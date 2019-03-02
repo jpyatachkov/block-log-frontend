@@ -1,3 +1,6 @@
+import '@/assets/index.scss';
+import '@/plugins/bootstrap-vue';
+
 import App from './App.vue';
 import Vue from 'vue';
 import router from './router';
