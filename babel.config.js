@@ -1,3 +1,5 @@
 module.exports = {
-  presets: ["@vue/app"]
+  /* elsint:disable */
+  presets: ['@babel/preset-env',
+    '@vue/app'],
 };
