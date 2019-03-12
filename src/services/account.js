@@ -1,40 +1,39 @@
 import HttpService from './http';
 import RouteService from './route';
 
-const AccountService = {};
+export default {
+  ...HttpService,
+  ...RouteService,
 
-Object.assign(AccountService, HttpService, RouteService);
+  async login({ userToken }) {
+    const url = this.jwtRoute();
+    const data = {
+      userToken,
+    };
 
-AccountService.login = async function({ userToken }) {
-  const url = this.jwtRoute();
-  const data = {
-    userToken,
-  };
+    const response = await this.doPost({
+      url,
+      data,
+    });
 
-  const response = await this.doPost({
-    url,
-    data,
-  });
+    return response.data;
+  },
 
-  return response.data;
+  logout() {
+    this.clearToken();
+  },
+
+  async register({ user }) {
+    const url = this.registerRoute();
+    const data = {
+      user,
+    };
+
+    const response = await this.doPost({
+      url,
+      data,
+    });
+
+    return response.data;
+  },
 };
-
-AccountService.logout = async function() {
-  this.clearToken();
-};
-
-AccountService.register = async function({ user }) {
-  const url = this.registerRoute();
-  const data = {
-    user,
-  };
-
-  const response = await this.doPost({
-    url,
-    data,
-  });
-
-  return response.data;
-};
-
-export default AccountService;

@@ -6,75 +6,66 @@ axios.defaults = {
   timeout: process.env.VUE_APP_API_TIMEOUT,
 };
 
-const HttpService = {};
+export default {
+  ...JwtService,
 
-Object.assign(HttpService, JwtService);
+  async __doRequest({ url, method, headers, params, data, timeout }) {
+    headers = {
+      ...headers,
+      Authorization: `Bearer ${this.getToken()}`,
+    };
+    return axios({
+      url,
+      method,
+      headers,
+      params,
+      data,
+      timeout,
+      transformResponse: [
+        (data) => {
+          data.isCorrect = !!data.errors;
+          return data;
+        },
+      ],
+    });
+  },
 
-HttpService.__doRequest = async function({
-  url,
-  method,
-  headers,
-  params,
-  data,
-  timeout,
-}) {
-  headers = {
-    ...headers,
-    Authorization: `Bearer ${this.getToken()}`,
-  };
-  return axios({
-    url,
-    method,
-    headers,
-    params,
-    data,
-    timeout,
-    transformResponse: [
-      (data) => {
-        data.isCorrect = !!data.errors;
-        return data;
-      },
-    ],
-  });
+  async doGet({ url, headers, params, timeout }) {
+    return this.__doRequest({
+      url,
+      method: 'GET',
+      headers,
+      params,
+      timeout,
+    });
+  },
+
+  async doPost({ url, headers, data, timeout }) {
+    return this.__doRequest({
+      url,
+      method: 'POST',
+      headers,
+      data,
+      timeout,
+    });
+  },
+
+  async doPatch({ url, headers, data, timeout }) {
+    return this.__doRequest({
+      url,
+      method: 'PATCH',
+      headers,
+      data,
+      timeout,
+    });
+  },
+
+  async doDelete({ url, headers, timeout }) {
+    return this.__doRequest({
+      url,
+      method: 'DELETE',
+      headers,
+      timeout,
+    });
+  },
 };
-
-HttpService.doGet = async function({ url, headers, params, timeout }) {
-  return this.__doRequest({
-    url,
-    method: 'GET',
-    headers,
-    params,
-    timeout,
-  });
-};
-
-HttpService.doPost = async function({ url, headers, data, timeout }) {
-  return this.__doRequest({
-    url,
-    method: 'POST',
-    headers,
-    data,
-    timeout,
-  });
-};
-
-HttpService.doPatch = async function({ url, headers, data, timeout }) {
-  return this.__doRequest({
-    url,
-    method: 'PATCH',
-    headers,
-    data,
-    timeout,
-  });
-};
-
-HttpService.doDelete = async function({ url, headers, timeout }) {
-  return this.__doRequest({
-    url,
-    method: 'DELETE',
-    headers,
-    timeout,
-  });
-};
-
-export default HttpService;

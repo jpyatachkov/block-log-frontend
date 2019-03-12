@@ -2,20 +2,18 @@ import StorageService from './storage';
 
 const JWT_KEY = 'jwt';
 
-const JwtService = {};
+export default {
+  ...StorageService,
 
-Object.assign(JwtService, StorageService);
+  clearToken() {
+    this.__remove(JWT_KEY);
+  },
 
-JwtService.clearToken = function() {
-  this.remove(JWT_KEY);
+  getToken() {
+    return this.__get(JWT_KEY);
+  },
+
+  setToken(token) {
+    return this.__set(JWT_KEY, token);
+  },
 };
-
-JwtService.getToken = function() {
-  return this.get(JWT_KEY);
-};
-
-JwtService.setToken = function(token) {
-  return this.set(JWT_KEY, token);
-};
-
-export default JwtService;
