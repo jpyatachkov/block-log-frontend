@@ -1,8 +1,9 @@
 <template>
-  <vs-card>
-    <div slot="header">
-      <h3>Вход в систему</h3>
-    </div>
+  <z-card>
+    <z-card-header
+    slot="header"
+    title="Вход"
+    />
 
     <z-alert
     v-if="error"
@@ -17,14 +18,18 @@
 
     <p class="text-center">
       Нет аккаунта?
-      <a href="#">Зарегистрируйтесь!</a>
+      <router-link :to="{ name: 'register' }">
+        Зарегистрируйтесь!
+      </router-link>
     </p>
-  </vs-card>
+  </z-card>
 </template>
 
 <script>
 import LoginForm from './LoginForm';
 import ZAlert from './ZAlert';
+import ZCard from './ZCard';
+import ZCardHeader from './ZCardHeader';
 
 export default {
   name: 'LoginContainer',
@@ -32,6 +37,8 @@ export default {
   components: {
     LoginForm,
     ZAlert,
+    ZCard,
+    ZCardHeader,
   },
 
   data: () => ({

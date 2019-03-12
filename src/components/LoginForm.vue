@@ -1,12 +1,14 @@
 <template>
-  <z-form @submit="onSubmit">
+  <z-form
+  submit-text="Войти"
+  @submit="onSubmit"
+  >
     <z-form-group
     v-model.lazy="username"
     :danger="!!usernameError"
     :danger-text="usernameError"
     icon="account_circle"
     label="Логин"
-    name="username"
     />
 
     <z-form-group
@@ -15,7 +17,6 @@
     :danger-text="passwordError"
     icon="lock"
     label="Пароль"
-    name="password"
     type="password"
     />
   </z-form>
