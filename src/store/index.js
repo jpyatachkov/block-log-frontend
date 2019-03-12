@@ -4,16 +4,35 @@ import account from './modules/account';
 
 Vue.use(Vuex);
 
-const state = {};
+const state = {
+  layout: null,
+  online: true,
+};
 
-const mutations = {};
+const mutations = {
+  setLayout(state, layout) {
+    state.layout = layout;
+  },
 
-const actions = {};
+  setOnline(state, online) {
+    state.online = online;
+  },
+};
+
+const getters = {
+  online(state) {
+    return state.online;
+  },
+
+  offline(state) {
+    return !state.online;
+  },
+};
 
 export default new Vuex.Store({
   state,
-  actions,
   mutations,
+  getters,
   modules: {
     account,
   },

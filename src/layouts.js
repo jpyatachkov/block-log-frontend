@@ -1,0 +1,4 @@
+export default {
+  MAIN_LAYOUT: 'MAIN_LAYOUT',
+  SIMPLE_LAYOUT: 'SIMPLE_LAYOUT',
+};
