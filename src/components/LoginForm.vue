@@ -1,5 +1,6 @@
 <template>
   <z-form
+  :loading="loading"
   submit-text="Войти"
   @submit="onSubmit"
   >
@@ -37,6 +38,13 @@ export default {
   components: {
     ZForm,
     ZFormGroup,
+  },
+
+  props: {
+    loading: {
+      default: false,
+      type: Boolean,
+    },
   },
 
   data: () => ({

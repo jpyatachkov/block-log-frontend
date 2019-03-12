@@ -14,7 +14,10 @@
       {{ errorContent }}
     </z-alert>
 
-    <login-form @submit="onSubmit" />
+    <login-form
+    :loading="loading"
+    @submit="onSubmit"
+    />
 
     <p class="text-center">
       Нет аккаунта?
@@ -45,6 +48,7 @@ export default {
   data: () => ({
     error: false,
     errorContent: null,
+    loading: false,
   }),
 
   methods: {
@@ -53,12 +57,17 @@ export default {
     }),
 
     async onSubmit(formData) {
+      this.setError(null);
+      this.loading = true;
+
       try {
         await this.login({ auth: formData });
         this.$router.push({ name: 'home' });
       } catch (error) {
         console.log(error);
         this.setError('Неверный логин или пароль');
+      } finally {
+        this.loading = false;
       }
     },
 

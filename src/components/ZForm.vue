@@ -3,7 +3,12 @@
   novalidate
   @submit.prevent="$emit('submit')"
   >
-    <slot />
+    <div
+    id="ZForm__content"
+    class="vs-con-loading__container"
+    >
+      <slot />
+    </div>
 
     <slot name="actions">
       <vs-row
@@ -16,7 +21,7 @@
         <z-button
         v-if="clearable"
         color="danger"
-        :disabled="disabled"
+        :disabled="disabled || loading"
         flat
         @click.prevent="$emit('clear')"
         >
@@ -24,8 +29,10 @@
         </z-button>
 
         <z-button
+        id="ZForm__submit"
+        class="vs-con-loading__container"
         color="primary"
-        :disabled="disabled"
+        :disabled="disabled || loading"
         >
           {{ submitText }}
         </z-button>
@@ -57,9 +64,37 @@ export default {
       default: false,
       type: Boolean,
     },
+    loading: {
+      default: false,
+      type: Boolean,
+    },
     submitText: {
       default: 'Сохранить',
       type: String,
+    },
+  },
+
+  data: () => ({
+    /* eslint-disable */
+    loadingElementIds: ['#ZForm__content', '#ZForm__submit'],
+    /* eslint-enable */
+    loadingScale: 0.6,
+  }),
+
+  watch: {
+    loading() {
+      if (this.loading) {
+        this.loadingElementIds.forEach((container) => {
+          this.$vs.loading({
+            container,
+            scale: this.loadingScale,
+          });
+        });
+      } else {
+        this.loadingElementIds.forEach((container) => {
+          this.$vs.loading.close(`${container} > .con-vs-loading`);
+        });
+      }
     },
   },
 };
