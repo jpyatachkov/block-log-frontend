@@ -5,10 +5,10 @@ export default {
   ...HttpService,
   ...RouteService,
 
-  async login({ userToken }) {
+  async login({ auth }) {
     const url = this.jwtRoute();
     const data = {
-      userToken,
+      auth,
     };
 
     const response = await this.doPost({
@@ -16,7 +16,11 @@ export default {
       data,
     });
 
-    return response.data;
+    const responseData = response.data;
+
+    this.setToken(responseData.jwt);
+
+    return responseData;
   },
 
   logout() {

@@ -16,4 +16,8 @@ export default {
   setToken(token) {
     return this.__set(JWT_KEY, token);
   },
+
+  hasToken() {
+    return !!this.getToken();
+  },
 };

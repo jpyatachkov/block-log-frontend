@@ -5,8 +5,8 @@ const state = {
 };
 
 const actions = {
-  async login({ commit }, { userToken }) {
-    const response = await ApiService.login({ userToken });
+  async login({ commit }, { auth }) {
+    const response = await ApiService.login({ auth });
 
     if (response.isCorrect) {
       commit('setUser', response);

@@ -30,6 +30,7 @@ import LoginForm from './LoginForm';
 import ZAlert from './ZAlert';
 import ZCard from './ZCard';
 import ZCardHeader from './ZCardHeader';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'LoginContainer',
@@ -47,8 +48,18 @@ export default {
   }),
 
   methods: {
-    onSubmit(formData) {
-      console.log(formData);
+    ...mapActions({
+      login: 'account/login',
+    }),
+
+    async onSubmit(formData) {
+      try {
+        await this.login({ auth: formData });
+        this.$router.push({ name: 'home' });
+      } catch (error) {
+        console.log(error);
+        this.setError('Неверный логин или пароль');
+      }
     },
 
     setError(content) {

@@ -1,10 +1,8 @@
 import JwtService from './jwt';
 import axios from 'axios';
 
-axios.defaults = {
-  baseURL: process.env.VUE_APP_API_BASE_URL,
-  timeout: process.env.VUE_APP_API_TIMEOUT,
-};
+axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL;
+axios.defaults.timeout = process.env.VUE_APP_API_TIMEOUT;
 
 export default {
   ...JwtService,
@@ -21,12 +19,6 @@ export default {
       params,
       data,
       timeout,
-      transformResponse: [
-        (data) => {
-          data.isCorrect = !!data.errors;
-          return data;
-        },
-      ],
     });
   },
 
