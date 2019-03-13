@@ -3,6 +3,7 @@
   :color="color"
   :disabled="disabled"
   :icon="icon"
+  :size="size"
   :type="type"
   >
     <slot />
@@ -35,6 +36,10 @@ export default {
     outline: {
       default: false,
       type: Boolean,
+    },
+    size: {
+      default: 'default',
+      type: String,
     },
   },
 

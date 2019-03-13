@@ -12,7 +12,13 @@ import store from './store';
 Vue.config.productionTip = false;
 
 Vue.use(SimpleVueValidation);
-Vue.use(Vuesax);
+Vue.use(Vuesax, {
+  theme: {
+    colors: {
+      primary: '#3D5AFE',
+    },
+  },
+});
 
 new Vue({
   router,

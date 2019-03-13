@@ -8,12 +8,26 @@
     :title="shortTitle"
     />
 
+    <vs-row
+    v-if="!preview"
+    class="mt-1 mb-1"
+    vs-align="center"
+    vs-type="flex"
+    vs-justify="flex-end"
+    vs-w="12"
+    >
+      <z-button color="primary">
+        Записаться
+      </z-button>
+    </vs-row>
+
     <p>{{ shortDescription }}</p>
   </z-card>
 </template>
 
 <script>
 import { ShortenMixin } from '@/mixins';
+import ZButton from './ZButton';
 import ZCard from './ZCard';
 import ZCardHeader from './ZCardHeader';
 
@@ -21,6 +35,7 @@ export default {
   name: 'CourseCard',
 
   components: {
+    ZButton,
     ZCard,
     ZCardHeader,
   },

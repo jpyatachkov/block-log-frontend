@@ -5,12 +5,12 @@
   vs-align="center"
   >
     <vs-col
-    class="height-100"
+    class="height-100 SimpleLayout__container"
     type="flex"
     vs-justify="center"
     vs-align="center"
-    vs-lg="4"
-    vs-md="6"
+    vs-lg="3"
+    vs-sm="8"
     vs-xs="12"
     >
       <router-view />
@@ -23,3 +23,8 @@ export default {
   name: 'SimpleLayout',
 };
 </script>
+
+<style lang="stylus" scoped>
+.SimpleLayout__container
+  min-width 300px
+</style>
