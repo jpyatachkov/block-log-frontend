@@ -4,16 +4,12 @@ module.exports = {
     node: true,
   },
   /* elsint:disable */
-  extends: ['plugin:vue/recommended',
-    'vuetify',
-    'prettier'],
+  extends: ['plugin:vue/recommended', 'vuetify', 'prettier'],
   rules: {
     /* elsint:disable */
-    'array-element-newline': ['error',
-      'always'],
+    'array-element-newline': ['error', 'consistent'],
     /* elsint:disable */
-    'comma-dangle': ['error',
-      'always-multiline'],
+    'comma-dangle': ['error', 'always-multiline'],
     indent: [
       'error',
       2,
@@ -25,8 +21,7 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     /* elsint:disable */
-    semi: ['error',
-      'always'],
+    semi: ['error', 'always'],
     'sort-imports': ['error'],
     'space-before-function-paren': [
       'error',
