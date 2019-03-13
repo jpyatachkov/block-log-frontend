@@ -1,7 +1,5 @@
 <template>
-  <main
-  class="height-100 d-flex flex-column justify-content-center align-items-center"
-  >
+  <main class="height-100">
     <main-layout-nav-bar />
     <main-layout-content />
   </main>

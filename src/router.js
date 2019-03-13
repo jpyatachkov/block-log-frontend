@@ -11,7 +11,6 @@ Vue.use(Router);
 const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  /* eslint-disable */
   routes: [
     {
       path: '/login',
@@ -38,7 +37,6 @@ const router = new Router({
       },
     },
   ],
-  /* eslint-enable */
 });
 
 router.beforeEach((to, from, next) => {

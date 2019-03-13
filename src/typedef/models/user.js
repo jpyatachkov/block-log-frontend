@@ -1,6 +1,7 @@
 /**
- * @typedef {object} User
- * @param {string} firstName
- * @param {string} lastName
- * @param {string} username
+ * @typedef {Object} User
+ * @property {string} firstName
+ * @property {string} lastName
+ * @property {string} username
+ * @property {string} email
  */

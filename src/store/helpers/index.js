@@ -31,3 +31,4 @@ export const rootMethods = {
 };
 
 export * from './account';
+export * from './courses';

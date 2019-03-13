@@ -3,42 +3,32 @@ import '@/typedef';
 import { ApiService } from '@/services';
 
 /**
- * @typedef {object} AuthState
- * @property {User?} user
+ * @typedef {Object} AuthState
+ * @property {User} user
  */
 
-/**
- * @type {AuthState}
- */
+/** @type AuthState */
 const state = {
-  user: null,
+  user: {},
 };
 
 const actions = {
-  async login({ commit }, { auth }) {
-    const response = await ApiService.login({ auth });
-
-    if (response.isCorrect) {
-      commit('setUser', response);
-    }
-
-    return response;
+  async login(context, { auth }) {
+    return ApiService.login({ auth });
   },
 
   async logout() {
-    ApiService.logout();
+    return ApiService.logout();
   },
 
   async register({ dispatch }, { user }) {
     const response = await ApiService.register({ user });
 
-    if (response.isCorrect) {
-      const userToken = {
-        username: response.username,
-        password: user.password,
-      };
-      await dispatch('login', { userToken });
-    }
+    const auth = {
+      username: response.username,
+      password: user.password,
+    };
+    await dispatch('login', { auth });
 
     return response;
   },
@@ -54,9 +44,20 @@ const mutations = {
   },
 };
 
+const getters = {
+  /**
+   * @param {AccountState} state
+   * @returns {User}
+   */
+  user(state) {
+    return state.user;
+  },
+};
+
 export default {
   namespaced: true,
   state,
   actions,
   mutations,
+  getters,
 };

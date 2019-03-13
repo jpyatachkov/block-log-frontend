@@ -1,4 +1,4 @@
-const RouteService = {
+export default {
   registerRoute: () => 'users/register',
   jwtRoute: () => 'user_token',
 
@@ -8,5 +8,3 @@ const RouteService = {
   assignmentsRoute: () => 'assignments',
   assignmentRoute: (assignmentId) => `assignments/${assignmentId}`,
 };
-
-export default RouteService;

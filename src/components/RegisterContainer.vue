@@ -60,13 +60,7 @@ export default {
       this.resetErrors();
 
       try {
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-
         await this.register({ user: formData });
-
-        const { username, password } = formData;
-        await this.login({ auth: { username, password } });
-
         this.$router.push({ name: 'home' });
       } catch (error) {
         const errorDetails = error.response.data.errors;

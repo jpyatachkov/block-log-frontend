@@ -1,16 +1,17 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import account from './modules/account';
+import courses from './modules/courses';
 
 Vue.use(Vuex);
 
 /**
- * @typedef RootState
- * @property {string?} layout
+ * @typedef {Object} RootState
+ * @property {?string} layout
  * @property {boolean} online
  */
 
-/** @type RootState */
+/** @type {RootState} */
 const state = {
   layout: null,
   online: true,
@@ -58,5 +59,6 @@ export default new Vuex.Store({
   getters,
   modules: {
     account,
+    courses,
   },
 });
