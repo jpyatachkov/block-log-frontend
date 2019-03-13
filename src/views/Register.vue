@@ -5,7 +5,7 @@
 <script>
 import RegisterContainer from '@/components/RegisterContainer';
 import layoutNames from '@/layouts';
-import { mapMutations } from 'vuex';
+import { rootMethods } from '@/store/helpers';
 
 export default {
   name: 'Register',
@@ -19,7 +19,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['setLayout']),
+    ...rootMethods,
   },
 };
 </script>

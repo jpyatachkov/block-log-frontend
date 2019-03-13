@@ -1,5 +1,6 @@
 <template>
   <z-form
+  :loading="loading"
   submit-text="Зарегистрироваться"
   @submit="onSubmit"
   >
@@ -21,7 +22,7 @@
     v-model.lazy="email"
     :danger="!!emailError"
     :danger-text="emailError"
-    label="Имя"
+    label="Электронная почта"
     />
 
     <z-form-group
@@ -63,6 +64,13 @@ export default {
   components: {
     ZForm,
     ZFormGroup,
+  },
+
+  props: {
+    loading: {
+      default: false,
+      type: Boolean,
+    },
   },
 
   data: () => ({

@@ -29,8 +29,6 @@
         </z-button>
 
         <z-button
-        id="ZForm__submit"
-        class="vs-con-loading__container"
         color="primary"
         :disabled="disabled || loading"
         >
@@ -42,6 +40,7 @@
 </template>
 
 <script>
+import { LoadingMixin } from '@/mixins';
 import ZButton from './ZButton';
 
 export default {
@@ -50,6 +49,8 @@ export default {
   components: {
     ZButton,
   },
+
+  mixins: [LoadingMixin],
 
   props: {
     clearable: {
@@ -75,27 +76,10 @@ export default {
   },
 
   data: () => ({
-    /* eslint-disable */
-    loadingElementIds: ['#ZForm__content', '#ZForm__submit'],
-    /* eslint-enable */
-    loadingScale: 0.6,
-  }),
-
-  watch: {
-    loading() {
-      if (this.loading) {
-        this.loadingElementIds.forEach((container) => {
-          this.$vs.loading({
-            container,
-            scale: this.loadingScale,
-          });
-        });
-      } else {
-        this.loadingElementIds.forEach((container) => {
-          this.$vs.loading.close(`${container} > .con-vs-loading`);
-        });
-      }
+    loadingConfig: {
+      elementIds: ['#ZForm__content'],
+      type: 'sound',
     },
-  },
+  }),
 };
 </script>

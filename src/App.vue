@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex';
+import { rootComputed, rootMethods } from '@/store/helpers';
 
 import MainLayout from '@/components/MainLayout';
 import SimpleLayout from '@/components/SimpleLayout';
@@ -18,7 +18,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['layout']),
+    ...rootComputed,
 
     currentLayout() {
       switch (true) {
@@ -43,7 +43,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['setOnline']),
+    ...rootMethods,
 
     updateOnline(evt) {
       const { type } = evt;

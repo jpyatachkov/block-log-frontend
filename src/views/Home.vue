@@ -4,7 +4,7 @@
 
 <script>
 import layoutNames from '@/layouts';
-import { mapMutations } from 'vuex';
+import { rootMethods } from '@/store/helpers';
 
 export default {
   name: 'Home',
@@ -14,7 +14,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['setLayout']),
+    ...rootMethods,
   },
 };
 </script>

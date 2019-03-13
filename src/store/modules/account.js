@@ -1,5 +1,15 @@
+import '@/typedef';
+
 import { ApiService } from '@/services';
 
+/**
+ * @typedef {object} AuthState
+ * @property {User?} user
+ */
+
+/**
+ * @type {AuthState}
+ */
 const state = {
   user: null,
 };
@@ -35,6 +45,10 @@ const actions = {
 };
 
 const mutations = {
+  /**
+   * @param {AuthState} state
+   * @param {User} user
+   */
   setUser(state, user) {
     state.user = user;
   },

@@ -8,6 +8,7 @@
     <z-alert
     v-if="error"
     v-model="error"
+    class="mt-1 mb-1"
     color="danger"
     dismissible
     >
@@ -33,7 +34,7 @@ import LoginForm from './LoginForm';
 import ZAlert from './ZAlert';
 import ZCard from './ZCard';
 import ZCardHeader from './ZCardHeader';
-import { mapActions } from 'vuex';
+import { accountMethods } from '@/store/helpers';
 
 export default {
   name: 'LoginContainer',
@@ -46,15 +47,13 @@ export default {
   },
 
   data: () => ({
-    error: false,
+    error: null,
     errorContent: null,
     loading: false,
   }),
 
   methods: {
-    ...mapActions({
-      login: 'account/login',
-    }),
+    ...accountMethods,
 
     async onSubmit(formData) {
       this.setError(null);
@@ -64,7 +63,6 @@ export default {
         await this.login({ auth: formData });
         this.$router.push({ name: 'home' });
       } catch (error) {
-        console.log(error);
         this.setError('Неверный логин или пароль');
       } finally {
         this.loading = false;
