@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "esnext",
     "module": "es6",
     "strict": true,
     "jsx": "preserve",
@@ -8,6 +8,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
+    "sourceMap": false,
     "paths": {
       "@/*": [
         "src/*"
