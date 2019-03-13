@@ -1,7 +1,7 @@
 <template>
   <items-grid
   :items="courses"
-  :total="5"
+  :total="coursesTotal"
   @fetch="onFetch"
   >
     <template v-slot:default="props">

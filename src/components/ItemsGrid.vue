@@ -9,7 +9,10 @@
       vs-sm="6"
       vs-lg="3"
       >
-        <slot :item="item" />
+        <slot
+        :item="item"
+        :number="index"
+        />
       </vs-col>
     </vs-row>
 

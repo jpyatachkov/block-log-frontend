@@ -1,5 +1,8 @@
 <template>
-  <z-card class="CourseCard">
+  <z-card
+  class="CourseCard"
+  @click.native="onClick"
+  >
     <z-card-header
     slot="header"
     :title="shortTitle"
@@ -29,15 +32,31 @@ export default {
       required: true,
       type: Object,
     },
+    preview: {
+      default: true,
+      type: Boolean,
+    },
   },
 
   computed: {
     shortTitle() {
-      return this.shorten(this.course.title, 25);
+      return this.preview
+        ? this.shorten(this.course.title, 25)
+        : this.course.title || '';
     },
 
     shortDescription() {
-      return this.shorten(this.course.description, 100);
+      return this.preview
+        ? this.shorten(this.course.description, 100)
+        : this.course.description || '';
+    },
+  },
+
+  methods: {
+    onClick() {
+      if (this.preview) {
+        this.$router.push({ name: 'course', params: { id: this.course.id } });
+      }
     },
   },
 };

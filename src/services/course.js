@@ -13,4 +13,10 @@ export default {
     });
     return response.data;
   },
+
+  async getCourse({ courseId }) {
+    const url = this.courseRoute(courseId);
+    const response = await this.doGet({ url });
+    return response.data;
+  },
 };
