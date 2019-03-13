@@ -47,6 +47,5 @@ export default {
 <style lang="stylus" scoped>
 .MainLayoutNavBar
   background-color white !important
-  box-shadow 0 0 15px rgba(0,0,0,0.55)
   min-height 65px
 </style>
