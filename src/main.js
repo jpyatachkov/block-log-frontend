@@ -15,7 +15,8 @@ Vue.use(SimpleVueValidation);
 Vue.use(Vuesax, {
   theme: {
     colors: {
-      primary: '#3D5AFE',
+      primary: '#8A59D5',
+      // primary: '#3D5AFE',
     },
   },
 });

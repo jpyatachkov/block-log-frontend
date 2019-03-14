@@ -6,5 +6,10 @@ export default {
   courseRoute: (courseId) => `courses/${courseId}`,
 
   assignmentsRoute: (courseId) => `courses/${courseId}/assignments`,
-  assignmentRoute: (assignmentId) => `assignments/${assignmentId}`,
+  assignmentRoute: (courseId, assignmentId) =>
+    `courses/${courseId}/assignments/${assignmentId}`,
+
+  solutionsRoute: (courseId, assignmentId) => `courses/${courseId}/assignments`,
+  solutionCreateRoute: () => 'solutions',
+  solutionRoute: (solutionId) => `solutions/${solutionId}`,
 };

@@ -1,5 +1,5 @@
 <template>
-  <main class="height-100">
+  <main class="MainLayout__container height-100">
     <main-layout-nav-bar />
     <main-layout-content />
   </main>
@@ -18,3 +18,8 @@ export default {
   },
 };
 </script>
+
+<style lang="stylus" scoped>
+.MainLayout__container
+  background-color #fcfcfc
+</style>

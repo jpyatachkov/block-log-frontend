@@ -16,7 +16,10 @@
     vs-justify="flex-end"
     vs-w="12"
     >
-      <z-button color="primary">
+      <z-button
+      color="primary"
+      size="large"
+      >
         Записаться
       </z-button>
     </vs-row>
