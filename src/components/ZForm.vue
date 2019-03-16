@@ -1,6 +1,7 @@
 <template>
-  <form
-  novalidate
+  <v-form
+  :value="value"
+  @input="$emit($event)"
   @submit.prevent="$emit('submit')"
   >
     <div
@@ -20,27 +21,29 @@
       >
         <z-button
         v-if="clearable"
-        color="danger"
         :disabled="disabled || loading"
+        color="danger"
         flat
+        type="reset"
         @click.prevent="$emit('clear')"
         >
           {{ clearText }}
         </z-button>
 
         <z-button
-        color="primary"
         :disabled="disabled || loading"
+        :loading="loading"
+        color="primary"
+        type="submit"
         >
           {{ submitText }}
         </z-button>
       </vs-row>
     </slot>
-  </form>
+  </v-form>
 </template>
 
 <script>
-import { LoadingMixin } from '@/mixins';
 import ZButton from './ZButton';
 
 export default {
@@ -49,8 +52,6 @@ export default {
   components: {
     ZButton,
   },
-
-  mixins: [LoadingMixin],
 
   props: {
     clearable: {
@@ -72,6 +73,10 @@ export default {
     submitText: {
       default: 'Сохранить',
       type: String,
+    },
+    value: {
+      required: true,
+      type: Boolean,
     },
   },
 

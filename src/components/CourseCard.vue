@@ -3,10 +3,9 @@
   class="CourseCard"
   @click.native="onClick"
   >
-    <z-card-header
-    slot="header"
-    :title="shortTitle"
-    />
+    <z-card-title>
+      <h2>{{ shortTitle }}</h2>
+    </z-card-title>
 
     <vs-row
     v-if="!preview"
@@ -32,7 +31,7 @@
 import { ShortenMixin } from '@/mixins';
 import ZButton from './ZButton';
 import ZCard from './ZCard';
-import ZCardHeader from './ZCardHeader';
+import ZCardTitle from './ZCardTitle';
 
 export default {
   name: 'CourseCard',
@@ -40,7 +39,7 @@ export default {
   components: {
     ZButton,
     ZCard,
-    ZCardHeader,
+    ZCardTitle,
   },
 
   mixins: [ShortenMixin],

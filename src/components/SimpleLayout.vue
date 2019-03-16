@@ -1,21 +1,25 @@
 <template>
-  <vs-row
-  class="SimpleLayout__container height-100"
-  vs-justify="center"
-  vs-align="center"
-  >
-    <vs-col
-    class="height-100 SimpleLayout__content"
-    type="flex"
-    vs-justify="center"
-    vs-align="center"
-    vs-lg="3"
-    vs-sm="8"
-    vs-xs="12"
+  <v-content class="SimpleLayout__container">
+    <v-container
+    fluid
+    fill-height
+    class="pa-0"
     >
-      <router-view />
-    </vs-col>
-  </vs-row>
+      <v-layout
+      align-center
+      justify-center
+      >
+        <v-flex
+        xs12
+        sm10
+        md6
+        xl4
+        >
+          <router-view />
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-content>
 </template>
 
 <script>

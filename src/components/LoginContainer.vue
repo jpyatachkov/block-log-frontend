@@ -1,9 +1,8 @@
 <template>
-  <z-card>
-    <z-card-header
-    slot="header"
-    title="Вход"
-    />
+  <z-card :class="classes">
+    <z-card-title>
+      <h2>Вход</h2>
+    </z-card-title>
 
     <z-alert
     v-if="error"
@@ -20,7 +19,7 @@
     @submit="onSubmit"
     />
 
-    <p class="text-center">
+    <p class="text-center mt-4">
       Нет аккаунта?
       <router-link :to="{ name: 'register' }">
         Зарегистрируйтесь!
@@ -33,7 +32,7 @@
 import LoginForm from './LoginForm';
 import ZAlert from './ZAlert';
 import ZCard from './ZCard';
-import ZCardHeader from './ZCardHeader';
+import ZCardTitle from './ZCardTitle';
 import { accountMethods } from '@/store/helpers';
 
 export default {
@@ -43,7 +42,7 @@ export default {
     LoginForm,
     ZAlert,
     ZCard,
-    ZCardHeader,
+    ZCardTitle,
   },
 
   data: () => ({
@@ -51,6 +50,26 @@ export default {
     errorContent: null,
     loading: false,
   }),
+
+  computed: {
+    classes() {
+      let classes;
+
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+        case 'sm':
+          classes = ['pa-1'];
+          break;
+        case 'md':
+        case 'lg':
+        case 'xl':
+          classes = ['pa-3'];
+          break;
+      }
+
+      return classes;
+    },
+  },
 
   methods: {
     ...accountMethods,

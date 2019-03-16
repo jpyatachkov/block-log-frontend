@@ -1,25 +1,29 @@
 <template>
-  <vs-button
+  <v-btn
+  :block="wide"
   :color="color"
   :disabled="disabled"
+  :flat="flat"
   :icon="icon"
-  :size="size"
+  :large="large"
+  :loading="loading"
+  :outline="outline"
+  :round="round"
+  :small="small"
   :type="type"
   >
     <slot />
-  </vs-button>
+  </v-btn>
 </template>
 
 <script>
-import { colorValidator } from '@/utils/validators/props';
-
 export default {
   name: 'ZButton',
 
   props: {
     color: {
       default: 'primary',
-      validator: colorValidator,
+      type: String,
     },
     disabled: {
       default: false,
@@ -30,28 +34,36 @@ export default {
       type: Boolean,
     },
     icon: {
-      default: '',
-      type: String,
+      default: false,
+      type: Boolean,
+    },
+    large: {
+      default: false,
+      type: Boolean,
+    },
+    loading: {
+      default: false,
+      type: Boolean,
     },
     outline: {
       default: false,
       type: Boolean,
     },
-    size: {
-      default: 'default',
+    round: {
+      default: false,
+      type: Boolean,
+    },
+    small: {
+      default: false,
+      type: Boolean,
+    },
+    type: {
+      default: 'button',
       type: String,
     },
-  },
-
-  computed: {
-    type() {
-      if (this.flat) {
-        return 'flat';
-      } else if (this.outline) {
-        return 'border';
-      } else {
-        return 'filled';
-      }
+    wide: {
+      default: false,
+      type: Boolean,
     },
   },
 };

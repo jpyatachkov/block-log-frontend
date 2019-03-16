@@ -1,15 +1,15 @@
 <template>
-  <vs-alert
-  :active="value"
-  :closable="dismissible"
-  close-icon="close"
-  :color="color"
-  :icon="icon"
-  :title="title"
-  @update:active="onUpdateValue"
+  <v-alert
+  :dismissible="dismissible"
+  :type="type"
+  :value="value"
+  class="mb-3"
+  transition="scale-transition"
+  @change="$emit('change', $event)"
+  @input="$emit('input', $event)"
   >
     <slot />
-  </vs-alert>
+  </v-alert>
 </template>
 
 <script>
@@ -19,32 +19,17 @@ export default {
   name: 'ZAlert',
 
   props: {
-    color: {
-      default: 'primary',
-      validator: colorValidator,
-    },
     dismissible: {
       default: false,
       type: Boolean,
     },
-    icon: {
-      default: '',
-      type: String,
-    },
-    title: {
-      default: '',
-      type: String,
+    type: {
+      default: 'error',
+      validator: colorValidator,
     },
     value: {
       default: true,
       type: Boolean,
-    },
-  },
-
-  methods: {
-    onUpdateValue(evt) {
-      this.$emit('input', evt);
-      this.$emit('change', evt);
     },
   },
 };

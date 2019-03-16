@@ -1,69 +1,74 @@
 <template>
-  <z-form
-  :loading="loading"
-  submit-text="Зарегистрироваться"
-  @submit="onSubmit"
-  >
-    <z-form-group
-    v-model.lazy="firstName"
-    :danger="!!firstNameError"
-    :danger-text="firstNameError"
-    label="Имя"
-    />
+  <div>
+    <v-form
+    ref="form"
+    v-model="valid"
+    >
+      <z-input
+      v-model.lazy="form.firstName"
+      :rules="rules.firstName"
+      label="Имя"
+      />
 
-    <z-form-group
-    v-model.lazy="lastName"
-    :danger="!!lastNameError"
-    :danger-text="lastNameError"
-    label="Фамилия"
-    />
+      <z-input
+      v-model.lazy="form.lastName"
+      :rules="rules.lastName"
+      label="Фамилия"
+      />
 
-    <z-form-group
-    v-model.lazy="email"
-    :danger="!!emailError"
-    :danger-text="emailError"
-    label="Электронная почта"
-    />
+      <z-input
+      v-model.lazy="form.email"
+      :error-messages="errors.email"
+      :rules="rules.email"
+      label="Электронная почта"
+      />
 
-    <z-form-group
-    v-model.lazy="username"
-    :danger="!!usernameError"
-    :danger-text="usernameError"
-    label="Логин"
-    />
+      <z-input
+      v-model.lazy="form.username"
+      :error-messages="errors.username"
+      :rules="rules.username"
+      label="Логин"
+      />
 
-    <z-form-group
-    v-model.lazy="password"
-    :danger="!!passwordError"
-    :danger-text="passwordError"
-    label="Пароль"
-    type="password"
-    />
+      <z-input
+      v-model.lazy="form.password"
+      :rules="rules.password"
+      label="Пароль"
+      type="password"
+      />
 
-    <z-form-group
-    v-model.lazy="passwordConfirmation"
-    :danger="!!passwordConfirmationError"
-    :danger-text="passwordConfirmationError"
-    label="Подтверждение пароля"
-    type="password"
-    />
-  </z-form>
+      <z-input
+      v-model.lazy="form.passwordConfirmation"
+      :error-messages="errors.passwordConfirmation"
+      :rules="rules.passwordConfirmation"
+      label="Подтверждение пароля"
+      type="password"
+      />
+    </v-form>
+
+    <v-btn
+    color="primary"
+    :disabled="loading"
+    :loading="loading"
+    block
+    large
+    @click="onSubmit"
+    >
+      ЗАРЕГИСТРИРОВАТЬСЯ
+    </v-btn>
+  </div>
 </template>
 
 <script>
-import ERRORS from '@/errors';
-import SimpleVueValidation from 'simple-vue-validator';
-import ZForm from './ZForm';
-import ZFormGroup from './ZFormGroup';
+import { email, passwordLength, required } from '@/utils/validators/inputs';
 
-const Validator = SimpleVueValidation.Validator;
+import ZInput from './ZInput';
 
 export default {
   name: 'RegisterForm',
 
   components: {
-    ZForm,
-    ZFormGroup,
+    ZInput,
   },
 
   props: {
@@ -74,74 +79,69 @@ export default {
   },
 
   data: () => ({
-    firstName: '',
-    lastName: '',
-    email: '',
-    username: '',
-    password: '',
-    passwordConfirmation: '',
+    errors: {
+      email: [],
+      username: [],
+      passwordConfirmation: [],
+    },
+    form: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      username: '',
+      password: '',
+      passwordConfirmation: '',
+    },
+    rules: {
+      firstName: [required],
+      lastName: [required],
+      email: [required, email],
+      username: [required],
+      password: [required, passwordLength(8)],
+      passwordConfirmation: [required, passwordLength(8)],
+    },
+    valid: false,
   }),
 
-  validators: {
-    firstName: (v) => Validator.value(v).required(ERRORS.required),
-    lastName: (v) => Validator.value(v).required(ERRORS.required),
-    email: (v) =>
-      Validator.value(v)
-        .required(ERRORS.required)
-        .email(ERRORS.email),
-    username: (v) => Validator.value(v).required(ERRORS.required),
-    password: (v) => Validator.value(v).required(ERRORS.required),
-    'passwordConfirmation,password'(passwordConfirmation, password) {
-      if (this.submitted || this.validation.isTouched('password')) {
-        return Validator.value(passwordConfirmation)
-          .required(ERRORS.required)
-          .match(password, ERRORS.passwordsDoNotMatch);
-      }
-    },
-  },
-
-  computed: {
-    firstNameError() {
-      return this.validation.firstError('firstName');
+  watch: {
+    'form.password'() {
+      this.comparePasswords();
     },
 
-    lastNameError() {
-      return this.validation.firstError('lastName');
-    },
-
-    emailError() {
-      return this.validation.firstError('email');
-    },
-
-    usernameError() {
-      return this.validation.firstError('username');
-    },
-
-    passwordError() {
-      return this.validation.firstError('password');
-    },
-
-    passwordConfirmationError() {
-      return this.validation.firstError('passwordConfirmation');
+    'form.passwordConfirmation'() {
+      this.comparePasswords();
     },
   },
 
   methods: {
-    async onSubmit() {
-      const isValid = await this.$validate();
+    comparePasswords() {
+      if (this.form.password === this.form.passwordConfirmation) {
+        this.errors.passwordConfirmation = [];
+      } else {
+        this.errors.passwordConfirmation.push(
+          'Пароль и подтверждение не совпадают',
+        );
+      }
+    },
 
-      if (!isValid) {
+    onSubmit() {
+      if (!this.$refs.form.validate()) {
         return;
       }
 
-      this.$emit('submit', {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.email,
-        username: this.username,
-        password: this.password,
-        passwordConfirmation: this.passwordConfirmation,
-      });
+      if (this.form.password !== this.form.passwordConfirmation) {
+        return;
+      }
+
+      this.$emit('submit', this.form);
+    },
+
+    setError(field, error) {
+      if (!this.errors[field]) {
+        this.errors[field] = [];
+      }
+
+      this.errors[field].push(error);
     },
   },
 };

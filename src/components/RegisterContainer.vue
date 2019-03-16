@@ -1,9 +1,8 @@
 <template>
-  <z-card>
-    <z-card-header
-    slot="header"
-    title="Регистрация"
-    />
+  <z-card :class="classes">
+    <z-card-title>
+      <h2>Регистрация</h2>
+    </z-card-title>
 
     <z-alert
     v-for="error in errors"
@@ -17,11 +16,12 @@
     </z-alert>
 
     <register-form
+    ref="form"
     :loading="loading"
     @submit="onSubmit"
     />
 
-    <p class="text-center">
+    <p class="text-center mt-4">
       Уже есть аккаунт?
       <router-link :to="{ name: 'login' }">
         Войдите!
@@ -34,7 +34,7 @@
 import RegisterForm from './RegisterForm';
 import ZAlert from './ZAlert';
 import ZCard from './ZCard';
-import ZCardHeader from './ZCardHeader';
+import ZCardTitle from './ZCardTitle';
 import { accountMethods } from '@/store/helpers';
 
 export default {
@@ -44,13 +44,33 @@ export default {
     RegisterForm,
     ZAlert,
     ZCard,
-    ZCardHeader,
+    ZCardTitle,
   },
 
   data: () => ({
     errors: [],
     loading: false,
   }),
+
+  computed: {
+    classes() {
+      let classes;
+
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+        case 'sm':
+          classes = ['pa-1'];
+          break;
+        case 'md':
+        case 'lg':
+        case 'xl':
+          classes = ['pa-3'];
+          break;
+      }
+
+      return classes;
+    },
+  },
 
   methods: {
     ...accountMethods,
@@ -63,6 +83,9 @@ export default {
         await this.register({ user: formData });
         this.$router.push({ name: 'home' });
       } catch (error) {
+        console.log({
+          ...error,
+        });
         const errorDetails = error.response.data.errors;
         Object.entries(errorDetails).forEach(([k, v]) =>
           this.resolveErrors(k, v),
@@ -82,7 +105,10 @@ export default {
         errors.forEach((error) => {
           switch (true) {
             case error === 'has already been taken':
-              this.pushError('Пользователь с таким именем уже существует');
+              this.$refs.form.setError(
+                'username',
+                'Пользователь с таким именем уже существует',
+              );
               break;
           }
         });
@@ -90,7 +116,8 @@ export default {
         errors.forEach((error) => {
           switch (true) {
             case error === 'has already been taken':
-              this.pushError(
+              this.$refs.form.setError(
+                'email',
                 'Пользователь с таким адресом электронной почты уже существует',
               );
               break;
@@ -107,7 +134,7 @@ export default {
     },
 
     resetErrors() {
-      this.errors = [];
+      // this.errors = [];
     },
   },
 };

@@ -1,43 +1,47 @@
 <template>
-  <z-form
-  :loading="loading"
-  submit-text="Войти"
-  @submit="onSubmit"
-  >
-    <z-form-group
-    v-model.lazy="username"
-    :danger="!!usernameError"
-    :danger-text="usernameError"
-    icon="account_circle"
-    label="Логин"
-    />
+  <div>
+    <v-form
+    ref="form"
+    v-model="valid"
+    >
+      <z-input
+      v-model.lazy="form.username"
+      :rules="rules.username"
+      label="Логин"
+      prepend-icon="account_circle"
+      />
 
-    <z-form-group
-    v-model.lazy="password"
-    :danger="!!passwordError"
-    :danger-text="passwordError"
-    icon="lock"
-    label="Пароль"
-    type="password"
-    />
-  </z-form>
+      <z-input
+      v-model.lazy="form.password"
+      :rules="rules.password"
+      prepend-icon="lock"
+      label="Пароль"
+      type="password"
+      />
+    </v-form>
+
+    <v-btn
+    color="primary"
+    :disabled="loading"
+    :loading="loading"
+    block
+    large
+    @click="onSubmit"
+    >
+      ВОЙТИ
+    </v-btn>
+  </div>
 </template>
 
 <script>
-import ERRORS from '@/errors';
-import SimpleVueValidation from 'simple-vue-validator';
-import ZForm from './ZForm';
-import ZFormGroup from './ZFormGroup';
-import { mapGetters } from 'vuex';
-
-const Validator = SimpleVueValidation.Validator;
+import ZInput from './ZInput';
+import { required } from '@/utils/validators/inputs';
 
 export default {
   name: 'LoginForm',
 
   components: {
-    ZForm,
-    ZFormGroup,
+    ZInput,
   },
 
   props: {
@@ -48,39 +52,24 @@ export default {
   },
 
   data: () => ({
-    username: '',
-    password: '',
+    form: {
+      username: '',
+      password: '',
+    },
+    rules: {
+      username: [required],
+      password: [required],
+    },
+    valid: false,
   }),
 
-  validators: {
-    username: (v) => Validator.value(v).required(ERRORS.required),
-    password: (v) => Validator.value(v).required(ERRORS.required),
-  },
-
-  computed: {
-    ...mapGetters(['offline']),
-
-    usernameError() {
-      return this.validation.firstError('username');
-    },
-
-    passwordError() {
-      return this.validation.firstError('password');
-    },
-  },
-
   methods: {
-    async onSubmit() {
-      const isValid = await this.$validate();
-
-      if (!isValid) {
+    onSubmit() {
+      if (!this.$refs.form.validate()) {
         return;
       }
 
-      this.$emit('submit', {
-        username: this.username,
-        password: this.password,
-      });
+      this.$emit('submit', this.form);
     },
   },
 };
