@@ -19,4 +19,32 @@ export default {
     const response = await this.doGet({ url });
     return response.data;
   },
+
+  async createCourse({ course }) {
+    const url = this.coursesRoute();
+    const data = {
+      course,
+    };
+
+    const response = await this.doPost({
+      url,
+      data,
+    });
+
+    return response.data;
+  },
+
+  async updateCourse({ course }) {
+    const url = this.coursesRoute();
+    const data = {
+      course,
+    };
+
+    const response = await this.doPatch({
+      url,
+      data,
+    });
+
+    return response.data;
+  },
 };

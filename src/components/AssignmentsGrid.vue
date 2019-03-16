@@ -1,6 +1,7 @@
 <template>
   <items-grid
   :items="assignments"
+  :loading="loading"
   :total="assignmentsTotal"
   z-sm="12"
   z-lg="12"
@@ -29,6 +30,10 @@ export default {
     ItemsGrid,
   },
 
+  data: () => ({
+    loading: false,
+  }),
+
   computed: {
     ...assignmentsComputed,
   },
@@ -37,8 +42,10 @@ export default {
     ...assignmentsMethods,
 
     async onFetch({ page }) {
+      this.loading = true;
       const courseId = this.$route.params.id;
       await this.getAssignments({ courseId, page });
+      this.loading = false;
     },
   },
 };

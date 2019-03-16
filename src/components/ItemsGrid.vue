@@ -1,8 +1,8 @@
 <template>
   <div
   v-infinite-scroll="onFetch"
-  infinite-scroll-disabled="busy"
   infinite-scroll-distance="10"
+  :infinite-scroll-disabled="loading"
   >
     <vs-row vs-w="12">
       <vs-col
@@ -31,6 +31,10 @@ export default {
       required: true,
       type: Array,
     },
+    loading: {
+      required: true,
+      type: Boolean,
+    },
     zLg: {
       default: 4,
       type: Number,
@@ -49,14 +53,13 @@ export default {
     currentPage: 1,
   }),
 
-  mounted() {
-    // this.$emit('fetch', { page: this.currentPage });
-  },
-
   methods: {
-    onFetch() {
-      this.currentPage++;
-      // this.$emit('fetch', { page: this.currentPage } );
+    async onFetch() {
+      if (this.loading) {
+        return;
+      }
+
+      this.$emit('fetch', { page: ++this.currentPage });
     },
   },
 };

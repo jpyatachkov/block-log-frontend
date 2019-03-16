@@ -1,6 +1,7 @@
 <template>
   <items-grid
   :items="courses"
+  :loading="loading"
   :total="coursesTotal"
   @fetch="onFetch"
   >
@@ -24,6 +25,10 @@ export default {
     ItemsGrid,
   },
 
+  data: () => ({
+    loading: false,
+  }),
+
   computed: {
     ...coursesComputed,
   },
@@ -32,7 +37,9 @@ export default {
     ...coursesMethods,
 
     async onFetch({ page }) {
+      this.loading = true;
       await this.getCourses({ page });
+      this.loading = false;
     },
   },
 };
