@@ -13,6 +13,10 @@ import Vuetify, {
   VForm,
   VHover,
   VLayout,
+  VTab,
+  VTabItem,
+  VTabs,
+  VTabsItems,
   VTextField,
 } from 'vuetify/lib';
 
@@ -33,6 +37,10 @@ Vue.use(Vuetify, {
     VForm,
     VHover,
     VLayout,
+    VTab,
+    VTabItem,
+    VTabs,
+    VTabsItems,
     VTextField,
   },
   directives: {

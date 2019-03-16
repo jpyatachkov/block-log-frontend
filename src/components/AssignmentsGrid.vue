@@ -2,6 +2,8 @@
   <items-grid
   :items="assignments"
   :total="assignmentsTotal"
+  z-sm="12"
+  z-lg="12"
   @fetch="onFetch"
   >
     <template v-slot:default="props">

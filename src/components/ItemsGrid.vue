@@ -1,33 +1,23 @@
 <template>
-  <div>
+  <div
+  v-infinite-scroll="onFetch"
+  infinite-scroll-disabled="busy"
+  infinite-scroll-distance="10"
+  >
     <vs-row vs-w="12">
       <vs-col
       v-for="(item, index) in items"
       :key="index"
       class="pa-1"
-      vs-xs="12"
-      vs-sm="6"
-      vs-lg="3"
+      :vs-lg="zLg"
+      :vs-sm="zSm"
+      :vs-xs="zXs"
       >
         <slot
         :item="item"
         :number="index"
         />
       </vs-col>
-    </vs-row>
-
-    <vs-row
-    v-if="items && items.length"
-    class="mt-2 mb-2"
-    vs-align="center"
-    vs-type="flex"
-    vs-justify="flex-end"
-    vs-w="12"
-    >
-      <vs-pagination
-      v-model="currentPage"
-      :total="total"
-      />
     </vs-row>
   </div>
 </template>
@@ -41,8 +31,16 @@ export default {
       required: true,
       type: Array,
     },
-    total: {
-      required: true,
+    zLg: {
+      default: 4,
+      type: Number,
+    },
+    zSm: {
+      default: 6,
+      type: Number,
+    },
+    zXs: {
+      default: 12,
       type: Number,
     },
   },
@@ -51,14 +49,15 @@ export default {
     currentPage: 1,
   }),
 
-  watch: {
-    currentPage() {
-      this.$emit('fetch', { page: this.currentPage });
-    },
+  mounted() {
+    // this.$emit('fetch', { page: this.currentPage });
   },
 
-  mounted() {
-    this.$emit('fetch', { page: this.currentPage });
+  methods: {
+    onFetch() {
+      this.currentPage++;
+      // this.$emit('fetch', { page: this.currentPage } );
+    },
   },
 };
 </script>

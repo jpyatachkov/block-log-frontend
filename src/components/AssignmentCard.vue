@@ -1,8 +1,11 @@
 <template>
-  <z-card class="AssignmentCard">
-    <div class="AssignmentCard__course-number">
-      <h2>{{ number + 1 }}</h2>
-    </div>
+  <z-card
+  class="AssignmentCard"
+  hoverable
+  >
+    <z-card-title>
+      {{ number + 1 }}
+    </z-card-title>
 
     <p>{{ shortText }}</p>
   </z-card>
@@ -11,12 +14,14 @@
 <script>
 import { ShortenMixin } from '@/mixins';
 import ZCard from './ZCard';
+import ZCardTitle from './ZCardTitle';
 
 export default {
   name: 'CourseCard',
 
   components: {
     ZCard,
+    ZCardTitle,
   },
 
   mixins: [ShortenMixin],

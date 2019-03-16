@@ -10,29 +10,35 @@
       <z-button
       class="mr-2 Course__button"
       color="primary"
-      size="large"
+      large
+      round
       >
         Новый курс
       </z-button>
     </vs-row>
 
-    <vs-tabs vs-alignment="fixed">
-      <vs-tab
-      class="Home__tabs-content"
-      vs-label="Мои курсы"
-      >
-        <vs-row vs-w="12">
-          <courses-grid />
-        </vs-row>
-      </vs-tab>
+    <v-tabs
+    slider-color="primary"
+    fixed-tabs
+    >
+      <v-tab href="#tab-1">
+        Мои курсы
+      </v-tab>
 
-      <vs-tab
-      class="Home__tabs-content"
-      vs-label="Все курсы"
-      >
+      <v-tab href="#tab-2">
+        Все курсы
+      </v-tab>
+    </v-tabs>
+
+    <v-tabs-items>
+      <v-tab-item value="#tab-1">
         <courses-grid />
-      </vs-tab>
-    </vs-tabs>
+      </v-tab-item>
+
+      <v-tab-item value="#tab-2">
+        <courses-grid />
+      </v-tab-item>
+    </v-tabs-items>
   </div>
 </template>
 
@@ -49,6 +55,10 @@ export default {
     CoursesGrid,
     ZButton,
   },
+
+  data: () => ({
+    currentTab: '#tab-1',
+  }),
 
   mounted() {
     this.setLayout(layoutNames.MAIN_LAYOUT);

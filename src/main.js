@@ -1,6 +1,7 @@
 import 'babel-polyfill';
 import 'material-icons/iconfont/material-icons.css';
 import '@/assets/index.styl';
+import '@/plugins/infinite-scroll';
 import '@/plugins/vuesax';
 import '@/plugins/vuetify';
 
