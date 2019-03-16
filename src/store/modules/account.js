@@ -52,6 +52,10 @@ const getters = {
   user(state) {
     return state.user;
   },
+
+  userRoles() {
+    return ApiService.userRoles();
+  },
 };
 
 export default {

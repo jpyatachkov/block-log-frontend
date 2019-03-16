@@ -29,15 +29,21 @@ const actions = {
     const response = await ApiService.getCourse({ courseId });
     commit('setItem', response);
   },
+
+  async create({ commit }, { course }) {
+    const response = await ApiService.createCourse({ course });
+    commit('setItem', response);
+  },
+
+  async update({ commit }, { course }) {
+    const response = await ApiService.updateCourse({ course });
+    commit('setItem', response);
+  },
 };
 
 const mutations = {
-  /**
-   * @param {CoursesState} state
-   * @param {Course} course
-   */
-  setItem(state, course) {
-    state.course = course;
+  setItem(state, response) {
+    state.course = response.course;
   },
 
   /**

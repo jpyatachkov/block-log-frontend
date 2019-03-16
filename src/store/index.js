@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import account from './modules/account';
 import assignments from './modules/assignments';
 import courses from './modules/courses';
+import solutions from './modules/solutions';
 
 Vue.use(Vuex);
 
@@ -62,5 +63,6 @@ export default new Vuex.Store({
     account,
     assignments,
     courses,
+    solutions,
   },
 });

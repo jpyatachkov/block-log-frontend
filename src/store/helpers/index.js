@@ -33,3 +33,4 @@ export const rootMethods = {
 export * from './account';
 export * from './assignments';
 export * from './courses';
+export * from './solutions';
