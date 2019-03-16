@@ -34,8 +34,8 @@ export default {
     return response.data;
   },
 
-  async updateCourse({ course }) {
-    const url = this.coursesRoute();
+  async updateCourse({ courseId, course }) {
+    const url = this.courseRoute(courseId);
     const data = {
       course,
     };

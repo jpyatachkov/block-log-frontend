@@ -40,4 +40,8 @@ export default {
 
     return response.data;
   },
+
+  userRoles() {
+    return this.getPayload().role;
+  },
 };
