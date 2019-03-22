@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Vue from 'vue';
 
 // const Course = () => import('@/views/Course');
+const CoursesList = () => import('@/views/CoursesList');
 // const Home = () => import('@/views/Home');
 const Login = () => import('@/views/Login');
 const Register = () => import('@/views/Register');
@@ -37,6 +38,14 @@ const router = new Router({
     //     forLoggedIn: true,
     //   },
     // },
+    {
+      path: '/courses',
+      name: 'courses',
+      component: CoursesList,
+      meta: {
+        forLoggedIn: true,
+      },
+    },
     // {
     //   path: '/course/:id',
     //   name: 'course',

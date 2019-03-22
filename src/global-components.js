@@ -6,6 +6,7 @@ import BlkCardHeader from '@/components/BlkCardHeader';
 import BlkForm from '@/components/BlkForm';
 import BlkFormButtons from '@/components/BlkFormButtons';
 import BlkInput from '@/components/BlkInput';
+import BlkItemsGrid from '@/components/BlkItemsGrid';
 import Vue from 'vue';
 
 Vue.component('blk-alert', BlkAlert);
@@ -16,3 +17,4 @@ Vue.component('blk-card-header', BlkCardHeader);
 Vue.component('blk-form', BlkForm);
 Vue.component('blk-form-buttons', BlkFormButtons);
 Vue.component('blk-input', BlkInput);
+Vue.component('blk-items-grid', BlkItemsGrid);

@@ -1,27 +1,45 @@
 <template>
-  <p>2</p>
-  <!-- <vs-navbar class="MainLayoutNavBar">
-    <vs-navbar-title slot="title">
-      Block Log
-    </vs-navbar-title>
+  <b-navbar
+  toggleable="lg"
+  type="light"
+  variant="white"
+  >
+    <b-navbar-brand to="{ name: 'home' }">
+      <img
+      class="MainLayoutNavBar__logo mr-2"
+      src="@/assets/logo.png"
+      >
+      BlockLog
+    </b-navbar-brand>
 
-    <vs-navbar-item>
-      <router-link :to="{ name: 'home' }">
-        Курсы
-      </router-link>
-    </vs-navbar-item>
+    <b-navbar-toggle target="nav_collapse" />
 
-    <vs-navbar-item>
-      <a href="#">Мой профиль</a>
-    </vs-navbar-item>
+    <b-collapse
+    id="nav_collapse"
+    is-nav
+    >
+      <b-navbar-nav class="ml-auto">
+        <b-nav-item
+        to="{ name: 'courses' }"
+        use-router
+        >
+          Курсы
+        </b-nav-item>
 
-    <vs-navbar-item>
-      <a
-      href="#"
-      @click.prevent="onLogout"
-      >Выход</a>
-    </vs-navbar-item>
-  </vs-navbar> -->
+        <b-nav-item-dropdown right>
+          <template slot="button-content">
+            <em>{{ `${user.firstName} ${user.lastName}` }}</em>
+          </template>
+          <b-dropdown-item href="#">
+            Профиль
+          </b-dropdown-item>
+          <b-dropdown-item @click="onLogout">
+            Выход
+          </b-dropdown-item>
+        </b-nav-item-dropdown>
+      </b-navbar-nav>
+    </b-collapse>
+  </b-navbar>
 </template>
 
 <script>
@@ -44,3 +62,10 @@ export default {
   },
 };
 </script>
+
+<style>
+.MainLayoutNavBar__logo {
+  max-width: 50px;
+  max-height: 50px;
+}
+</style>

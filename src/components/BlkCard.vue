@@ -1,7 +1,7 @@
 <template>
   <div
   class="Card p-3"
-  :classes="additionalStyles"
+  :class="additionalStyles"
   >
     <slot />
   </div>
@@ -47,12 +47,16 @@ export default {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   opacity: 0;
   -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.Card--hoverable {
+  cursor: pointer;
 }
 
 .Card--hoverable:hover {
-  -webkit-transform: scale(1.1, 1.1);
-  transform: scale(1.1, 1.1);
+  -webkit-transform: scale(1.05, 1.05);
+  transform: scale(1.05, 1.05);
 }
 
 .Card--hoverable:hover::after {
