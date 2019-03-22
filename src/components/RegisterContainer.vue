@@ -46,11 +46,13 @@ export default {
 
     async onSubmit(formData) {
       this.setLoading(true);
+
       this.clearErrors();
+      this.$refs.form.clearErrors();
 
       try {
         await this.register({ user: formData });
-        this.$router.push({ name: 'home' });
+        this.$router.push({ name: 'courses' });
       } catch (error) {
         this.$refs.form.mapBackendErrorsToFields(error);
       } finally {

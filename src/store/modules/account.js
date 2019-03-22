@@ -17,7 +17,7 @@ const actions = {
     const response = await ApiService.register({ user });
 
     const auth = {
-      username: response.username,
+      username: response.user.username,
       password: user.password,
     };
     await dispatch('login', { auth });
