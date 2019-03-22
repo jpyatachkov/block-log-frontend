@@ -1,48 +1,47 @@
 <template>
-  <div>
-    <v-form
-    ref="form"
-    v-model="valid"
-    >
-      <z-input
-      v-model.lazy="form.username"
-      :rules="rules.username"
-      label="Логин"
-      prepend-icon="account_circle"
-      />
-
-      <z-input
-      v-model.lazy="form.password"
-      :rules="rules.password"
-      prepend-icon="lock"
-      label="Пароль"
-      type="password"
-      />
-    </v-form>
-
-    <v-btn
-    color="primary"
+  <blk-form
+  class="LoginForm__container"
+  @submit="onSubmit"
+  >
+    <blk-input
+    v-model.lazy="form.username"
     :disabled="loading"
-    :loading="loading"
-    block
-    large
-    @click="onSubmit"
-    >
-      ВОЙТИ
-    </v-btn>
-  </div>
+    :errors="usernameErrors"
+    label="Логин"
+    />
+
+    <blk-input
+    v-model.lazy="form.password"
+    :disabled="loading"
+    :errors="passwordErrors"
+    label="Пароль"
+    type="password"
+    />
+
+    <blk-form-buttons>
+      <blk-button
+      :disabled="loading"
+      :loading="loading"
+      block
+      round
+      type="submit"
+      variant="primary"
+      >
+        Войти
+      </blk-button>
+    </blk-form-buttons>
+  </blk-form>
 </template>
 
 <script>
-import ZInput from './ZInput';
-import { required } from '@/utils/validators/inputs';
+import { FormValidationMixin } from '@/mixins';
+import { REQUIRED } from '@/utils/validators/inputs';
+import Validator from '@/utils/form-validator';
 
 export default {
   name: 'LoginForm',
 
-  components: {
-    ZInput,
-  },
+  mixins: [FormValidationMixin],
 
   props: {
     loading: {
@@ -56,21 +55,27 @@ export default {
       username: '',
       password: '',
     },
-    rules: {
-      username: [required],
-      password: [required],
-    },
-    valid: false,
   }),
 
-  methods: {
-    onSubmit() {
-      if (!this.$refs.form.validate()) {
-        return;
-      }
-
-      this.$emit('submit', this.form);
+  computed: {
+    usernameErrors() {
+      return this.getFieldErrors('form.username');
     },
+
+    passwordErrors() {
+      return this.getFieldErrors('form.password');
+    },
+  },
+
+  validators: {
+    'form.username': (v) => Validator.value(v).required(REQUIRED),
+    'form.password': (v) => Validator.value(v).required(REQUIRED),
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.LoginForm__container {
+  min-width: 290px;
+}
+</style>

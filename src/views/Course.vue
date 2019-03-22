@@ -1,39 +1,35 @@
 <template>
-  <vs-row vs-w="12">
+  <p>1</p>
+  <!-- <vs-row vs-w="12">
     <course-card
     :course="course"
     :preview="false"
     />
 
     <assignments-grid class="mt-2" />
-  </vs-row>
+  </vs-row> -->
 </template>
 
 <script>
+import { FetchResourceMixin, MainLayoutMixin } from '@/mixins';
 import { coursesComputed, coursesMethods } from '@/store/helpers';
-
-import AssignmentsGrid from '@/components/AssignmentsGrid';
-import CourseCard from '@/components/CourseCard';
 
 export default {
   name: 'Course',
 
-  components: {
-    AssignmentsGrid,
-    CourseCard,
-  },
+  mixins: [FetchResourceMixin, MainLayoutMixin],
 
   computed: {
     ...coursesComputed,
   },
 
-  async mounted() {
-    const courseId = this.$route.params.id;
-    await this.getCourse({ courseId });
-  },
-
   methods: {
     ...coursesMethods,
+
+    async doFetch() {
+      const courseId = this.$route.params.id;
+      await this.getCourse({ courseId });
+    },
   },
 };
 </script>

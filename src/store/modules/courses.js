@@ -1,16 +1,5 @@
-import '@/typedef';
-
 import { ApiService } from '@/services';
 
-/**
- * @typedef {Object} CoursesState
- * @property {Course} course
- * @property {Array<Course>} courses
- */
-
-/**
- * @type {CoursesState}
- */
 const state = {
   course: {},
   courses: {
@@ -46,10 +35,6 @@ const mutations = {
     state.course = response.course;
   },
 
-  /**
-   * @param {CoursesState} state
-   * @param {Array<Course>} courses
-   */
   addItems(state, courses) {
     const { total, items } = courses;
 
@@ -57,9 +42,6 @@ const mutations = {
     state.courses.items.push(...items);
   },
 
-  /**
-   * @param {CoursesState} state
-   */
   clearItems(state) {
     state.courses = {
       total: 0,
@@ -69,26 +51,14 @@ const mutations = {
 };
 
 const getters = {
-  /**
-   * @param {CoursesState} state
-   * @returns {Course}
-   */
   item(state) {
     return state.course;
   },
 
-  /**
-   * @param {CoursesState} state
-   * @returns {Array<Course>}
-   */
   items(state) {
     return state.courses.items;
   },
 
-  /**
-   * @param {CoursesState} state
-   * @returns {number}
-   */
   total(state) {
     return state.courses.total;
   },

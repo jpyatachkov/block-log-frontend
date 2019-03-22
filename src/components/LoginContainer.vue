@@ -1,18 +1,10 @@
 <template>
-  <z-card :class="classes">
-    <z-card-title>
-      <h2>Вход</h2>
-    </z-card-title>
+  <blk-card>
+    <blk-card-header class="text-center">
+      Вход
+    </blk-card-header>
 
-    <z-alert
-    v-if="error"
-    v-model="error"
-    class="mt-1 mb-1"
-    color="danger"
-    dismissible
-    >
-      {{ errorContent }}
-    </z-alert>
+    <form-errors :errors="errors" />
 
     <login-form
     :loading="loading"
@@ -25,72 +17,41 @@
         Зарегистрируйтесь!
       </router-link>
     </p>
-  </z-card>
+  </blk-card>
 </template>
 
 <script>
+import { ErrorsMixin, LoadingMixin } from '@/mixins';
+
+import FormErrors from './FormErrors';
 import LoginForm from './LoginForm';
-import ZAlert from './ZAlert';
-import ZCard from './ZCard';
-import ZCardTitle from './ZCardTitle';
 import { accountMethods } from '@/store/helpers';
 
 export default {
   name: 'LoginContainer',
 
   components: {
+    FormErrors,
     LoginForm,
-    ZAlert,
-    ZCard,
-    ZCardTitle,
   },
 
-  data: () => ({
-    error: null,
-    errorContent: null,
-    loading: false,
-  }),
-
-  computed: {
-    classes() {
-      let classes;
-
-      switch (this.$vuetify.breakpoint.name) {
-        case 'xs':
-        case 'sm':
-          classes = ['pa-1'];
-          break;
-        case 'md':
-        case 'lg':
-        case 'xl':
-          classes = ['pa-3'];
-          break;
-      }
-
-      return classes;
-    },
-  },
+  mixins: [ErrorsMixin, LoadingMixin],
 
   methods: {
     ...accountMethods,
 
     async onSubmit(formData) {
-      this.setError(null);
-      this.loading = true;
+      this.clearErrors();
+      this.setLoading(true);
 
       try {
         await this.login({ auth: formData });
         this.$router.push({ name: 'home' });
       } catch (error) {
-        this.setError('Неверный логин или пароль');
+        this.pushError('Неверный логин или пароль');
       } finally {
-        this.loading = false;
+        this.setLoading(false);
       }
-    },
-
-    setError(content) {
-      this.error = !!content;
-      this.errorContent = content;
     },
   },
 };

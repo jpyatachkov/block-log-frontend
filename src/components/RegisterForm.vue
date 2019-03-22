@@ -1,75 +1,71 @@
 <template>
-  <div>
-    <v-form
-    ref="form"
-    v-model="valid"
-    >
-      <z-input
-      v-model.lazy="form.firstName"
-      :rules="rules.firstName"
-      label="Имя"
-      />
+  <blk-form
+  class="RegisterForm__container"
+  @submit="onSubmit"
+  >
+    <blk-input
+    v-model.lazy="form.firstName"
+    :errors="firstNameErrors"
+    label="Имя"
+    />
 
-      <z-input
-      v-model.lazy="form.lastName"
-      :rules="rules.lastName"
-      label="Фамилия"
-      />
+    <blk-input
+    v-model.lazy="form.lastName"
+    :errors="lastNameErrors"
+    label="Фамилия"
+    />
 
-      <z-input
-      v-model.lazy="form.email"
-      :error-messages="errors.email"
-      :rules="rules.email"
-      label="Электронная почта"
-      />
+    <blk-input
+    v-model.lazy="form.email"
+    :errors="emailErrors"
+    label="Электронная почта"
+    />
 
-      <z-input
-      v-model.lazy="form.username"
-      :error-messages="errors.username"
-      :rules="rules.username"
-      label="Логин"
-      />
+    <blk-input
+    v-model.lazy="form.username"
+    :errors="usernameErrors"
+    label="Логин"
+    />
 
-      <z-input
-      v-model.lazy="form.password"
-      :rules="rules.password"
-      label="Пароль"
-      type="password"
-      />
+    <blk-input
+    v-model.lazy="form.password"
+    :errors="passwordErrors"
+    label="Пароль"
+    type="password"
+    />
 
-      <z-input
-      v-model.lazy="form.passwordConfirmation"
-      :error-messages="errors.passwordConfirmation"
-      :rules="rules.passwordConfirmation"
-      label="Подтверждение пароля"
-      type="password"
-      />
-    </v-form>
+    <blk-input
+    v-model.lazy="form.passwordConfirmation"
+    :errors="passwordConfirmationErrors"
+    label="Подтверждение пароля"
+    type="password"
+    />
 
-    <v-btn
-    color="primary"
-    :disabled="loading"
-    :loading="loading"
-    block
-    large
-    @click="onSubmit"
-    >
-      ЗАРЕГИСТРИРОВАТЬСЯ
-    </v-btn>
-  </div>
+    <blk-form-buttons>
+      <blk-button
+      :disabled="loading"
+      :loading="loading"
+      block
+      round
+      type="submit"
+      variant="primary"
+      >
+        Зарегистрироваться
+      </blk-button>
+    </blk-form-buttons>
+  </blk-form>
 </template>
 
 <script>
-import { email, passwordLength, required } from '@/utils/validators/inputs';
+import { EMAIL, REQUIRED } from '@/utils/validators/inputs';
+import { ErrorsMixin, FormValidationMixin } from '@/mixins';
 
-import ZInput from './ZInput';
+import Validator from '@/utils/form-validator';
 
 export default {
   name: 'RegisterForm',
 
-  components: {
-    ZInput,
-  },
+  mixins: [ErrorsMixin, FormValidationMixin],
 
   props: {
     loading: {
@@ -79,11 +75,6 @@ export default {
   },
 
   data: () => ({
-    errors: {
-      email: [],
-      username: [],
-      passwordConfirmation: [],
-    },
     form: {
       firstName: '',
       lastName: '',
@@ -92,57 +83,62 @@ export default {
       password: '',
       passwordConfirmation: '',
     },
-    rules: {
-      firstName: [required],
-      lastName: [required],
-      email: [required, email],
-      username: [required],
-      password: [required, passwordLength(8)],
-      passwordConfirmation: [required, passwordLength(8)],
-    },
-    valid: false,
   }),
 
-  watch: {
-    'form.password'() {
-      this.comparePasswords();
+  computed: {
+    firstNameErrors() {
+      return this.getFieldErrors('form.firstName');
     },
 
-    'form.passwordConfirmation'() {
-      this.comparePasswords();
+    lastNameErrors() {
+      return this.getFieldErrors('form.lastName');
+    },
+
+    emailErrors() {
+      return this.getFieldErrors('form.email');
+    },
+
+    usernameErrors() {
+      return this.getFieldErrors('form.username');
+    },
+
+    passwordErrors() {
+      return this.getFieldErrors('form.password');
+    },
+
+    passwordConfirmationErrors() {
+      return this.getFieldErrors('form.passwordConfirmation');
     },
   },
 
-  methods: {
-    comparePasswords() {
-      if (this.form.password === this.form.passwordConfirmation) {
-        this.errors.passwordConfirmation = [];
-      } else {
-        this.errors.passwordConfirmation.push(
-          'Пароль и подтверждение не совпадают',
-        );
+  validators: {
+    'form.firstName': (v) => Validator.value(v).required(REQUIRED),
+    'form.lastName': (v) => Validator.value(v).required(REQUIRED),
+    'form.email': (v) =>
+      Validator.value(v)
+        .required(REQUIRED)
+        .email(EMAIL),
+    'form.username': (v) => Validator.value(v).required(REQUIRED),
+    'form.password': (v) => Validator.value(v).required(REQUIRED),
+    'form.passwordConfirmation, form.password': function(
+      confirmation,
+      password,
+    ) {
+      if (
+        this.submitted ||
+        this.validation.isTouched('form.passwordConfirmation')
+      ) {
+        return Validator.value(confirmation)
+          .required(REQUIRED)
+          .match(password, 'Пароль и подтверждение не совпадают');
       }
-    },
-
-    onSubmit() {
-      if (!this.$refs.form.validate()) {
-        return;
-      }
-
-      if (this.form.password !== this.form.passwordConfirmation) {
-        return;
-      }
-
-      this.$emit('submit', this.form);
-    },
-
-    setError(field, error) {
-      if (!this.errors[field]) {
-        this.errors[field] = [];
-      }
-
-      this.errors[field].push(error);
     },
   },
 };
 </script>
+
+<style>
+.RegisterForm__container {
+  min-width: 290px;
+}
+</style>

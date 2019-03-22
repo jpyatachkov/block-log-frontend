@@ -4,8 +4,7 @@
 
 <script>
 import RegisterContainer from '@/components/RegisterContainer';
-import layoutNames from '@/layouts';
-import { rootMethods } from '@/store/helpers';
+import { SimpleLayoutMixin } from '@/mixins';
 
 export default {
   name: 'Register',
@@ -14,12 +13,6 @@ export default {
     RegisterContainer,
   },
 
-  mounted() {
-    this.setLayout(layoutNames.SIMPLE_LAYOUT);
-  },
-
-  methods: {
-    ...rootMethods,
-  },
+  mixins: [SimpleLayoutMixin],
 };
 </script>

@@ -1,5 +1,3 @@
-import '@/typedef';
-
 import { mapActions, mapGetters } from 'vuex';
 
 export const solutionsComputed = {

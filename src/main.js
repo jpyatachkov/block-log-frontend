@@ -1,9 +1,8 @@
 import 'babel-polyfill';
-import 'material-icons/iconfont/material-icons.css';
-import '@/assets/index.styl';
-import '@/plugins/infinite-scroll';
-import '@/plugins/vuesax';
-import '@/plugins/vuetify';
+import './assets/index.scss';
+import './plugins/bootstrap-vue';
+import './plugins/simple-vue-validator';
+import './global-components';
 
 import App from './App.vue';
 import Vue from 'vue';

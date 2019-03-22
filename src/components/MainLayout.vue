@@ -19,7 +19,8 @@ export default {
 };
 </script>
 
-<style lang="stylus" scoped>
-.MainLayout__container
-  background-color #fcfcfc
+<style lang="scss" scoped>
+.MainLayout__container {
+  background-color: #f1f5fb;
+}
 </style>

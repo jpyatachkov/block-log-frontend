@@ -1,5 +1,6 @@
 <template>
-  <vs-row
+  <router-view />
+  <!-- <vs-row
   class="mt-4"
   vs-justify="center"
   vs-w="12"
@@ -14,7 +15,7 @@
     >
       <router-view />
     </vs-col>
-  </vs-row>
+  </vs-row> -->
 </template>
 
 <script>

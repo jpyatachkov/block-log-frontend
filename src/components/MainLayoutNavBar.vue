@@ -1,5 +1,6 @@
 <template>
-  <vs-navbar class="MainLayoutNavBar">
+  <p>2</p>
+  <!-- <vs-navbar class="MainLayoutNavBar">
     <vs-navbar-title slot="title">
       Block Log
     </vs-navbar-title>
@@ -20,7 +21,7 @@
       @click.prevent="onLogout"
       >Выход</a>
     </vs-navbar-item>
-  </vs-navbar>
+  </vs-navbar> -->
 </template>
 
 <script>
@@ -43,9 +44,3 @@ export default {
   },
 };
 </script>
-
-<style lang="stylus" scoped>
-.MainLayoutNavBar
-  background-color white !important
-  min-height 65px
-</style>

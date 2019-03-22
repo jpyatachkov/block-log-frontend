@@ -4,8 +4,7 @@
 
 <script>
 import LoginContainer from '@/components/LoginContainer';
-import layoutNames from '@/layouts';
-import { rootMethods } from '@/store/helpers';
+import { SimpleLayoutMixin } from '@/mixins';
 
 export default {
   name: 'Login',
@@ -14,12 +13,6 @@ export default {
     LoginContainer,
   },
 
-  mounted() {
-    this.setLayout(layoutNames.SIMPLE_LAYOUT);
-  },
-
-  methods: {
-    ...rootMethods,
-  },
+  mixins: [SimpleLayoutMixin],
 };
 </script>

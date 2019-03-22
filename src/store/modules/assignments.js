@@ -1,15 +1,5 @@
-import '@/typedef';
-
 import { ApiService } from '@/services';
 
-/**
- * @typedef {Object} AssignmentsState
- * @property {Array<Assignment>} assignments
- */
-
-/**
- * @type {AssignmentsState}
- */
 const state = {
   assignment: {},
   assignments: {
@@ -48,10 +38,6 @@ const actions = {
 };
 
 const mutations = {
-  /**
-   * @param {AssignmentsState} state
-   * @param {Array<Assignment>} assignments
-   */
   addItems(state, assignments) {
     const { total, items } = assignments;
 
@@ -76,18 +62,10 @@ const getters = {
     return state.assignment;
   },
 
-  /**
-   * @param {AssignmentsState} state
-   * @returns {Array<Assignment>}
-   */
   items(state) {
     return state.assignments.items;
   },
 
-  /**
-   * @param {AssignmentsState} state
-   * @returns {number}
-   */
   total(state) {
     return state.assignments.total;
   },

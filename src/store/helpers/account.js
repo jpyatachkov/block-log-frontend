@@ -1,5 +1,3 @@
-import '@/typedef';
-
 import { mapActions, mapGetters } from 'vuex';
 
 export const accountComputed = {
@@ -9,17 +7,6 @@ export const accountComputed = {
   }),
 };
 
-/**
- * @typedef {object} AccountMethods
- * @property {{(payload: LoginPayload): Promise<void>}} login
- * @property {{(): Promise<void>}} logout
- * @property {{(payload: User): Promise<void>}} register
- */
-
-/**
- * @type {AccountMethods}
- */
-// @ts-ignore
 export const accountMethods = {
   ...mapActions({
     login: 'account/login',

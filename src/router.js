@@ -2,8 +2,8 @@ import { JwtService } from '@/services';
 import Router from 'vue-router';
 import Vue from 'vue';
 
-const Course = () => import('@/views/Course');
-const Home = () => import('@/views/Home');
+// const Course = () => import('@/views/Course');
+// const Home = () => import('@/views/Home');
 const Login = () => import('@/views/Login');
 const Register = () => import('@/views/Register');
 
@@ -29,22 +29,22 @@ const router = new Router({
         forAnonymous: true,
       },
     },
-    {
-      path: '/',
-      name: 'home',
-      component: Home,
-      meta: {
-        forLoggedIn: true,
-      },
-    },
-    {
-      path: '/course/:id',
-      name: 'course',
-      component: Course,
-      meta: {
-        forLoggedIn: true,
-      },
-    },
+    // {
+    //   path: '/',
+    //   name: 'home',
+    //   component: Home,
+    //   meta: {
+    //     forLoggedIn: true,
+    //   },
+    // },
+    // {
+    //   path: '/course/:id',
+    //   name: 'course',
+    //   component: Course,
+    //   meta: {
+    //     forLoggedIn: true,
+    //   },
+    // },
   ],
 });
 

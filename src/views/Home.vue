@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <p>1</p>
+  <!-- <div>
     <vs-row
     class="mb-2"
     vs-align="center"
@@ -39,39 +40,15 @@
         <courses-grid />
       </v-tab-item>
     </v-tabs-items>
-  </div>
+  </div> -->
 </template>
 
 <script>
-import CoursesGrid from '@/components/CoursesGrid';
-import ZButton from '@/components/ZButton';
-import layoutNames from '@/layouts';
-import { rootMethods } from '@/store/helpers';
+import { MainLayoutMixin } from '@/mixins';
 
 export default {
   name: 'Home',
 
-  components: {
-    CoursesGrid,
-    ZButton,
-  },
-
-  data: () => ({
-    currentTab: '#tab-1',
-  }),
-
-  mounted() {
-    this.setLayout(layoutNames.MAIN_LAYOUT);
-  },
-
-  methods: {
-    ...rootMethods,
-  },
+  mixins: [MainLayoutMixin],
 };
 </script>
-
-<style lang="stylus" scoped>
-.Home__tabs-content
-  padding-left 0
-  padding-right 0
-</style>

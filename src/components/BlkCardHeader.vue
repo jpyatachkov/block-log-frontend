@@ -1,11 +1,11 @@
 <template>
-  <v-card-title>
+  <h2>
     <slot />
-  </v-card-title>
+  </h2>
 </template>
 
 <script>
 export default {
-  name: 'ZCardTitle',
+  name: 'BlkCardHeader',
 };
 </script>

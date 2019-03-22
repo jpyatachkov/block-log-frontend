@@ -1,25 +1,17 @@
 <template>
-  <v-content class="SimpleLayout__container">
-    <v-container
-    fluid
-    fill-height
-    class="pa-0"
-    >
-      <v-layout
-      align-center
-      justify-center
+  <div class="SimpleLayout__container container height-100">
+    <aside class="SimpleLayout__logo">
+      <img
+      class="mt-1 mb-3"
+      src="@/assets/logo.png"
       >
-        <v-flex
-        xs12
-        sm10
-        md6
-        xl4
-        >
-          <router-view />
-        </v-flex>
-      </v-layout>
-    </v-container>
-  </v-content>
+      <h2>BlockLog</h2>
+    </aside>
+
+    <main>
+      <router-view />
+    </main>
+  </div>
 </template>
 
 <script>
@@ -28,10 +20,19 @@ export default {
 };
 </script>
 
-<style lang="stylus" scoped>
-.SimpleLayout__container
-  background linear-gradient(to bottom, #FFF 55%, #FF6EBA 15%, #AF84FF 30%)
+<style lang="scss" scoped>
+.SimpleLayout__container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
 
-.SimpleLayout__content
-  min-width 300px
+.SimpleLayout__logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 </style>
