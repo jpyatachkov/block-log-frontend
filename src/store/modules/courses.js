@@ -64,7 +64,7 @@ const mutations = {
   },
 
   incrementCoursesPage(state) {
-    state.coursesCurrentPage += 1;
+    state.coursesCurrentPage++;
   },
 
   addItems(state, courses) {
@@ -75,7 +75,7 @@ const mutations = {
   },
 
   incrementMyCoursesPage(state) {
-    state.myCoursesCurrentPage += 1;
+    state.myCoursesCurrentPage++;
   },
 
   addMyItems(state, myCourses) {
@@ -86,6 +86,7 @@ const mutations = {
   },
 
   clearItems(state) {
+    state.coursesCurrentPage = 0;
     state.courses = {
       total: 0,
       items: [],
@@ -93,6 +94,7 @@ const mutations = {
   },
 
   clearMyItems(state) {
+    state.myCoursesCurrentPage = 0;
     state.myCourses = {
       total: 0,
       items: [],

@@ -1,4 +1,4 @@
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 export const assignmentsComputed = {
   ...mapGetters({
@@ -14,5 +14,9 @@ export const assignmentsMethods = {
     getAssignment: 'assignments/getOne',
     createAssignment: 'assignments/create',
     updateAssignment: 'assignments/update',
+  }),
+
+  ...mapMutations({
+    clearAssignments: 'assignments/clearItems',
   }),
 };

@@ -1,9 +1,13 @@
 <template>
   <div
-  class="Card p-3"
+  class="Card"
   :class="additionalStyles"
   >
-    <slot />
+    <slot name="image" />
+
+    <div class="p-3">
+      <slot />
+    </div>
   </div>
 </template>
 
@@ -31,7 +35,7 @@ export default {
 <style lang="scss" scoped>
 .Card {
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: 6px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 

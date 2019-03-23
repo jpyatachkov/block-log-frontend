@@ -1,5 +1,9 @@
 <template>
-  <blk-card :hoverable="preview">
+  <blk-card
+  :class="classes"
+  :hoverable="preview"
+  @click.native="onClick"
+  >
     <blk-card-header>
       {{ title }}
     </blk-card-header>
@@ -46,6 +50,20 @@ export default {
       }
 
       return description;
+    },
+
+    classes() {
+      return {
+        pointer: this.preview,
+      };
+    },
+  },
+
+  methods: {
+    onClick() {
+      if (this.preview) {
+        this.$router.push({ name: 'course', params: { id: this.course.id } });
+      }
     },
   },
 };

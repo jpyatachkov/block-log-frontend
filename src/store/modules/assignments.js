@@ -2,6 +2,7 @@ import { ApiService } from '@/services';
 
 const state = {
   assignment: {},
+  assignmentsCurrentPage: 0,
   assignments: {
     total: 0,
     items: [],
@@ -9,8 +10,19 @@ const state = {
 };
 
 const actions = {
-  async get({ commit }, { courseId, page, size }) {
+  async get({ state, commit }, { courseId, page, size }) {
+    page =
+      page >= state.assignmentsCurrentPage
+        ? page
+        : state.assignmentsCurrentPage;
+
+    if (state.assignmentsCurrentPage && page >= state.assignments.total) {
+      return;
+    }
+
     const response = await ApiService.getAssignments({ courseId, page, size });
+
+    commit('incrementAssignmentsPage');
     commit('addItems', response);
   },
 
@@ -38,22 +50,27 @@ const actions = {
 };
 
 const mutations = {
+  setItem(state, assignment) {
+    state.assignment = assignment;
+  },
+
+  incrementAssignmentsPage(state) {
+    state.assignmentsCurrentPage++;
+  },
+
   addItems(state, assignments) {
     const { total, items } = assignments;
 
-    state.assignments.total += total;
+    state.assignments.total = total;
     state.assignments.items.push(...items);
   },
 
   clearItems(state) {
+    state.assignmentsCurrentPage = 0;
     state.assignments = {
       total: 0,
       items: [],
     };
-  },
-
-  setItem(state, assignment) {
-    state.assignment = assignment;
   },
 };
 
