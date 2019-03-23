@@ -2,6 +2,7 @@ import { JwtService } from '@/services';
 import Router from 'vue-router';
 import Vue from 'vue';
 
+const Assignment = () => import('@/views/Assignment');
 const Course = () => import('@/views/Course');
 const CoursesList = () => import('@/views/CoursesList');
 // const Home = () => import('@/views/Home');
@@ -51,6 +52,14 @@ const router = new Router({
       path: '/course/:id',
       name: 'course',
       component: Course,
+      meta: {
+        forLoggedIn: true,
+      },
+    },
+    {
+      path: '/course/:courseId/assignment/:id',
+      name: 'assignment',
+      component: Assignment,
       meta: {
         forLoggedIn: true,
       },

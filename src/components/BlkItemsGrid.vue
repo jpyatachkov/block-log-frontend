@@ -71,7 +71,7 @@ export default {
 <style lang="scss" scoped>
 .BlkItemsGrid__container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
   grid-auto-rows: auto;
   grid-gap: 1rem;
 }

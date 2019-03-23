@@ -50,8 +50,8 @@ const actions = {
 };
 
 const mutations = {
-  setItem(state, assignment) {
-    state.assignment = assignment;
+  setItem(state, response) {
+    state.assignment = response.assignment;
   },
 
   incrementAssignmentsPage(state) {

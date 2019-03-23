@@ -1,5 +1,8 @@
 <template>
-  <blk-card :hoverable="preview">
+  <blk-card
+  :hoverable="preview"
+  @click.native="onClick"
+  >
     <assignment-card-number
     v-if="preview"
     slot="image"
@@ -28,7 +31,7 @@ export default {
       type: Object,
     },
     index: {
-      required: true,
+      default: 0,
       type: Number,
     },
     preview: {
@@ -46,6 +49,17 @@ export default {
       }
 
       return text;
+    },
+  },
+
+  methods: {
+    onClick() {
+      if (this.preview) {
+        const courseId = this.assignment.course.id;
+        const id = this.assignment.id;
+
+        this.$router.push({ name: 'assignment', params: { courseId, id } });
+      }
     },
   },
 };

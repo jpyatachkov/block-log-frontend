@@ -31,8 +31,8 @@ const actions = {
 };
 
 const mutations = {
-  setItem(state, solution) {
-    state.solution = solution;
+  setItem(state, response) {
+    state.solution = response.solution;
   },
 
   addItems(state, solutions) {

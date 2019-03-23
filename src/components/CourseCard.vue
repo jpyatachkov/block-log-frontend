@@ -62,7 +62,8 @@ export default {
   methods: {
     onClick() {
       if (this.preview) {
-        this.$router.push({ name: 'course', params: { id: this.course.id } });
+        const id = this.course.id;
+        this.$router.push({ name: 'course', params: { id } });
       }
     },
   },

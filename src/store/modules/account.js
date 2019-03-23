@@ -9,8 +9,13 @@ const actions = {
     return ApiService.login({ auth });
   },
 
-  async logout() {
-    return ApiService.logout();
+  async logout({ commit }) {
+    await ApiService.logout();
+
+    commit('assignments/clearItems', null, { root: true });
+    commit('courses/clearItems', null, { root: true });
+    commit('courses/clearMyItems', null, { root: true });
+    commit('solutions/clearItems', null, { root: true });
   },
 
   async register({ dispatch }, { user }) {
