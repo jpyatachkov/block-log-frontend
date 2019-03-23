@@ -56,7 +56,7 @@ export default {
       } catch (error) {
         this.$refs.form.mapBackendErrorsToFields(error);
       } finally {
-        this.loading = false;
+        this.setLoading(false);
       }
     },
   },

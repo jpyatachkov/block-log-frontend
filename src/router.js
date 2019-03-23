@@ -4,6 +4,7 @@ import Vue from 'vue';
 
 const Assignment = () => import('@/views/Assignment');
 const Course = () => import('@/views/Course');
+const CourseCreate = () => import('@/views/CourseCreate');
 const CoursesList = () => import('@/views/CoursesList');
 // const Home = () => import('@/views/Home');
 const Login = () => import('@/views/Login');
@@ -44,6 +45,14 @@ const router = new Router({
       path: '/courses/mine',
       name: 'my_courses',
       component: MyCoursesList,
+      meta: {
+        forLoggedIn: true,
+      },
+    },
+    {
+      path: '/course/new',
+      name: 'course_create',
+      component: CourseCreate,
       meta: {
         forLoggedIn: true,
       },

@@ -5,6 +5,7 @@
 <script>
 import { rootComputed, rootMethods } from '@/store/helpers';
 
+import EmptyLayout from '@/components/EmptyLayout';
 import MainLayout from '@/components/MainLayout';
 import SimpleLayout from '@/components/SimpleLayout';
 import layoutNames from '@/layouts';
@@ -13,6 +14,7 @@ export default {
   name: 'App',
 
   components: {
+    EmptyLayout,
     MainLayout,
     SimpleLayout,
   },
@@ -22,6 +24,8 @@ export default {
 
     currentLayout() {
       switch (true) {
+        case this.layout === layoutNames.EMPTY_LAYOUT:
+          return EmptyLayout;
         case this.layout === layoutNames.MAIN_LAYOUT:
           return MainLayout;
         case this.layout === layoutNames.SIMPLE_LAYOUT:

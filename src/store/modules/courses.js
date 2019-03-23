@@ -1,4 +1,5 @@
 import { ApiService } from '@/services';
+import form from './forms/course';
 
 const state = {
   course: {},
@@ -44,16 +45,6 @@ const actions = {
 
   async getOne({ commit }, { courseId }) {
     const response = await ApiService.getCourse({ courseId });
-    commit('setItem', response);
-  },
-
-  async create({ commit }, { course }) {
-    const response = await ApiService.createCourse({ course });
-    commit('setItem', response);
-  },
-
-  async update({ commit }, { course }) {
-    const response = await ApiService.updateCourse({ course });
     commit('setItem', response);
   },
 };
@@ -130,4 +121,7 @@ export default {
   actions,
   mutations,
   getters,
+  modules: {
+    form,
+  },
 };

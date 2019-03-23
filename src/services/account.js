@@ -41,7 +41,24 @@ export default {
     return response.data;
   },
 
+  /**
+   * @returns {Array}
+   */
   userRoles() {
     return this.getPayload().role;
+  },
+
+  userCanCreateAndDelete() {
+    const AUTHORIZED_ROLES = ['moderator', 'collaborator'];
+    const userRoles = this.userRoles();
+
+    return AUTHORIZED_ROLES.some((role) => userRoles.includes(role));
+  },
+
+  userCanUpdate() {
+    const AUTHORIZED_ROLES = ['moderator', 'collaborator'];
+    const userRoles = this.userRoles();
+
+    return AUTHORIZED_ROLES.some((role) => userRoles.includes(role));
   },
 };

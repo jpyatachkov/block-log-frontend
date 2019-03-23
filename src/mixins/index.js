@@ -1,3 +1,4 @@
+export { default as EmptyLayoutMixin } from './empty-layout';
 export { default as ErrorsMixin } from './errors';
 export { default as FetchResourceMixin } from './fetch-resource';
 export { default as FormValidationMixin } from './form-validation';

@@ -20,6 +20,10 @@
     is-nav
     >
       <b-navbar-nav class="ml-auto">
+        <blk-form class="form-inline my-2 my-lg-0">
+          <main-action-button />
+        </blk-form>
+
         <b-nav-item
         :active="myCoursesIsActive"
         :to="{ name: 'my_courses' }"
@@ -36,11 +40,11 @@
 
         <b-nav-item-dropdown right>
           <template slot="button-content">
-            <em>{{ `${user.firstName} ${user.lastName}` }}</em>
+            Аккаунт
           </template>
-          <b-dropdown-item href="#">
+          <!-- <b-dropdown-item href="#">
             Профиль
-          </b-dropdown-item>
+          </b-dropdown-item> -->
           <b-dropdown-item @click="onLogout">
             Выход
           </b-dropdown-item>
@@ -53,8 +57,14 @@
 <script>
 import { accountComputed, accountMethods } from '@/store/helpers';
 
+import MainActionButton from './MainActionButton';
+
 export default {
   name: 'MainLayoutNavBar',
+
+  components: {
+    MainActionButton,
+  },
 
   computed: {
     ...accountComputed,

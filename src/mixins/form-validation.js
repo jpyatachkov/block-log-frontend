@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import { capitalize } from '@/utils/helpers';
 
 export default {
@@ -38,7 +39,7 @@ export default {
 
     pushFieldError(fieldName, errorContent) {
       if (!this.fieldErrors[fieldName]) {
-        this.fieldErrors[fieldName] = [];
+        Vue.set(this.fieldErrors, fieldName, []);
       }
 
       this.fieldErrors[fieldName].push(errorContent);

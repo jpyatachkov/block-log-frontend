@@ -8,6 +8,7 @@ import BlkFormButtons from '@/components/BlkFormButtons';
 import BlkInput from '@/components/BlkInput';
 import BlkItemsGrid from '@/components/BlkItemsGrid';
 import BlkLoader from '@/components/BlkLoader';
+import BlkTextarea from '@/components/BlkTextarea';
 import Vue from 'vue';
 
 Vue.component('blk-alert', BlkAlert);
@@ -20,3 +21,4 @@ Vue.component('blk-form-buttons', BlkFormButtons);
 Vue.component('blk-input', BlkInput);
 Vue.component('blk-items-grid', BlkItemsGrid);
 Vue.component('blk-loader', BlkLoader);
+Vue.component('blk-textarea', BlkTextarea);
