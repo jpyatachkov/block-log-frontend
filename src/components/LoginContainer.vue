@@ -46,7 +46,7 @@ export default {
 
       try {
         await this.login({ auth: formData });
-        this.$router.push({ name: 'courses' });
+        this.$router.push({ name: 'my_courses' });
       } catch (error) {
         this.pushError('Неверный логин или пароль');
       } finally {

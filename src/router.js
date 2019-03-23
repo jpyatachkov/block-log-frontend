@@ -6,6 +6,7 @@ import Vue from 'vue';
 const CoursesList = () => import('@/views/CoursesList');
 // const Home = () => import('@/views/Home');
 const Login = () => import('@/views/Login');
+const MyCoursesList = () => import('@/views/MyCoursesList');
 const Register = () => import('@/views/Register');
 
 Vue.use(Router);
@@ -30,18 +31,18 @@ const router = new Router({
         forAnonymous: true,
       },
     },
-    // {
-    //   path: '/',
-    //   name: 'home',
-    //   component: Home,
-    //   meta: {
-    //     forLoggedIn: true,
-    //   },
-    // },
     {
       path: '/courses',
       name: 'courses',
       component: CoursesList,
+      meta: {
+        forLoggedIn: true,
+      },
+    },
+    {
+      path: '/courses/mine',
+      name: 'my_courses',
+      component: MyCoursesList,
       meta: {
         forLoggedIn: true,
       },

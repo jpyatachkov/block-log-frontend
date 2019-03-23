@@ -3,6 +3,7 @@ export default {
   jwtRoute: () => 'user_token',
 
   coursesRoute: () => 'courses',
+  myCoursesRoute: () => 'courses/mine',
   courseRoute: (courseId) => `courses/${courseId}`,
 
   assignmentsRoute: (courseId) => `courses/${courseId}/assignments`,

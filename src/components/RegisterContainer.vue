@@ -52,7 +52,7 @@ export default {
 
       try {
         await this.register({ user: formData });
-        this.$router.push({ name: 'courses' });
+        this.$router.push({ name: 'my_courses' });
       } catch (error) {
         this.$refs.form.mapBackendErrorsToFields(error);
       } finally {

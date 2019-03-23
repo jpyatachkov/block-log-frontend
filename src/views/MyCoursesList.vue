@@ -1,6 +1,6 @@
 <template>
   <courses-grid
-  :courses="courses"
+  :courses="myCourses"
   :loading="loading"
   @fetch="doFetch"
   />
@@ -34,7 +34,7 @@ export default {
 
     async doFetch({ page = 1 } = {}) {
       this.loading = true;
-      await this.getCourses({ page });
+      await this.getMyCourses({ page });
       this.loading = false;
     },
   },

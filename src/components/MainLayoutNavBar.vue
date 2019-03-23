@@ -4,7 +4,7 @@
   type="light"
   variant="white"
   >
-    <b-navbar-brand to="{ name: 'home' }">
+    <b-navbar-brand :to="{ name: 'home' }">
       <img
       class="MainLayoutNavBar__logo mr-2"
       src="@/assets/logo.png"
@@ -20,8 +20,15 @@
     >
       <b-navbar-nav class="ml-auto">
         <b-nav-item
-        to="{ name: 'courses' }"
-        use-router
+        :active="myCoursesIsActive"
+        :to="{ name: 'my_courses' }"
+        >
+          Мои Курсы
+        </b-nav-item>
+
+        <b-nav-item
+        :active="coursesActive"
+        :to="{ name: 'courses' }"
         >
           Курсы
         </b-nav-item>
@@ -50,6 +57,14 @@ export default {
 
   computed: {
     ...accountComputed,
+
+    myCoursesIsActive() {
+      return this.$route.name === 'my_courses';
+    },
+
+    coursesActive() {
+      return this.$route.name === 'courses';
+    },
   },
 
   methods: {

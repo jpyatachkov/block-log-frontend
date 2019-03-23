@@ -62,10 +62,6 @@ export default {
     },
 
     triggerFetch() {
-      if (this.loading) {
-        return;
-      }
-
       this.$emit('fetch', ++this.currentPage);
     },
   },
