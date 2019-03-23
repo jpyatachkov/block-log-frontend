@@ -34,10 +34,6 @@ export default {
       required: true,
       type: String,
     },
-    value: {
-      required: true,
-      validator: (v) => !v || v instanceof String || typeof v === 'string',
-    },
   },
 
   computed: {

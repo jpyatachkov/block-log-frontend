@@ -6,6 +6,7 @@ const Assignment = () => import('@/views/Assignment');
 const Course = () => import('@/views/Course');
 const CourseCreate = () => import('@/views/CourseCreate');
 const CoursesList = () => import('@/views/CoursesList');
+const CourseUpdate = () => import('@/views/CourseUpdate');
 // const Home = () => import('@/views/Home');
 const Login = () => import('@/views/Login');
 const MyCoursesList = () => import('@/views/MyCoursesList');
@@ -61,6 +62,14 @@ const router = new Router({
       path: '/course/:id',
       name: 'course',
       component: Course,
+      meta: {
+        forLoggedIn: true,
+      },
+    },
+    {
+      path: '/course/:id/edit',
+      name: 'course_update',
+      component: CourseUpdate,
       meta: {
         forLoggedIn: true,
       },

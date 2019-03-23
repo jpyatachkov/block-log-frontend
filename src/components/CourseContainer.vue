@@ -50,7 +50,7 @@ export default {
         let id;
 
         if (this.update) {
-          id = await this.updateCourse();
+          id = await this.updateCourse({ id: this.$route.params.id });
         } else {
           id = await this.createCourse();
         }

@@ -21,17 +21,24 @@ const actions = {
     return rootState.courses.course.id;
   },
 
-  async update({ commit, rootState }) {
+  async update({ commit, rootState }, { id }) {
     const course = {
       title: state.title,
       description: state.description,
     };
 
-    const response = await ApiService.updateCourse({ course });
+    const response = await ApiService.updateCourse({ courseId: id, course });
+
+    console.log(response);
 
     commit('courses/setItem', response, { root: true });
 
     return rootState.courses.course.id;
+  },
+
+  async fill({ commit }, { courseId }) {
+    const response = await ApiService.getCourse({ courseId });
+    commit('setForm', response);
   },
 };
 
@@ -42,9 +49,16 @@ const getters = {
 const mutations = {
   updateField,
 
-  setForm(state, form) {
-    state.title = form.title;
-    state.description = form.description;
+  clear(state) {
+    state.title = '';
+    state.description = '';
+  },
+
+  setForm(state, response) {
+    const { title, description } = response.course;
+
+    state.title = title;
+    state.description = description;
   },
 };
 

@@ -58,6 +58,10 @@ export default {
           AccountService.userCanCreateAndDelete():
           this.$router.push({ name: 'course_create' });
           break;
+        case this.$route.name === 'course' && AccountService.userCanUpdate():
+          const id = this.$route.params.id;
+          this.$router.push({ name: 'course_update', params: { id } });
+          break;
         default:
           break;
       }

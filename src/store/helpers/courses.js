@@ -24,6 +24,7 @@ export const coursesMethods = {
     getCourses: 'courses/get',
     getMyCourses: 'courses/getMine',
     getCourse: 'courses/getOne',
+    fillCourseForm: 'courses/form/fill',
     createCourse: 'courses/form/create',
     updateCourse: 'courses/form/update',
   }),
@@ -31,5 +32,6 @@ export const coursesMethods = {
   ...mapMutations({
     clearCourses: 'courses/clearItems',
     clearMyCourses: 'courses/clearMyItems',
+    clearCourseForm: 'courses/form/clear',
   }),
 };

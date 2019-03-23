@@ -5,6 +5,7 @@
 <script>
 import CourseContainer from '@/components/CourseContainer';
 import { EmptyLayoutMixin } from '@/mixins';
+import { coursesMethods } from '@/store/helpers';
 
 export default {
   name: 'CourseCreate',
@@ -14,5 +15,13 @@ export default {
   },
 
   mixins: [EmptyLayoutMixin],
+
+  created() {
+    this.clearCourseForm();
+  },
+
+  methods: {
+    ...coursesMethods,
+  },
 };
 </script>
