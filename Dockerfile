@@ -1,8 +1,8 @@
 FROM node:lts-alpine as build-stage
 
-RUN mkdir -p /var/www/block-log-frontent/
+RUN mkdir -p /var/www/block-log-frontend/
 
-WORKDIR /var/www/block-log-frontent/
+WORKDIR /var/www/block-log-frontend/
 
 COPY package*.json ./
 
