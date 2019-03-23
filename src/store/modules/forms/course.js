@@ -29,8 +29,6 @@ const actions = {
 
     const response = await ApiService.updateCourse({ courseId: id, course });
 
-    console.log(response);
-
     commit('courses/setItem', response, { root: true });
 
     return rootState.courses.course.id;

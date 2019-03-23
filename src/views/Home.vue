@@ -1,54 +1,29 @@
 <template>
-  <p>1</p>
-  <!-- <div>
-    <vs-row
-    class="mb-2"
-    vs-align="center"
-    vs-type="flex"
-    vs-justify="flex-end"
-    vs-w="12"
+  <div class="Home__container height-100">
+    <img
+    class="mt-1 mb-3 pointer"
+    src="@/assets/logo.png"
+    @click="$router.push({ name: 'my_courses' })"
     >
-      <z-button
-      class="mr-2 Course__button"
-      color="primary"
-      large
-      round
-      >
-        Новый курс
-      </z-button>
-    </vs-row>
-
-    <v-tabs
-    slider-color="primary"
-    fixed-tabs
-    >
-      <v-tab href="#tab-1">
-        Мои курсы
-      </v-tab>
-
-      <v-tab href="#tab-2">
-        Все курсы
-      </v-tab>
-    </v-tabs>
-
-    <v-tabs-items>
-      <v-tab-item value="#tab-1">
-        <courses-grid />
-      </v-tab-item>
-
-      <v-tab-item value="#tab-2">
-        <courses-grid />
-      </v-tab-item>
-    </v-tabs-items>
-  </div> -->
+    <h2>BlockLog</h2>
+  </div>
 </template>
 
 <script>
-import { MainLayoutMixin } from '@/mixins';
+import { EmptyLayoutMixin } from '@/mixins';
 
 export default {
   name: 'Home',
 
-  mixins: [MainLayoutMixin],
+  mixins: [EmptyLayoutMixin],
 };
 </script>
+
+<style lang="scss" scoped>
+.Home__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+</style>

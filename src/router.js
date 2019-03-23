@@ -7,7 +7,7 @@ const Course = () => import('@/views/Course');
 const CourseCreate = () => import('@/views/CourseCreate');
 const CoursesList = () => import('@/views/CoursesList');
 const CourseUpdate = () => import('@/views/CourseUpdate');
-// const Home = () => import('@/views/Home');
+const Home = () => import('@/views/Home');
 const Login = () => import('@/views/Login');
 const MyCoursesList = () => import('@/views/MyCoursesList');
 const Register = () => import('@/views/Register');
@@ -33,6 +33,11 @@ const router = new Router({
       meta: {
         forAnonymous: true,
       },
+    },
+    {
+      path: '/',
+      name: 'home',
+      component: Home,
     },
     {
       path: '/courses',

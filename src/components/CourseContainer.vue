@@ -57,7 +57,6 @@ export default {
 
         this.$router.push({ name: 'course', params: { id } });
       } catch (error) {
-        console.log(error);
         this.$refs.form.mapBackendErrorsToFields(error, '');
       } finally {
         this.setLoading(false);
