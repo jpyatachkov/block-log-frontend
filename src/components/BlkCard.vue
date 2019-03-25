@@ -59,8 +59,7 @@ export default {
 }
 
 .Card--hoverable:hover {
-  -webkit-transform: scale(1.05, 1.05);
-  transform: scale(1.05, 1.05);
+  transform: scale(1.03, 1.03);
 }
 
 .Card--hoverable:hover::after {

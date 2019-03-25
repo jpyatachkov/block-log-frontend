@@ -7,6 +7,7 @@
     <course-form
     ref="form"
     :loading="loading"
+    :update="update"
     @submit="onSubmit"
     />
   </div>

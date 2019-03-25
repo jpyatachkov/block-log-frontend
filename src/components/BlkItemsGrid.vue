@@ -62,7 +62,7 @@ export default {
     },
 
     triggerFetch() {
-      this.$emit('fetch', ++this.currentPage);
+      this.$emit('fetch', { page: this.currentPage++ });
     },
   },
 };

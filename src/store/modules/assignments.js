@@ -10,7 +10,11 @@ const state = {
 };
 
 const actions = {
-  async get({ state, commit }, { courseId, size }) {
+  async get({ state, commit }, { courseId, page, size }) {
+    if (page === 1 && state.assignmentsCurrentPage > page) {
+      return;
+    }
+
     if (
       state.assignmentsCurrentPage &&
       state.assignmentsCurrentPage >= state.assignments.total

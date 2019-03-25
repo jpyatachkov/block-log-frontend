@@ -16,7 +16,11 @@ const state = {
 };
 
 const actions = {
-  async get({ state, commit }, { size }) {
+  async get({ state, commit }, { page, size }) {
+    if (page === 1 && state.coursesCurrentPage > page) {
+      return;
+    }
+
     if (
       state.coursesCurrentPage &&
       state.coursesCurrentPage >= state.courses.total
@@ -35,7 +39,11 @@ const actions = {
     commit('addItems', response);
   },
 
-  async getMine({ state, commit }, { size }) {
+  async getMine({ state, commit }, { page, size }) {
+    if (page === 1 && state.myCoursesCurrentPage > page) {
+      return;
+    }
+
     if (
       state.myCoursesCurrentPage &&
       state.myCoursesCurrentPage >= state.myCourses.total

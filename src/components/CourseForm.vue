@@ -14,6 +14,14 @@
 
     <blk-form-buttons>
       <router-link
+      v-if="update"
+      :to="{ name: 'course', params: { id: course.id } }"
+      class="mr-2"
+      >
+        К странице курса
+      </router-link>
+      <router-link
+      v-else
       :to="{ name: 'my_courses' }"
       class="mr-2"
       >
@@ -45,6 +53,10 @@ export default {
 
   props: {
     loading: {
+      default: false,
+      type: Boolean,
+    },
+    update: {
       default: false,
       type: Boolean,
     },
