@@ -16,28 +16,39 @@ const state = {
 };
 
 const actions = {
-  async get({ state, commit }, { page, size }) {
-    page = page >= state.coursesCurrentPage ? page : state.coursesCurrentPage;
-
-    if (state.coursesCurrentPage && page >= state.courses.total) {
+  async get({ state, commit }, { size }) {
+    if (
+      state.coursesCurrentPage &&
+      state.coursesCurrentPage >= state.courses.total
+    ) {
       return;
     }
 
-    const response = await ApiService.getCourses({ page, size });
+    const response = await ApiService.getCourses({
+      page: state.coursesCurrentPage + 1,
+      size,
+    });
+
+    console.log('GET CALLED', state.coursesCurrentPage + 1);
 
     commit('incrementCoursesPage');
     commit('addItems', response);
   },
 
-  async getMine({ state, commit }, { page, size }) {
-    page =
-      page >= state.myCoursesCurrentPage ? page : state.myCoursesCurrentPage;
-
-    if (state.myCoursesCurrentPage && page >= state.myCourses.total) {
+  async getMine({ state, commit }, { size }) {
+    if (
+      state.myCoursesCurrentPage &&
+      state.myCoursesCurrentPage >= state.myCourses.total
+    ) {
       return;
     }
 
-    const response = await ApiService.getMyCourses({ page, size });
+    const response = await ApiService.getMyCourses({
+      page: state.myCoursesCurrentPage + 1,
+      size,
+    });
+
+    console.log('GET MINE CALLED', state.myCoursesCurrentPage + 1);
 
     commit('incrementMyCoursesPage');
     commit('addMyItems', response);

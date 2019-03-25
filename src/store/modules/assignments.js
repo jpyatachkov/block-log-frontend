@@ -10,17 +10,19 @@ const state = {
 };
 
 const actions = {
-  async get({ state, commit }, { courseId, page, size }) {
-    page =
-      page >= state.assignmentsCurrentPage
-        ? page
-        : state.assignmentsCurrentPage;
-
-    if (state.assignmentsCurrentPage && page >= state.assignments.total) {
+  async get({ state, commit }, { courseId, size }) {
+    if (
+      state.assignmentsCurrentPage &&
+      state.assignmentsCurrentPage >= state.assignments.total
+    ) {
       return;
     }
 
-    const response = await ApiService.getAssignments({ courseId, page, size });
+    const response = await ApiService.getAssignments({
+      courseId,
+      page: state.assignmentsCurrentPage + 1,
+      size,
+    });
 
     commit('incrementAssignmentsPage');
     commit('addItems', response);
