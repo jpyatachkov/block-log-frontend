@@ -72,6 +72,11 @@ const actions = {
     return response.course;
   },
 
+  async enroll({ dispatch }, { courseId }) {
+    await ApiService.enrollCourse({ courseId });
+    dispatch('getOne', { courseId });
+  },
+
   async delete({ commit }, { courseId }) {
     await ApiService.deleteCourse({ courseId });
     commit('clearItem');

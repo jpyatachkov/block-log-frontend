@@ -27,6 +27,7 @@ export const coursesMethods = {
     getCourses: 'courses/get',
     getMyCourses: 'courses/getMine',
     getCourse: 'courses/getOne',
+    enrollCourse: 'courses/enroll',
     fillCourseForm: 'courses/form/fill',
     createCourse: 'courses/form/create',
     updateCourse: 'courses/form/update',

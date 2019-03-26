@@ -17,10 +17,7 @@ export default {
 
   computed: {
     show() {
-      return (
-        AccountService.userCanCreateCourses() &&
-        (this.$route.name === 'courses' || this.$route.name === 'my_courses')
-      );
+      return AccountService.userCanCreateCourses();
     },
   },
 };

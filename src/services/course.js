@@ -29,6 +29,12 @@ export default {
     return response.data;
   },
 
+  async enrollCourse({ courseId }) {
+    const url = this.courseEnrollRoute(courseId);
+    const response = await this.doPost({ url });
+    return response.data;
+  },
+
   async createCourse({ course }) {
     const url = this.coursesRoute();
     const data = {

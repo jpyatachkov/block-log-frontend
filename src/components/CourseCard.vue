@@ -51,9 +51,10 @@
 </template>
 
 <script>
+import { coursePermissions, coursesMethods } from '@/store/helpers';
+
 import { AccountService } from '@/services';
 import { ShortenMixin } from '@/mixins';
-import { coursePermissions } from '@/store/helpers';
 
 export default {
   name: 'CourseCard',
@@ -128,6 +129,8 @@ export default {
   },
 
   methods: {
+    ...coursesMethods,
+
     onCardClick() {
       if (this.preview) {
         const id = this.course.id;
@@ -140,7 +143,16 @@ export default {
       this.$emit('edit', this.editMode);
     },
 
-    onEnrollClick() {},
+    async onEnrollClick() {
+      const courseId = this.$route.params.id;
+      await this.enrollCourse({ courseId });
+
+      // Нужно для того, чтобы список курсов обновился.
+      // Если этого не сделать, то при переходе на страницу моих курсов или курсов в целом
+      // не будет запроса к API (т.к. мы кэшируем извлеченные данные, чтобы не делать лишних запросов),
+      // соответственно, нужно будет обновлять страницу вручную, чтобы увидеть созданный курс.
+      this.clearMyCourses();
+    },
   },
 };
 </script>
