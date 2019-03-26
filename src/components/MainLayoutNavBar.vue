@@ -6,10 +6,7 @@
   variant="white"
   >
     <b-navbar-brand :to="{ name: 'home' }">
-      <img
-      class="MainLayoutNavBar__logo mr-2"
-      src="@/assets/logo.png"
-      >
+      <blk-logo class="MainLayoutNavBar__logo mr-2" />
       BlockLog
     </b-navbar-brand>
 
