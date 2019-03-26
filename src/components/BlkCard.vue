@@ -59,7 +59,7 @@ export default {
 }
 
 .Card--hoverable:hover {
-  transform: scale(1.03, 1.03);
+  transform: scale(1.01, 1.01);
 }
 
 .Card--hoverable:hover::after {
