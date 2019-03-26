@@ -12,6 +12,7 @@ const CourseUpdate = () => import('@/views/CourseUpdate');
 const Home = () => import('@/views/Home');
 const Login = () => import('@/views/Login');
 const MyCoursesList = () => import('@/views/MyCoursesList');
+const NotFound = () => import('@/views/NotFound');
 const Register = () => import('@/views/Register');
 
 Vue.use(Router);
@@ -21,11 +22,22 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: '/404',
+      name: 'not_found',
+      component: NotFound,
+    },
+    {
       path: '/login',
       name: 'login',
       component: Login,
       meta: {
         forAnonymous: true,
+      },
+    },
+    {
+      path: '*',
+      redirect: {
+        name: 'not_found',
       },
     },
     {

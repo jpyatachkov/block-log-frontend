@@ -1,9 +1,10 @@
 <template>
   <div class="SimpleLayout__container container height-100">
-    <aside class="SimpleLayout__logo">
+    <aside class="SimpleLayout__aside">
       <img
-      class="mt-1 mb-3"
+      class="SimpleLayout__logo mt-1 mb-3 pointer"
       src="@/assets/logo.png"
+      @click="$router.push({ name: 'home' })"
       >
       <h2>BlockLog</h2>
     </aside>
@@ -29,10 +30,15 @@ export default {
   align-items: center;
 }
 
-.SimpleLayout__logo {
+.SimpleLayout__aside {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.SimpleLayout__logo {
+  max-height: 350px;
+  max-width: 350px;
 }
 </style>
