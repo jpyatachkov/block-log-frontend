@@ -60,8 +60,6 @@ export default {
 
       const courseId = this.$route.params.courseId;
 
-      console.log(this.$route.params, courseId);
-
       try {
         if (this.update) {
           const assignmentId = this.$route.params.id;

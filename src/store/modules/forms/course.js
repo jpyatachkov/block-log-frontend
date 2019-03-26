@@ -1,60 +1,54 @@
-import { getField, updateField } from 'vuex-map-fields';
-
 import { ApiService } from '@/services';
-
-const state = {
-  title: '',
-  description: '',
-};
-
-function payloadFromState(state) {
-  return {
-    title: state.title,
-    description: state.description,
-  };
-}
 
 function setItem({ rootState, commit, response }) {
   commit('courses/setItem', response, { root: true });
   return rootState.courses.course.id;
 }
 
+const state = {
+  title: '',
+  description: '',
+  unsaved: false,
+};
+
 const actions = {
-  async create({ state, commit, rootState }) {
-    const course = payloadFromState(state);
+  async create({ commit, rootState }, { course }) {
     const response = await ApiService.createCourse({ course });
     return setItem({ rootState, commit, response });
   },
 
-  async update({ commit, rootState }, { id }) {
-    const course = payloadFromState(state);
-    const response = await ApiService.updateCourse({ courseId: id, course });
+  async update({ commit, rootState }, { courseId, course }) {
+    const response = await ApiService.updateCourse({ courseId, course });
     return setItem({ rootState, commit, response });
-  },
-
-  async fill({ commit }, { courseId }) {
-    const response = await ApiService.getCourse({ courseId });
-    commit('setForm', response);
   },
 };
 
 const getters = {
-  getField,
+  data(state) {
+    return {
+      title: state.title,
+      description: state.description,
+    };
+  },
+
+  unsaved(state) {
+    return state.unsaved;
+  },
 };
 
 const mutations = {
-  updateField,
-
   clear(state) {
     state.title = '';
     state.description = '';
+    state.unsaved = false;
   },
 
-  setForm(state, response) {
-    const { title, description } = response.course;
+  set(state, form) {
+    const { title, description } = form;
 
     state.title = title;
     state.description = description;
+    state.unsaved = true;
   },
 };
 

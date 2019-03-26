@@ -24,7 +24,6 @@
 import { FormValidationMixin } from '@/mixins';
 import { REQUIRED } from '@/utils/validators/inputs';
 import Validator from '@/utils/form-validator';
-import { assignmentsMethods } from '@/store/helpers';
 
 export default {
   name: 'AssignmentForm',
@@ -59,8 +58,6 @@ export default {
   },
 
   methods: {
-    ...assignmentsMethods,
-
     setFormData(form) {
       const { text } = form;
 

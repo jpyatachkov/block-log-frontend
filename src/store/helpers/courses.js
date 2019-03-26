@@ -1,22 +1,15 @@
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 
-import { createHelpers } from 'vuex-map-fields';
-
-const { mapFields } = createHelpers({
-  getterType: 'courses/form/getField',
-  mutationType: 'courses/form/updateField',
-});
-
 export const coursesComputed = {
   ...mapGetters({
     course: 'courses/item',
+    courseForm: 'courses/form/data',
+    courseFormUnsaved: 'courses/form/unsaved',
     courses: 'courses/items',
     coursesTotal: 'courses/total',
     myCourses: 'courses/myItems',
     myCoursesTotal: 'courses/myTotal',
   }),
-
-  ...mapFields(['title', 'description']),
 };
 
 export const coursesMethods = {

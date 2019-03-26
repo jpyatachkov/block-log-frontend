@@ -3,10 +3,8 @@
 </template>
 
 <script>
-import { EmptyLayoutMixin, FetchResourceMixin } from '@/mixins';
-
 import CourseContainer from '@/components/CourseContainer';
-import { coursesMethods } from '@/store/helpers';
+import { EmptyLayoutMixin } from '@/mixins';
 
 export default {
   name: 'CourseUpdate',
@@ -15,15 +13,6 @@ export default {
     CourseContainer,
   },
 
-  mixins: [EmptyLayoutMixin, FetchResourceMixin],
-
-  methods: {
-    ...coursesMethods,
-
-    async doFetch() {
-      const courseId = this.$route.params.id;
-      await this.fillCourseForm({ courseId });
-    },
-  },
+  mixins: [EmptyLayoutMixin],
 };
 </script>

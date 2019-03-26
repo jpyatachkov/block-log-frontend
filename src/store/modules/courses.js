@@ -33,8 +33,6 @@ const actions = {
       size,
     });
 
-    console.log('GET CALLED', state.coursesCurrentPage + 1);
-
     commit('incrementCoursesPage');
     commit('addItems', response);
   },
@@ -56,8 +54,6 @@ const actions = {
       size,
     });
 
-    console.log('GET MINE CALLED', state.myCoursesCurrentPage + 1);
-
     commit('incrementMyCoursesPage');
     commit('addMyItems', response);
   },
@@ -65,6 +61,7 @@ const actions = {
   async getOne({ commit }, { courseId }) {
     const response = await ApiService.getCourse({ courseId });
     commit('setItem', response);
+    return response.course;
   },
 };
 
