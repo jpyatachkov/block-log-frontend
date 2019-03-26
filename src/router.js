@@ -120,11 +120,25 @@ const router = new Router({
   ],
 });
 
+let initialPageLoad = true;
+
 router.beforeEach((to, from, next) => {
   const forAnonymous = to.matched.some((route) => route.meta.forAnonymous);
   const forLoggedIn = to.matched.some((route) => route.meta.forLoggedIn);
 
   const userLoggedIn = JwtService.hasToken();
+
+  // Для удобства если пользователь залогинен, показываем ему не
+  // лендинг, а список его курсов.
+  if (initialPageLoad && to.name === 'home') {
+    initialPageLoad = false;
+
+    if (userLoggedIn) {
+      return next({ name: 'my_courses' });
+    } else {
+      return next();
+    }
+  }
 
   if (forAnonymous && userLoggedIn) {
     return next({ name: 'home' });
