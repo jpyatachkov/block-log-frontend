@@ -39,7 +39,7 @@ export default {
     ...coursesComputed,
 
     title() {
-      return this.update ? 'Обновление курса' : 'Создание курса';
+      return this.update ? 'Изменение курса' : 'Создание курса';
     },
   },
 

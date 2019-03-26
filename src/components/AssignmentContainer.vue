@@ -1,10 +1,16 @@
 <template>
-  <assignment-form
-  ref="form"
-  :loading="loading"
-  :update="update"
-  @submit="onSubmit"
-  />
+  <div>
+    <blk-card-header>
+      {{ title }}
+    </blk-card-header>
+
+    <assignment-form
+    ref="form"
+    :loading="loading"
+    :update="update"
+    @submit="onSubmit"
+    />
+  </div>
 </template>
 
 <script>
@@ -31,6 +37,10 @@ export default {
 
   computed: {
     ...assignmentsComputed,
+
+    title() {
+      return this.update ? 'Изменение задания' : 'Создание задания';
+    },
   },
 
   async mounted() {

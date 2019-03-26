@@ -13,6 +13,8 @@
     />
 
     <blk-form-buttons>
+      <prev-page-link />
+
       <blk-button
       :disabled="loading"
       :loading="loading"
@@ -28,11 +30,16 @@
 
 <script>
 import { FormValidationMixin } from '@/mixins';
+import PrevPageLink from './PrevPageLink';
 import { REQUIRED } from '@/utils/validators/inputs';
 import Validator from '@/utils/form-validator';
 
 export default {
   name: 'CourseForm',
+
+  components: {
+    PrevPageLink,
+  },
 
   mixins: [FormValidationMixin],
 

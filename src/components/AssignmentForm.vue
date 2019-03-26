@@ -7,6 +7,8 @@
     />
 
     <blk-form-buttons>
+      <prev-page-link />
+
       <blk-button
       :disabled="loading"
       :loading="loading"
@@ -22,11 +24,16 @@
 
 <script>
 import { FormValidationMixin } from '@/mixins';
+import PrevPageLink from './PrevPageLink';
 import { REQUIRED } from '@/utils/validators/inputs';
 import Validator from '@/utils/form-validator';
 
 export default {
   name: 'AssignmentForm',
+
+  components: {
+    PrevPageLink,
+  },
 
   mixins: [FormValidationMixin],
 
