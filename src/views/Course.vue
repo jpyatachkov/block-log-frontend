@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { FetchResourceMixin, MainLayoutMixin } from '@/mixins';
+import { FetchResourceMixin, LoadingMixin, MainLayoutMixin } from '@/mixins';
 import {
   assignmentsComputed,
   assignmentsMethods,
@@ -34,11 +34,7 @@ export default {
     CourseCard,
   },
 
-  mixins: [FetchResourceMixin, MainLayoutMixin],
-
-  data: () => ({
-    loading: false,
-  }),
+  mixins: [FetchResourceMixin, LoadingMixin, MainLayoutMixin],
 
   computed: {
     ...assignmentsComputed,
@@ -63,9 +59,9 @@ export default {
     async doFetchAssignments({ page = 1 } = {}) {
       const courseId = this.course.id;
 
-      this.loading = true;
+      this.setLoading(true);
       await this.getAssignments({ courseId, page });
-      this.loading = false;
+      this.setLoading(false);
     },
   },
 };

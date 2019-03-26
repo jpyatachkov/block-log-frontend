@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { FetchResourceMixin, MainLayoutMixin } from '@/mixins';
+import { FetchResourceMixin, LoadingMixin, MainLayoutMixin } from '@/mixins';
 import { coursesComputed, coursesMethods } from '@/store/helpers';
 
 import CoursesGrid from '@/components/CoursesGrid';
@@ -19,11 +19,7 @@ export default {
     CoursesGrid,
   },
 
-  mixins: [FetchResourceMixin, MainLayoutMixin],
-
-  data: () => ({
-    loading: false,
-  }),
+  mixins: [FetchResourceMixin, LoadingMixin, MainLayoutMixin],
 
   computed: {
     ...coursesComputed,
@@ -33,9 +29,9 @@ export default {
     ...coursesMethods,
 
     async doFetch({ page = 1 } = {}) {
-      this.loading = true;
+      this.setLoading(true);
       await this.getCourses({ page });
-      this.loading = false;
+      this.setLoading(false);
     },
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <div
-  class="Card"
+  class="Card Card--word-wrap"
   :class="additionalStyles"
   >
     <slot name="image" />
@@ -64,5 +64,9 @@ export default {
 
 .Card--hoverable:hover::after {
   opacity: 1;
+}
+
+.Card--word-wrap {
+  word-wrap: break-word;
 }
 </style>
