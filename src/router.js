@@ -3,6 +3,8 @@ import Router from 'vue-router';
 import Vue from 'vue';
 
 const Assignment = () => import('@/views/Assignment');
+const AssignmentCreate = () => import('@/views/AssignmentCreate');
+const AssignmentUpdate = () => import('@/views/AssignmentUpdate');
 const Course = () => import('@/views/Course');
 const CourseCreate = () => import('@/views/CourseCreate');
 const CoursesList = () => import('@/views/CoursesList');
@@ -80,9 +82,25 @@ const router = new Router({
       },
     },
     {
+      path: '/course/:courseId/assignment/new',
+      name: 'assignment_create',
+      component: AssignmentCreate,
+      meta: {
+        forLoggedIn: true,
+      },
+    },
+    {
       path: '/course/:courseId/assignment/:id',
       name: 'assignment',
       component: Assignment,
+      meta: {
+        forLoggedIn: true,
+      },
+    },
+    {
+      path: '/course/:courseId/assignment/:id/edit',
+      name: 'assignment_update',
+      component: AssignmentUpdate,
       meta: {
         forLoggedIn: true,
       },

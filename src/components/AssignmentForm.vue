@@ -1,14 +1,8 @@
 <template>
   <blk-form @submit="onSubmit">
-    <blk-input
-    v-model.lazy="title"
-    :errors="titleErrors"
-    label="Название курса"
-    />
-
     <blk-textarea
-    v-model.lazy="description"
-    :errors="descriptionErrors"
+    v-model.lazy="form.text"
+    :errors="textErrors"
     label="Краткое описание"
     />
 
@@ -30,10 +24,10 @@
 import { FormValidationMixin } from '@/mixins';
 import { REQUIRED } from '@/utils/validators/inputs';
 import Validator from '@/utils/form-validator';
-import { coursesComputed } from '@/store/helpers';
+import { assignmentsMethods } from '@/store/helpers';
 
 export default {
-  name: 'CourseForm',
+  name: 'AssignmentForm',
 
   mixins: [FormValidationMixin],
 
@@ -48,21 +42,32 @@ export default {
     },
   },
 
-  computed: {
-    ...coursesComputed,
-
-    titleErrors() {
-      return this.getFieldErrors('title');
+  data: () => ({
+    form: {
+      text: '',
     },
+  }),
 
-    descriptionErrors() {
-      return this.getFieldErrors('description');
+  computed: {
+    textErrors() {
+      return this.getFieldErrors('form.text');
     },
   },
 
   validators: {
-    title: (v) => Validator.value(v).required(REQUIRED),
-    description: (v) => Validator.value(v).required(REQUIRED),
+    'form.text': (v) => Validator.value(v).required(REQUIRED),
+  },
+
+  methods: {
+    ...assignmentsMethods,
+
+    setFormData(form) {
+      const { text } = form;
+
+      this.form = {
+        text,
+      };
+    },
   },
 };
 </script>

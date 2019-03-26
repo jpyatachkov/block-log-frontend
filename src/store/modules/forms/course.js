@@ -7,31 +7,29 @@ const state = {
   description: '',
 };
 
+function payloadFromState(state) {
+  return {
+    title: state.title,
+    description: state.description,
+  };
+}
+
+function setItem({ rootState, commit, response }) {
+  commit('courses/setItem', response, { root: true });
+  return rootState.courses.course.id;
+}
+
 const actions = {
   async create({ state, commit, rootState }) {
-    const course = {
-      title: state.title,
-      description: state.description,
-    };
-
+    const course = payloadFromState(state);
     const response = await ApiService.createCourse({ course });
-
-    commit('courses/setItem', response, { root: true });
-
-    return rootState.courses.course.id;
+    return setItem({ rootState, commit, response });
   },
 
   async update({ commit, rootState }, { id }) {
-    const course = {
-      title: state.title,
-      description: state.description,
-    };
-
+    const course = payloadFromState(state);
     const response = await ApiService.updateCourse({ courseId: id, course });
-
-    commit('courses/setItem', response, { root: true });
-
-    return rootState.courses.course.id;
+    return setItem({ rootState, commit, response });
   },
 
   async fill({ commit }, { courseId }) {
