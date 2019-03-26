@@ -122,11 +122,17 @@ const router = new Router({
 
 let initialPageLoad = true;
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
+  await Vue.nextTick();
+
   const forAnonymous = to.matched.some((route) => route.meta.forAnonymous);
   const forLoggedIn = to.matched.some((route) => route.meta.forLoggedIn);
 
   const userLoggedIn = JwtService.hasToken();
+
+  if (forLoggedIn && userLoggedIn) {
+    await router.app.$store.dispatch('account/me');
+  }
 
   // Для удобства если пользователь залогинен, показываем ему не
   // лендинг, а список его курсов.

@@ -9,6 +9,7 @@ import BlkInput from '@/components/BlkInput';
 import BlkItemsGrid from '@/components/BlkItemsGrid';
 import BlkLoader from '@/components/BlkLoader';
 import BlkLogo from '@/components/BlkLogo';
+import BlkModal from '@/components/BlkModal';
 import BlkTextarea from '@/components/BlkTextarea';
 import Vue from 'vue';
 
@@ -23,4 +24,5 @@ Vue.component('blk-input', BlkInput);
 Vue.component('blk-items-grid', BlkItemsGrid);
 Vue.component('blk-loader', BlkLoader);
 Vue.component('blk-logo', BlkLogo);
+Vue.component('blk-modal', BlkModal);
 Vue.component('blk-textarea', BlkTextarea);

@@ -1,6 +1,14 @@
 import { ApiService } from '@/services';
 import form from './forms/course';
 
+/**
+ * @param {*} state
+ * @returns {Array}
+ */
+function getUserRights(state) {
+  return state.course.userRights || [];
+}
+
 const state = {
   course: {},
   coursesCurrentPage: 0,
@@ -63,6 +71,11 @@ const actions = {
     commit('setItem', response);
     return response.course;
   },
+
+  async delete({ commit }, { courseId }) {
+    await ApiService.deleteCourse({ courseId });
+    commit('clearItem');
+  },
 };
 
 const mutations = {
@@ -90,6 +103,10 @@ const mutations = {
 
     state.myCourses.total = total;
     state.myCourses.items.push(...items);
+  },
+
+  clearItem(state) {
+    state.item = {};
   },
 
   clearItems(state) {
@@ -128,6 +145,18 @@ const getters = {
 
   myTotal(state) {
     return state.myCourses.total;
+  },
+
+  userIsEnrolled(state) {
+    return getUserRights(state).includes('user');
+  },
+
+  userIsCollaborator(state) {
+    return getUserRights(state).includes('collaborator');
+  },
+
+  userIsModerator(state) {
+    return getUserRights(state).includes('moderator');
   },
 };
 

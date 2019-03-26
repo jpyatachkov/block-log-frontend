@@ -1,6 +1,7 @@
 export default {
   registerRoute: () => 'users/register',
   jwtRoute: () => 'user_token',
+  meRoute: () => 'users/me',
 
   coursesRoute: () => 'courses',
   myCoursesRoute: () => 'courses/mine',

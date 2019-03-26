@@ -1,5 +1,13 @@
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 
+export const coursePermissions = {
+  ...mapGetters({
+    userIsEnrolled: 'courses/userIsEnrolled',
+    userIsCollaborator: 'courses/userIsCollaborator',
+    userIsModerator: 'courses/userIsModerator',
+  }),
+};
+
 export const coursesComputed = {
   ...mapGetters({
     course: 'courses/item',
@@ -10,6 +18,8 @@ export const coursesComputed = {
     myCourses: 'courses/myItems',
     myCoursesTotal: 'courses/myTotal',
   }),
+
+  ...coursePermissions,
 };
 
 export const coursesMethods = {
@@ -20,6 +30,7 @@ export const coursesMethods = {
     fillCourseForm: 'courses/form/fill',
     createCourse: 'courses/form/create',
     updateCourse: 'courses/form/update',
+    deleteCourse: 'courses/delete',
   }),
 
   ...mapMutations({

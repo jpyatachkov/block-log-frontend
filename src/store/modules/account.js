@@ -18,6 +18,11 @@ const actions = {
     commit('solutions/clearItems', null, { root: true });
   },
 
+  async me({ commit }) {
+    const response = await ApiService.me();
+    commit('setUser', response);
+  },
+
   async register({ dispatch }, { user }) {
     const response = await ApiService.register({ user });
 
@@ -32,18 +37,14 @@ const actions = {
 };
 
 const mutations = {
-  setUser(state, user) {
-    state.user = user;
+  setUser(state, response) {
+    state.user = response.user;
   },
 };
 
 const getters = {
   user(state) {
     return state.user;
-  },
-
-  userRoles() {
-    return ApiService.userRoles();
   },
 };
 

@@ -3,6 +3,12 @@
     <course-card
     :course="course"
     :preview="false"
+    @edit="editMode = $event"
+    />
+
+    <course-edit-card
+    v-if="editMode"
+    class="mt-3 mb-3"
     />
 
     <assignments-grid
@@ -25,6 +31,7 @@ import {
 
 import AssignmentsGrid from '@/components/AssignmentsGrid';
 import CourseCard from '@/components/CourseCard';
+import CourseEditCard from '@/components/CourseEditCard';
 
 export default {
   name: 'Course',
@@ -32,9 +39,14 @@ export default {
   components: {
     AssignmentsGrid,
     CourseCard,
+    CourseEditCard,
   },
 
   mixins: [FetchResourceMixin, LoadingMixin, MainLayoutMixin],
+
+  data: () => ({
+    editMode: false,
+  }),
 
   computed: {
     ...assignmentsComputed,

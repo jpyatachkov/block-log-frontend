@@ -27,6 +27,12 @@ export default {
     this.clearToken();
   },
 
+  async me() {
+    const url = this.meRoute();
+    const response = await this.doGet({ url });
+    return response.data;
+  },
+
   async register({ user }) {
     const url = this.registerRoute();
     const data = {
@@ -45,18 +51,24 @@ export default {
    * @returns {Array}
    */
   userRoles() {
-    return this.getPayload().role;
+    return this.getPayload().role || [];
   },
 
-  userCanCreateAndDelete() {
-    const AUTHORIZED_ROLES = ['moderator', 'collaborator'];
+  /**
+   * @returns {Array}
+   */
+  userIsStaff() {
+    const AUTHORIZED_ROLES = ['collaborator', 'moderator'];
     const userRoles = this.userRoles();
 
     return AUTHORIZED_ROLES.some((role) => userRoles.includes(role));
   },
 
-  userCanUpdate() {
-    const AUTHORIZED_ROLES = ['moderator', 'collaborator'];
+  /**
+   * @returns {Boolean}
+   */
+  userCanCreateCourses() {
+    const AUTHORIZED_ROLES = ['moderator'];
     const userRoles = this.userRoles();
 
     return AUTHORIZED_ROLES.some((role) => userRoles.includes(role));

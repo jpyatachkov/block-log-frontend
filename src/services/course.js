@@ -56,4 +56,10 @@ export default {
 
     return response.data;
   },
+
+  async deleteCourse({ courseId }) {
+    const url = this.courseRoute(courseId);
+    const response = await this.doDelete({ url });
+    return response.data;
+  },
 };

@@ -17,8 +17,8 @@
     is-nav
     >
       <b-navbar-nav class="ml-auto">
-        <blk-form class="form-inline my-2 my-lg-0">
-          <main-action-button />
+        <blk-form class="form-inline my-2 my-lg-0 mr-2">
+          <course-create-button />
         </blk-form>
 
         <b-nav-item
@@ -32,7 +32,7 @@
         :active="coursesActive"
         :to="{ name: 'courses' }"
         >
-          Курсы
+          Все курсы
         </b-nav-item>
 
         <b-nav-item-dropdown right>
@@ -54,13 +54,13 @@
 <script>
 import { accountComputed, accountMethods } from '@/store/helpers';
 
-import MainActionButton from './MainActionButton';
+import CourseCreateButton from './CourseCreateButton';
 
 export default {
   name: 'MainLayoutNavBar',
 
   components: {
-    MainActionButton,
+    CourseCreateButton,
   },
 
   computed: {

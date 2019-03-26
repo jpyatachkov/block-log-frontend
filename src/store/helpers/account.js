@@ -3,7 +3,6 @@ import { mapActions, mapGetters } from 'vuex';
 export const accountComputed = {
   ...mapGetters({
     user: 'account/user',
-    userRoles: 'account/userRoles',
   }),
 };
 
