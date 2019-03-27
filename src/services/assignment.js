@@ -50,4 +50,10 @@ export default {
 
     return response.data;
   },
+
+  async deleteAssignment({ courseId, assignmentId }) {
+    const url = this.assignmentRoute(courseId, assignmentId);
+    const response = await this.doDelete({ url });
+    return response.data;
+  },
 };

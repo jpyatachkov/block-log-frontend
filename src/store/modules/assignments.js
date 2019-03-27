@@ -55,6 +55,11 @@ const actions = {
     });
     commit('setItem', response);
   },
+
+  async delete({ commit }, { courseId, assignmentId }) {
+    await ApiService.deleteAssignment({ courseId, assignmentId });
+    commit('clearItem');
+  },
 };
 
 const mutations = {
@@ -71,6 +76,10 @@ const mutations = {
 
     state.assignments.total = total;
     state.assignments.items.push(...items);
+  },
+
+  clearItem(state) {
+    state.assignment = {};
   },
 
   clearItems(state) {

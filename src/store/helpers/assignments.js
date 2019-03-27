@@ -16,6 +16,7 @@ export const assignmentsMethods = {
     getAssignment: 'assignments/getOne',
     createAssignment: 'assignments/form/create',
     updateAssignment: 'assignments/form/update',
+    deleteAssignment: 'assignments/delete',
   }),
 
   ...mapMutations({
