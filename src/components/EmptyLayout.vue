@@ -1,5 +1,5 @@
 <template>
-  <main class="bg-native container fill-height height-100">
+  <main class="container fill-height height-100">
     <router-view />
   </main>
 </template>
