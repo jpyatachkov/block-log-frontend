@@ -29,7 +29,7 @@
         </b-nav-item>
 
         <b-nav-item
-        :active="coursesActive"
+        :active="coursesIsActive"
         :to="{ name: 'courses' }"
         >
           Все курсы
@@ -66,12 +66,12 @@ export default {
   computed: {
     ...accountComputed,
 
-    myCoursesIsActive() {
-      return this.$route.name === 'my_courses';
+    coursesIsActive() {
+      return this.$route.name === 'courses';
     },
 
-    coursesActive() {
-      return this.$route.name === 'courses';
+    myCoursesIsActive() {
+      return this.$route.name === 'my_courses';
     },
   },
 

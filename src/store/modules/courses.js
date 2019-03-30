@@ -1,5 +1,13 @@
+import {
+  createCollectionEmptyState,
+  createCollectionGetAction,
+  createCollectionGetters,
+  createCollectionMutations,
+} from '@/store/utils';
+
 import { ApiService } from '@/services';
 import form from './forms/course';
+import { getMutationNamesByEntity } from '@/store/utils/helpers';
 
 /**
  * @param {*} state
@@ -10,65 +18,33 @@ function getUserRights(state) {
 }
 
 const state = {
-  course: {},
-  coursesCurrentPage: 0,
-  courses: {
-    total: 0,
-    items: [],
-  },
-  myCoursesCurrentPage: 0,
-  myCourses: {
-    total: 0,
-    items: [],
-  },
+  ...createCollectionEmptyState('course'),
+  ...createCollectionEmptyState('myCourse'),
 };
 
+const {
+  clearName: clearMutationName,
+  setName: setMutationName,
+} = getMutationNamesByEntity('course');
+
 const actions = {
-  async get({ state, commit }, { page, size }) {
-    if (page === 1 && state.coursesCurrentPage > page) {
-      return;
-    }
-
-    if (
-      state.coursesCurrentPage &&
-      state.coursesCurrentPage >= state.courses.total
-    ) {
-      return;
-    }
-
-    const response = await ApiService.getCourses({
-      page: state.coursesCurrentPage + 1,
+  get: createCollectionGetAction(async ({ size }) => {
+    return ApiService.getCourses({
+      page: state.courseCurrentPage + 1,
       size,
     });
+  }, 'course'),
 
-    commit('incrementCoursesPage');
-    commit('addItems', response);
-  },
-
-  async getMine({ state, commit }, { page, size }) {
-    if (page === 1 && state.myCoursesCurrentPage > page) {
-      return;
-    }
-
-    if (
-      state.myCoursesCurrentPage &&
-      state.myCoursesCurrentPage >= state.myCourses.total
-    ) {
-      return;
-    }
-
-    const response = await ApiService.getMyCourses({
-      page: state.myCoursesCurrentPage + 1,
+  getMine: createCollectionGetAction(async ({ size }) => {
+    return ApiService.getMyCourses({
+      page: state.myCourseCurrentPage + 1,
       size,
     });
-
-    commit('incrementMyCoursesPage');
-    commit('addMyItems', response);
-  },
+  }, 'myCourse'),
 
   async getOne({ commit }, { courseId }) {
     const response = await ApiService.getCourse({ courseId });
-    commit('setItem', response);
+    commit(setMutationName, response);
     return response.course;
   },
 
@@ -79,78 +55,18 @@ const actions = {
 
   async delete({ commit }, { courseId }) {
     await ApiService.deleteCourse({ courseId });
-    commit('clearItem');
+    commit(clearMutationName);
   },
 };
 
 const mutations = {
-  setItem(state, response) {
-    state.course = response.course;
-  },
-
-  incrementCoursesPage(state) {
-    state.coursesCurrentPage++;
-  },
-
-  addItems(state, courses) {
-    const { total, items } = courses;
-
-    state.courses.total = total;
-    state.courses.items.push(...items);
-  },
-
-  incrementMyCoursesPage(state) {
-    state.myCoursesCurrentPage++;
-  },
-
-  addMyItems(state, myCourses) {
-    const { total, items } = myCourses;
-
-    state.myCourses.total = total;
-    state.myCourses.items.push(...items);
-  },
-
-  clearItem(state) {
-    state.item = {};
-  },
-
-  clearItems(state) {
-    state.coursesCurrentPage = 0;
-    state.courses = {
-      total: 0,
-      items: [],
-    };
-  },
-
-  clearMyItems(state) {
-    state.myCoursesCurrentPage = 0;
-    state.myCourses = {
-      total: 0,
-      items: [],
-    };
-  },
+  ...createCollectionMutations('course'),
+  ...createCollectionMutations('myCourse'),
 };
 
 const getters = {
-  item(state) {
-    return state.course;
-  },
-
-  items(state) {
-    return state.courses.items;
-  },
-
-  myItems(state) {
-    return state.myCourses.items;
-  },
-
-  total(state) {
-    return state.courses.total;
-  },
-
-  myTotal(state) {
-    return state.myCourses.total;
-  },
+  ...createCollectionGetters('course'),
+  ...createCollectionGetters('myCourse'),
 
   userIsEnrolled(state) {
     return getUserRights(state).includes('user');

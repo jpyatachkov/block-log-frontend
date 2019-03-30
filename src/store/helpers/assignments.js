@@ -2,11 +2,11 @@ import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 export const assignmentsComputed = {
   ...mapGetters({
-    assignment: 'assignments/item',
+    assignment: 'assignments/getAssignment',
     assignmentForm: 'assignments/form/data',
     assignmentFormUnsaved: 'assignments/form/unsaved',
-    assignments: 'assignments/items',
-    assignmentsTotal: 'assignments/total',
+    assignments: 'assignments/getAssignmentList',
+    assignmentsTotal: 'assignments/getAssignmentTotal',
   }),
 };
 
@@ -20,7 +20,7 @@ export const assignmentsMethods = {
   }),
 
   ...mapMutations({
-    clearAssignments: 'assignments/clearItems',
+    clearAssignments: 'assignments/clearAssignmentList',
     clearAssignmentForm: 'assignments/form/clear',
     setAssignmentForm: 'assignments/form/set',
   }),

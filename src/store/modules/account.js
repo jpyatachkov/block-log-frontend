@@ -12,9 +12,9 @@ const actions = {
   async logout({ commit }) {
     await ApiService.logout();
 
-    commit('assignments/clearItems', null, { root: true });
-    commit('courses/clearItems', null, { root: true });
-    commit('courses/clearMyItems', null, { root: true });
+    commit('assignments/clearAssignmentList', null, { root: true });
+    commit('courses/clearCourseList', null, { root: true });
+    commit('courses/clearMyCourseList', null, { root: true });
     commit('solutions/clearItems', null, { root: true });
   },
 

@@ -1,15 +1,17 @@
 import { ApiService } from '@/services';
+import { createItemFromFormSetter } from '@/store/utils';
 
-function setItem({ rootState, commit, response }) {
-  commit('courses/setItem', response, { root: true });
-  return rootState.courses.course.id;
-}
-
-const state = {
+const createEmptyState = () => ({
   title: '',
   description: '',
   unsaved: false,
-};
+});
+const setItem = createItemFromFormSetter(
+  'courses/setCourse',
+  (rootState) => rootState.courses.course.id,
+);
+
+const state = createEmptyState();
 
 const actions = {
   async create({ commit, rootState }, { course }) {
@@ -38,9 +40,10 @@ const getters = {
 
 const mutations = {
   clear(state) {
-    state.title = '';
-    state.description = '';
-    state.unsaved = false;
+    state = {
+      ...state,
+      ...createEmptyState(),
+    };
   },
 
   set(state, form) {

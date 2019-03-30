@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="BlkItemsGrid__container">
+    <div class="BlkItemsGrid__container height-100">
       <div
       v-for="(item, index) in items"
       :key="index"

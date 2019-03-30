@@ -10,13 +10,13 @@ export const coursePermissions = {
 
 export const coursesComputed = {
   ...mapGetters({
-    course: 'courses/item',
+    course: 'courses/getCourse',
     courseForm: 'courses/form/data',
     courseFormUnsaved: 'courses/form/unsaved',
-    courses: 'courses/items',
-    coursesTotal: 'courses/total',
-    myCourses: 'courses/myItems',
-    myCoursesTotal: 'courses/myTotal',
+    courses: 'courses/getCourseList',
+    coursesTotal: 'courses/getCourseTotal',
+    myCourses: 'courses/getMyCourseList',
+    myCoursesTotal: 'courses/getMyCourseTotal',
   }),
 
   ...coursePermissions,
@@ -35,8 +35,8 @@ export const coursesMethods = {
   }),
 
   ...mapMutations({
-    clearCourses: 'courses/clearItems',
-    clearMyCourses: 'courses/clearMyItems',
+    clearCourses: 'courses/clearCourseList',
+    clearMyCourses: 'courses/clearMyCourseList',
     clearCourseForm: 'courses/form/clear',
   }),
 };

@@ -130,29 +130,28 @@ router.beforeEach(async (to, from, next) => {
 
   const userLoggedIn = JwtService.hasToken();
 
+  // Если пользователь залогинен,
+  // при первом входе на сайт показываем ему не лендинг,
+  // а список его курсов.
+  if (initialPageLoad && to.name === 'home' && userLoggedIn) {
+    return next({ name: 'my_courses' });
+  }
+
+  initialPageLoad = false;
+
   if (forLoggedIn && userLoggedIn) {
     await router.app.$store.dispatch('account/me');
   }
 
-  // Для удобства если пользователь залогинен, показываем ему не
-  // лендинг, а список его курсов.
-  if (initialPageLoad && to.name === 'home') {
-    initialPageLoad = false;
-
-    if (userLoggedIn) {
-      return next({ name: 'my_courses' });
-    } else {
-      return next();
-    }
-  }
-
   if (forAnonymous && userLoggedIn) {
     return next({ name: 'home' });
-  } else if (forLoggedIn && !userLoggedIn) {
-    return next({ name: 'login' });
-  } else {
-    return next();
   }
+
+  if (forLoggedIn && !userLoggedIn) {
+    return next({ name: 'login', query: { redirect: to.fullPath } });
+  }
+
+  next();
 });
 
 export default router;
