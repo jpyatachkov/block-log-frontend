@@ -10,7 +10,7 @@
 
     <p>{{ description }}</p>
 
-    <b-row>
+    <b-row class="mt-3">
       <b-col
       md="8"
       lg="9"
@@ -23,7 +23,7 @@
       >
         <blk-card-actions v-if="!preview">
           <blk-button
-          v-if="showEnrollButton"
+          v-if="userCanEnroll"
           block
           round
           variant="primary"
@@ -32,7 +32,7 @@
             {{ enrollButtonText }}
           </blk-button>
           <div
-          v-else-if="showEditButton"
+          v-else-if="userCanEdit"
           class="d-flex fill-width"
           >
             <blk-button
@@ -51,15 +51,15 @@
 </template>
 
 <script>
-import { coursePermissions, coursesMethods } from '@/store/helpers';
+import { CoursePermissionsMixin, ShortenMixin } from '@/mixins';
 
 import { AccountService } from '@/services';
-import { ShortenMixin } from '@/mixins';
+import { coursesMethods } from '@/store/helpers';
 
 export default {
   name: 'CourseCard',
 
-  mixins: [ShortenMixin],
+  mixins: [CoursePermissionsMixin, ShortenMixin],
 
   props: {
     course: {
@@ -77,8 +77,6 @@ export default {
   }),
 
   computed: {
-    ...coursePermissions,
-
     classes() {
       return {
         pointer: this.preview,
@@ -105,16 +103,6 @@ export default {
       }
 
       return text;
-    },
-
-    showEditButton() {
-      return (
-        this.userIsEnrolled && (this.userIsCollaborator || this.userIsModerator)
-      );
-    },
-
-    showEnrollButton() {
-      return !this.userIsEnrolled;
     },
 
     title() {

@@ -1,65 +1,65 @@
 <template>
-  <b-row>
-    <b-col lg="3" />
-
-    <b-col
-    xs="12"
-    md="6"
-    lg="3"
-    >
-      <blk-button
-      block
-      class="mr-2"
-      round
-      variant="primary"
-      @click="onEditClick"
+  <blk-card>
+    <b-row>
+      <b-col
+      class="mt-2 mb-2"
+      xs="12"
+      md="6"
       >
-        Редактировать задание
-      </blk-button>
-    </b-col>
-
-    <!-- <b-col
-    xs="12"
-    md="6"
-    lg="3"
-    >
-      <blk-button
-      block
-      round
-      variant="danger"
-      @click="showModal = true"
-      >
-        Удалить задание
-      </blk-button>
-    </b-col> -->
-
-    <b-modal
-    v-model="showModal"
-    busy
-    centered
-    title="Удалить курс?"
-    >
-      <p class="my-4">
-        Это действие приведет к безвозвратному удалению задания. Вы уверены?
-      </p>
-
-      <blk-form-buttons slot="modal-footer">
         <blk-button
+        block
         class="mr-2"
-        @click="showModal = false"
+        round
+        variant="primary"
+        @click="onEditClick"
         >
-          Отмена
+          Редактировать задание
         </blk-button>
+      </b-col>
 
+      <b-col
+      class="mt-2 mb-2"
+      xs="12"
+      md="6"
+      >
         <blk-button
+        block
+        round
         variant="danger"
-        @click="onDeleteClick"
+        @click="showModal = true"
         >
-          Удалить
+          Удалить задание
         </blk-button>
-      </blk-form-buttons>
-    </b-modal>
-  </b-row>
+      </b-col>
+
+      <b-modal
+      v-model="showModal"
+      busy
+      centered
+      title="Удалить курс?"
+      >
+        <p class="my-4">
+          Это действие приведет к безвозвратному удалению задания. Вы уверены?
+        </p>
+
+        <blk-form-buttons slot="modal-footer">
+          <blk-button
+          class="mr-2"
+          @click="showModal = false"
+          >
+            Отмена
+          </blk-button>
+
+          <blk-button
+          variant="danger"
+          @click="onDeleteClick"
+          >
+            Удалить
+          </blk-button>
+        </blk-form-buttons>
+      </b-modal>
+    </b-row>
+  </blk-card>
 </template>
 
 <script>
@@ -74,6 +74,8 @@ export default {
 
   methods: {
     ...assignmentsMethods,
+
+    onChangeClick() {},
 
     async onDeleteClick() {
       // const courseId = this.$route.params.courseId;

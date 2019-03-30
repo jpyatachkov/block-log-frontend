@@ -1,7 +1,7 @@
 <template>
   <blk-card
   :hoverable="preview"
-  @click.native="onClick"
+  @click.native="onCardClick"
   >
     <assignment-card-number
     v-if="preview"
@@ -11,14 +11,36 @@
 
     {{ text }}
 
-    <assignment-edit-card v-if="showEdit" />
+    <b-row class="mt-3">
+      <b-col
+      md="8"
+      lg="9"
+      />
+
+      <b-col
+      xs="12"
+      md="4"
+      lg="3"
+      >
+        <blk-card-actions v-if="!preview">
+          <blk-button
+          block
+          round
+          variant="outline-primary"
+          @click="onEditButtonClick"
+          >
+            {{ editMode ? 'Просмотр' : 'Редактирование' }}
+          </blk-button>
+        </blk-card-actions>
+      </b-col>
+    </b-row>
   </blk-card>
 </template>
 
 <script>
+import { CoursePermissionsMixin, ShortenMixin } from '@/mixins';
+
 import AssignmentCardNumber from './AssignmentCardNumber';
-import AssignmentEditCard from './AssignmentEditCard';
-import { ShortenMixin } from '@/mixins';
 import { coursePermissions } from '@/store/helpers';
 
 export default {
@@ -26,10 +48,9 @@ export default {
 
   components: {
     AssignmentCardNumber,
-    AssignmentEditCard,
   },
 
-  mixins: [ShortenMixin],
+  mixins: [CoursePermissionsMixin, ShortenMixin],
 
   props: {
     assignment: {
@@ -46,18 +67,12 @@ export default {
     },
   },
 
+  data: () => ({
+    editMode: false,
+  }),
+
   computed: {
     ...coursePermissions,
-
-    showEdit() {
-      if (this.preview) {
-        return false;
-      }
-
-      return (
-        this.userIsEnrolled && (this.userIsCollaborator || this.userIsModerator)
-      );
-    },
 
     text() {
       let text = this.assignment.text;
@@ -71,13 +86,18 @@ export default {
   },
 
   methods: {
-    onClick() {
+    onCardClick() {
       if (this.preview) {
         const courseId = this.assignment.course.id;
         const id = this.assignment.id;
 
         this.$router.push({ name: 'assignment', params: { courseId, id } });
       }
+    },
+
+    onEditButtonClick() {
+      this.editMode = !this.editMode;
+      this.$emit('edit', this.editMode);
     },
   },
 };

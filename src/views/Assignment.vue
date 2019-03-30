@@ -1,8 +1,16 @@
 <template>
-  <assignment-card
-  :assignment="assignment"
-  :preview="false"
-  />
+  <div>
+    <assignment-card
+    :assignment="assignment"
+    :preview="false"
+    @edit="editMode = $event"
+    />
+
+    <assignment-edit-card
+    v-if="editMode"
+    class="mt-3 mb-3"
+    />
+  </div>
 </template>
 
 <script>
@@ -14,15 +22,21 @@ import {
 } from '@/store/helpers';
 
 import AssignmentCard from '@/components/AssignmentCard';
+import AssignmentEditCard from '@/components/AssignmentEditCard';
 
 export default {
   name: 'Assignment',
 
   components: {
     AssignmentCard,
+    AssignmentEditCard,
   },
 
   mixins: [FetchResourceMixin, MainLayoutMixin],
+
+  data: () => ({
+    editMode: false,
+  }),
 
   computed: {
     ...assignmentsComputed,
