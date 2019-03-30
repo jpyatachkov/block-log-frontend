@@ -1,5 +1,5 @@
 export default {
-  __get(key) {
+  __get(key, parse = true) {
     const value = localStorage.getItem(key);
 
     if (!value) {
@@ -7,7 +7,7 @@ export default {
     }
 
     try {
-      return JSON.parse(value);
+      return parse ? JSON.parse(value) : value;
     } catch (err) {
       return null;
     }
@@ -17,8 +17,8 @@ export default {
     localStorage.removeItem(key);
   },
 
-  __set(key, value) {
-    const stringified = JSON.stringify(value);
+  __set(key, value, stringify = true) {
+    const stringified = stringify ? JSON.stringify(value) : value;
     localStorage.setItem(key, stringified);
   },
 };
