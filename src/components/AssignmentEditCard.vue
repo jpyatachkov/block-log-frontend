@@ -18,7 +18,7 @@
       </blk-button>
     </b-col>
 
-    <b-col
+    <!-- <b-col
     xs="12"
     md="6"
     lg="3"
@@ -31,7 +31,7 @@
       >
         Удалить задание
       </blk-button>
-    </b-col>
+    </b-col> -->
 
     <b-modal
     v-model="showModal"
@@ -76,12 +76,10 @@ export default {
     ...assignmentsMethods,
 
     async onDeleteClick() {
-      const courseId = this.$route.params.courseId;
-      const assignmentId = this.$route.params.id;
-
-      await this.deleteAssignment({ courseId, assignmentId });
-
-      this.clearAssignments();
+      // const courseId = this.$route.params.courseId;
+      // const assignmentId = this.$route.params.id;
+      // await this.deleteAssignment({ courseId, assignmentId });
+      // this.clearAssignments();
     },
 
     onEditClick() {
