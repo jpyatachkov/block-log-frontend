@@ -1,5 +1,5 @@
 <template>
-  <div class="SimpleLayout__container container height-100">
+  <div class="SimpleLayout__container bg-native container height-100">
     <aside class="SimpleLayout__aside">
       <img
       class="SimpleLayout__logo mt-1 mb-3 pointer"

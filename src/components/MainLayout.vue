@@ -1,5 +1,5 @@
 <template>
-  <main class="MainLayout__container height-100">
+  <main class="bg-native height-100">
     <main-layout-nav-bar />
     <main-layout-content />
   </main>
@@ -18,9 +18,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.MainLayout__container {
-  background-color: #f1f5fb;
-}
-</style>
