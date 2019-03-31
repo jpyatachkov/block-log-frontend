@@ -6,6 +6,16 @@
   >
     <blk-card-header>
       {{ title }}
+
+      <div
+      v-if="!preview"
+      slot="link-back"
+      class="mb-2"
+      >
+        <router-link :to="{ name: 'my_courses' }">
+          К моим курсам
+        </router-link>
+      </div>
     </blk-card-header>
 
     <p>{{ description }}</p>

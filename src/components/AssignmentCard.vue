@@ -9,7 +9,21 @@
     :number="index"
     />
 
-    <blk-card-header> {{ assignment.id }} {{ title }} </blk-card-header>
+    <blk-card-header>
+      {{ title }}
+
+      <div
+      v-if="!preview"
+      slot="link-back"
+      class="mb-2"
+      >
+        <router-link
+        :to="{ name: 'course', params: { id: $route.params.courseId } }"
+        >
+          К странице курса
+        </router-link>
+      </div>
+    </blk-card-header>
 
     <p v-if="!preview">
       {{ assignment.description }}
