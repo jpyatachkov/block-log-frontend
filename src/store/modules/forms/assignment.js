@@ -1,9 +1,13 @@
 import { ApiService } from '@/services';
 import { createItemFromFormSetter } from '@/store/utils';
 
+/**
+ * Поле program хранится в localStorage и доступно через EditorService.
+ */
 const createEmptyState = () => ({
-  text: '',
-  tests: [],
+  title: '',
+  description: '',
+  inputs: [],
   unsaved: false,
 });
 const setItem = createItemFromFormSetter(
@@ -35,8 +39,9 @@ const actions = {
 const getters = {
   data(state) {
     return {
-      text: state.text,
-      tests: state.tests,
+      title: state.text,
+      description: state.description,
+      inputs: state.inputs,
     };
   },
 
@@ -47,17 +52,19 @@ const getters = {
 
 const mutations = {
   clear(state) {
-    state = {
-      ...state,
-      ...createEmptyState(),
-    };
+    const emptyState = createEmptyState();
+
+    for (let attr in emptyState) {
+      state[attr] = emptyState[attr];
+    }
   },
 
   set(state, form) {
-    const { text, tests } = form;
+    const { title, description, inputs } = form;
 
-    state.text = text;
-    state.tests = tests;
+    state.title = title;
+    state.description = description;
+    state.inputs = inputs;
     state.unsaved = true;
   },
 };

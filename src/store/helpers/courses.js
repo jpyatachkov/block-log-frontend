@@ -12,7 +12,6 @@ export const coursesComputed = {
   ...mapGetters({
     course: 'courses/getCourse',
     courseForm: 'courses/form/data',
-    courseFormUnsaved: 'courses/form/unsaved',
     courses: 'courses/getCourseList',
     coursesTotal: 'courses/getCourseTotal',
     myCourses: 'courses/getMyCourseList',

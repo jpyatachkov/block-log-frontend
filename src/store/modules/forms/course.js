@@ -3,8 +3,8 @@ import { createItemFromFormSetter } from '@/store/utils';
 
 const createEmptyState = () => ({
   title: '',
+  shortDescription: '',
   description: '',
-  unsaved: false,
 });
 const setItem = createItemFromFormSetter(
   'courses/setCourse',
@@ -29,29 +29,27 @@ const getters = {
   data(state) {
     return {
       title: state.title,
+      shortDescription: state.shortDescription,
       description: state.description,
     };
-  },
-
-  unsaved(state) {
-    return state.unsaved;
   },
 };
 
 const mutations = {
   clear(state) {
-    state = {
-      ...state,
-      ...createEmptyState(),
-    };
+    const emptyState = createEmptyState();
+
+    for (let attr in emptyState) {
+      state[attr] = emptyState[attr];
+    }
   },
 
   set(state, form) {
-    const { title, description } = form;
+    const { title, shortDescription, description } = form;
 
     state.title = title;
+    state.shortDescription = shortDescription;
     state.description = description;
-    state.unsaved = true;
   },
 };
 

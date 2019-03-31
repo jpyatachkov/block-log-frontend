@@ -7,9 +7,15 @@
     />
 
     <blk-textarea
+    v-model.lazy="form.shortDescription"
+    :errors="shortDescriptionErrors"
+    label="Краткое описание"
+    />
+
+    <blk-textarea
     v-model.lazy="form.description"
     :errors="descriptionErrors"
-    label="Краткое описание"
+    label="Полное описание"
     />
 
     <blk-form-buttons>
@@ -57,6 +63,7 @@ export default {
   data: () => ({
     form: {
       title: '',
+      shortDescription: '',
       description: '',
     },
   }),
@@ -66,6 +73,10 @@ export default {
       return this.getFieldErrors('form.title');
     },
 
+    shortDescriptionErrors() {
+      return this.getFieldErrors('form.shortDescription');
+    },
+
     descriptionErrors() {
       return this.getFieldErrors('form.description');
     },
@@ -73,15 +84,17 @@ export default {
 
   validators: {
     'form.title': (v) => Validator.value(v).required(REQUIRED),
+    'form.shortDescription': (v) => Validator.value(v).required(REQUIRED),
     'form.description': (v) => Validator.value(v).required(REQUIRED),
   },
 
   methods: {
     setFormData(form) {
-      const { title, description } = form;
+      const { title, shortDescription, description } = form;
 
       this.form = {
         title,
+        shortDescription,
         description,
       };
     },

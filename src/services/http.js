@@ -1,5 +1,6 @@
 import JwtService from './jwt';
 import axios from 'axios';
+import router from '@/router';
 
 axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL;
 axios.defaults.headers = {
@@ -15,14 +16,25 @@ export default {
       ...headers,
       Authorization: `Bearer ${this.getToken()}`,
     };
-    return axios({
-      url,
-      method,
-      headers,
-      params,
-      data,
-      timeout,
-    });
+
+    try {
+      const response = await axios({
+        url,
+        method,
+        headers,
+        params,
+        data,
+        timeout,
+      });
+      return response;
+    } catch (err) {
+      switch (err.response.status) {
+        case 404:
+          router.push({ name: 'not_found' });
+      }
+
+      throw err;
+    }
   },
 
   async doGet({ url, headers, params, timeout }) {

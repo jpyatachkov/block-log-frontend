@@ -1,12 +1,33 @@
 <template>
-  <blk-form @submit="onSubmit">
-    <blk-textarea
-    v-model.lazy="form.text"
-    :errors="textErrors"
-    label="Краткое описание"
+  <blk-form
+  @submit="
+    onSubmit();
+    clearAutosavedData();
+  "
+  >
+    <blk-input
+    v-model.lazy="form.title"
+    :errors="titleErrors"
+    label="Название задания"
     />
 
-    <blk-form-buttons>
+    <blk-textarea
+    v-model.lazy="form.description"
+    :errors="descriptionErrors"
+    label="Текст задания"
+    />
+
+    <blk-button
+    :disabled="loading"
+    :loading="loading"
+    round
+    variant="outline-primary"
+    @click.prevent="onRedirectToEditor"
+    >
+      {{ update ? 'Обновить' : 'Создать' }} шаблон решения
+    </blk-button>
+
+    <blk-form-buttons class="mt-2">
       <prev-page-link />
 
       <blk-button
@@ -23,10 +44,12 @@
 </template>
 
 <script>
+import { EditorService } from '@/services';
 import { FormValidationMixin } from '@/mixins';
 import PrevPageLink from './PrevPageLink';
 import { REQUIRED } from '@/utils/validators/inputs';
 import Validator from '@/utils/form-validator';
+import { assignmentsMethods } from '@/store/helpers';
 
 export default {
   name: 'AssignmentForm',
@@ -50,26 +73,54 @@ export default {
 
   data: () => ({
     form: {
-      text: '',
+      title: '',
+      description: '',
+      program: null,
+      inputs: [''],
+      outputs: [''],
     },
   }),
 
   computed: {
-    textErrors() {
-      return this.getFieldErrors('form.text');
+    titleErrors() {
+      return this.getFieldErrors('form.title');
+    },
+
+    descriptionErrors() {
+      return this.getFieldErrors('form.description');
     },
   },
 
   validators: {
-    'form.text': (v) => Validator.value(v).required(REQUIRED),
+    'form.title': (v) => Validator.value(v).required(REQUIRED),
+    'form.description': (v) => Validator.value(v).required(REQUIRED),
   },
 
   methods: {
+    ...assignmentsMethods,
+
+    clearAutosavedData() {
+      this.clearAssignmentForm();
+    },
+
+    onRedirectToEditor() {
+      this.setAssignmentForm(this.form);
+
+      EditorService.setButtonText('Сохранить шаблон');
+      EditorService.setProgram(this.form.program);
+      EditorService.setRedirectURL(this.$route.fullPath);
+      EditorService.openEditor();
+    },
+
     setFormData(form) {
-      const { text } = form;
+      const { title, description, program, inputs, outputs } = form;
 
       this.form = {
-        text,
+        title,
+        description,
+        program,
+        inputs,
+        outputs,
       };
     },
   },

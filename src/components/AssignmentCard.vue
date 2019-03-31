@@ -9,7 +9,13 @@
     :number="index"
     />
 
-    {{ text }}
+    <blk-card-header>
+      {{ title }}
+    </blk-card-header>
+
+    <p v-if="!preview">
+      {{ assignment.description }}
+    </p>
 
     <b-row class="mt-3">
       <b-col
@@ -22,7 +28,7 @@
       md="4"
       lg="3"
       >
-        <blk-card-actions v-if="!preview">
+        <blk-card-actions v-if="!preview && userCanEdit">
           <blk-button
           block
           round
@@ -74,14 +80,14 @@ export default {
   computed: {
     ...coursePermissions,
 
-    text() {
-      let text = this.assignment.text;
+    title() {
+      let title = this.assignment.title;
 
       if (this.preview) {
-        text = this.shorten(text, 100);
+        title = this.shorten(title, 100);
       }
 
-      return text;
+      return title;
     },
   },
 

@@ -1,5 +1,9 @@
 export default {
   async created() {
-    await this.doFetch();
+    try {
+      await this.doFetch();
+    } catch (err) {
+      // DO NOTHING
+    }
   },
 };

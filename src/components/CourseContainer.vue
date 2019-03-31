@@ -45,13 +45,9 @@ export default {
 
   async mounted() {
     if (this.update) {
-      if (this.courseFormUnsaved) {
-        this.setFormData(this.courseForm);
-      } else {
-        const courseId = this.$route.params.id;
-        const courseForm = await this.getCourse({ courseId });
-        this.setFormData(courseForm);
-      }
+      const courseId = this.$route.params.id;
+      const courseForm = await this.getCourse({ courseId });
+      this.setFormData(courseForm);
     }
   },
 

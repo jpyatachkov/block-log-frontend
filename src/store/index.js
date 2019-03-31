@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import account from './modules/account';
 import assignments from './modules/assignments';
 import courses from './modules/courses';
+import createPersistedState from 'vuex-persistedstate';
 import solutions from './modules/solutions';
 
 Vue.use(Vuex);
@@ -36,6 +37,11 @@ export default new Vuex.Store({
   state,
   mutations,
   getters,
+  plugins: [
+    createPersistedState({
+      paths: ['assignments.form'],
+    }),
+  ],
   modules: {
     account,
     assignments,

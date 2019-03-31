@@ -17,6 +17,7 @@
 import { assignmentsComputed, assignmentsMethods } from '@/store/helpers';
 
 import AssignmentForm from './AssignmentForm';
+import { EditorService } from '@/services';
 import { LoadingMixin } from '@/mixins';
 
 export default {
@@ -46,7 +47,12 @@ export default {
   async mounted() {
     if (this.update) {
       if (this.assignmentFormUnsaved) {
-        this.setFormData(this.assignmentForm);
+        const program = EditorService.getProgram();
+
+        this.setFormData({
+          ...this.assignmentForm,
+          program,
+        });
       } else {
         const courseId = this.$route.params.courseId;
         const assignmentId = this.$route.params.id;
@@ -58,6 +64,8 @@ export default {
 
         this.setFormData(assignmentForm);
       }
+
+      EditorService.clearButtonText().clearRedirectURL();
     }
   },
 
@@ -71,14 +79,25 @@ export default {
       const courseId = this.$route.params.courseId;
 
       try {
+        let id;
+
         if (this.update) {
           const assignmentId = this.$route.params.id;
-          await this.updateAssignment({ courseId, assignmentId, assignment });
+          id = await this.updateAssignment({
+            courseId,
+            assignmentId,
+            assignment,
+          });
         } else {
-          await this.createAssignment({ courseId, assignment });
+          id = await this.createAssignment({ courseId, assignment });
         }
 
-        this.$router.push({ name: 'course', params: { id: courseId } });
+        EditorService.clearProgram();
+
+        this.$router.push({
+          name: 'assignment',
+          params: { courseId: courseId, id },
+        });
       } catch (error) {
         this.$refs.form.mapBackendErrorsToFields(error);
       } finally {

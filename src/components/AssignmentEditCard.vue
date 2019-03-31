@@ -75,13 +75,14 @@ export default {
   methods: {
     ...assignmentsMethods,
 
-    onChangeClick() {},
-
     async onDeleteClick() {
-      // const courseId = this.$route.params.courseId;
-      // const assignmentId = this.$route.params.id;
-      // await this.deleteAssignment({ courseId, assignmentId });
-      // this.clearAssignments();
+      const courseId = this.$route.params.courseId;
+      const assignmentId = this.$route.params.id;
+      await this.deleteAssignment({ courseId, assignmentId });
+      this.clearAssignments();
+
+      const id = this.$route.params.courseId;
+      this.$router.push({ name: 'course', params: { id } });
     },
 
     onEditClick() {

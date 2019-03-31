@@ -84,10 +84,12 @@ export default {
     },
 
     description() {
-      let description = this.course.description;
+      let description;
 
       if (this.preview) {
-        description = this.shorten(description, 100);
+        description = this.shorten(this.course.shortDescription, 100);
+      } else {
+        description = this.course.description;
       }
 
       return description;
