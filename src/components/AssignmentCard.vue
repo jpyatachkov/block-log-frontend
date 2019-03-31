@@ -9,9 +9,7 @@
     :number="index"
     />
 
-    <blk-card-header>
-      {{ title }}
-    </blk-card-header>
+    <blk-card-header> {{ assignment.id }} {{ title }} </blk-card-header>
 
     <p v-if="!preview">
       {{ assignment.description }}

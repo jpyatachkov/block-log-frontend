@@ -19,7 +19,7 @@
 <script>
 import { getPageHeight, getScrollHeight } from '@/utils/helpers';
 
-const FETCH_SCROLL_THRESHOLD = 50;
+const FETCH_SCROLL_THRESHOLD = 100;
 
 export default {
   name: 'BlkItemsGrid',

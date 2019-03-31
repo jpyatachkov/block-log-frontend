@@ -25,6 +25,8 @@ export function createCollectionGetAction(apiCallback, entityName) {
     const currentPage = currentPageCallback(state);
     const totalItems = totalItemsCallback(state);
 
+    console.log(page, currentPage, totalItems);
+
     if (page === 1 && currentPage > page) {
       commit(setLoadingMutationName, false);
       return;

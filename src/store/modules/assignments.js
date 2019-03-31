@@ -22,7 +22,7 @@ const actions = {
   get: createCollectionGetAction(async ({ state }, { courseId, size }) => {
     return ApiService.getAssignments({
       courseId,
-      page: state.assignmentsCurrentPage + 1,
+      page: state.assignmentCurrentPage + 1,
       size,
     });
   }, 'assignment'),

@@ -1,14 +1,16 @@
 import { capitalize } from '@/utils/helpers';
 
 export function getCallbacksByEntity(entityName) {
-  const { item, itemCurrentPage, itemLoading } = getCollectionAttrNamesByEntity(
-    entityName,
-  );
+  const {
+    itemCurrentPage,
+    itemList,
+    itemLoading,
+  } = getCollectionAttrNamesByEntity(entityName);
 
   return {
     currentPageCallback: (state) => state[itemCurrentPage],
     isLoadingCallback: (state) => state[itemLoading],
-    totalItemsCallback: (state) => state[item].total,
+    totalItemsCallback: (state) => state[itemList].total,
   };
 }
 
