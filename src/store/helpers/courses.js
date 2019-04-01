@@ -16,6 +16,7 @@ export const coursesComputed = {
     coursesTotal: 'courses/getCourseTotal',
     myCourses: 'courses/getMyCourseList',
     myCoursesTotal: 'courses/getMyCourseTotal',
+    coursesEditState: 'courses/getCourseEditState',
   }),
 
   ...coursePermissions,
@@ -34,6 +35,7 @@ export const coursesMethods = {
   }),
 
   ...mapMutations({
+    changeCoursesEditState: 'courses/changeCourseEditState',
     clearCourses: 'courses/clearCourseList',
     clearMyCourses: 'courses/clearMyCourseList',
     clearCourseForm: 'courses/form/clear',

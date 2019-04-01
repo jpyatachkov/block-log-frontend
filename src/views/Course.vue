@@ -3,11 +3,11 @@
     <course-card
     :course="course"
     :preview="false"
-    @edit="editMode = $event"
+    @edit="changeEditState"
     />
 
     <course-edit-card
-    v-if="editMode"
+    v-if="isEditMode"
     class="mt-3 mb-3"
     />
 
@@ -51,6 +51,11 @@ export default {
   computed: {
     ...assignmentsComputed,
     ...coursesComputed,
+
+    isEditMode() {
+      const idAsString = `${this.$route.params.id}`;
+      return this.coursesEditState.includes(idAsString);
+    },
   },
 
   created() {
@@ -60,6 +65,11 @@ export default {
   methods: {
     ...assignmentsMethods,
     ...coursesMethods,
+
+    changeEditState(isEditMode) {
+      const id = this.$route.params.id;
+      this.changeCoursesEditState({ id, isEditMode });
+    },
 
     async doFetch() {
       const courseId = this.$route.params.id;

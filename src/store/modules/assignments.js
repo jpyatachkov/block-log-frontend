@@ -3,20 +3,26 @@ import {
   createCollectionGetAction,
   createCollectionGetters,
   createCollectionMutations,
+  createEditStateEmptyState,
+  createEditStateGetters,
+  createEditStateMutations,
 } from '@/store/utils';
 
 import { ApiService } from '@/services';
 import form from './forms/assignment';
-import { getMutationNamesByEntity } from '@/store/utils/helpers';
+import { getCollectionMutationNamesByEntity } from '@/store/utils/collection-state/helpers';
+
+const ASSIGNMENT = 'assignment';
 
 const state = {
-  ...createCollectionEmptyState('assignment'),
+  ...createCollectionEmptyState(ASSIGNMENT),
+  ...createEditStateEmptyState(ASSIGNMENT),
 };
 
 const {
   clearName: clearMutationName,
   setName: setMutationName,
-} = getMutationNamesByEntity('assignment');
+} = getCollectionMutationNamesByEntity(ASSIGNMENT);
 
 const actions = {
   get: createCollectionGetAction(async ({ state }, { courseId, size }) => {
@@ -40,11 +46,13 @@ const actions = {
 };
 
 const mutations = {
-  ...createCollectionMutations('assignment'),
+  ...createCollectionMutations(ASSIGNMENT),
+  ...createEditStateMutations(ASSIGNMENT),
 };
 
 const getters = {
-  ...createCollectionGetters('assignment'),
+  ...createCollectionGetters(ASSIGNMENT),
+  ...createEditStateGetters(ASSIGNMENT),
 };
 
 export default {

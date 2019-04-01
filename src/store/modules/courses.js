@@ -3,11 +3,14 @@ import {
   createCollectionGetAction,
   createCollectionGetters,
   createCollectionMutations,
+  createEditStateEmptyState,
+  createEditStateGetters,
+  createEditStateMutations,
 } from '@/store/utils';
 
 import { ApiService } from '@/services';
 import form from './forms/course';
-import { getMutationNamesByEntity } from '@/store/utils/helpers';
+import { getCollectionMutationNamesByEntity } from '@/store/utils/collection-state/helpers';
 
 /**
  * @param {*} state
@@ -17,15 +20,19 @@ function getUserRights(state) {
   return state.course.userRights || [];
 }
 
+const COURSE = 'course';
+const MY_COURSE = 'myCourse';
+
 const state = {
-  ...createCollectionEmptyState('course'),
-  ...createCollectionEmptyState('myCourse'),
+  ...createCollectionEmptyState(COURSE),
+  ...createCollectionEmptyState(MY_COURSE),
+  ...createEditStateEmptyState(COURSE),
 };
 
 const {
   clearName: clearMutationName,
   setName: setMutationName,
-} = getMutationNamesByEntity('course');
+} = getCollectionMutationNamesByEntity(COURSE);
 
 const actions = {
   get: createCollectionGetAction(async ({ size }) => {
@@ -33,14 +40,14 @@ const actions = {
       page: state.courseCurrentPage + 1,
       size,
     });
-  }, 'course'),
+  }, COURSE),
 
   getMine: createCollectionGetAction(async ({ size }) => {
     return ApiService.getMyCourses({
       page: state.myCourseCurrentPage + 1,
       size,
     });
-  }, 'myCourse'),
+  }, MY_COURSE),
 
   async getOne({ commit }, { courseId }) {
     const response = await ApiService.getCourse({ courseId });
@@ -60,13 +67,15 @@ const actions = {
 };
 
 const mutations = {
-  ...createCollectionMutations('course'),
-  ...createCollectionMutations('myCourse'),
+  ...createCollectionMutations(COURSE),
+  ...createCollectionMutations(MY_COURSE),
+  ...createEditStateMutations(COURSE),
 };
 
 const getters = {
-  ...createCollectionGetters('course'),
-  ...createCollectionGetters('myCourse'),
+  ...createCollectionGetters(COURSE),
+  ...createCollectionGetters(MY_COURSE),
+  ...createEditStateGetters(COURSE),
 
   userIsEnrolled(state) {
     return getUserRights(state).includes('user');

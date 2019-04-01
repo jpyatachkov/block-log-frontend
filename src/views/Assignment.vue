@@ -2,12 +2,13 @@
   <div>
     <assignment-card
     :assignment="assignment"
+    :is-edit-mode="isEditMode"
     :preview="false"
-    @edit="editMode = $event"
+    @edit="changeEditState"
     />
 
     <assignment-edit-card
-    v-if="editMode"
+    v-if="isEditMode"
     class="mt-3 mb-3"
     />
   </div>
@@ -34,17 +35,23 @@ export default {
 
   mixins: [FetchResourceMixin, MainLayoutMixin],
 
-  data: () => ({
-    editMode: false,
-  }),
-
   computed: {
     ...assignmentsComputed,
+
+    isEditMode() {
+      const idAsString = `${this.$route.params.id}`;
+      return this.assignmentsEditState.includes(idAsString);
+    },
   },
 
   methods: {
     ...assignmentsMethods,
     ...coursesMethods,
+
+    changeEditState(isEditMode) {
+      const id = this.$route.params.id;
+      this.changeAssignmentsEditState({ id, isEditMode });
+    },
 
     async doFetch() {
       const courseId = this.$route.params.courseId;

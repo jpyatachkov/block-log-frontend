@@ -7,6 +7,7 @@ export const assignmentsComputed = {
     assignmentFormUnsaved: 'assignments/form/unsaved',
     assignments: 'assignments/getAssignmentList',
     assignmentsTotal: 'assignments/getAssignmentTotal',
+    assignmentsEditState: 'assignments/getAssignmentEditState',
   }),
 };
 
@@ -20,6 +21,7 @@ export const assignmentsMethods = {
   }),
 
   ...mapMutations({
+    changeAssignmentsEditState: 'assignments/changeAssignmentEditState',
     clearAssignments: 'assignments/clearAssignmentList',
     clearAssignmentForm: 'assignments/form/clear',
     setAssignmentForm: 'assignments/form/set',

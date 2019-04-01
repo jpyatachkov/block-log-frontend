@@ -47,7 +47,7 @@
           variant="outline-primary"
           @click="onEditButtonClick"
           >
-            {{ editMode ? 'Просмотр' : 'Редактирование' }}
+            {{ isEditMode ? 'Просмотр' : 'Редактирование' }}
           </blk-button>
         </blk-card-actions>
       </b-col>
@@ -79,15 +79,15 @@ export default {
       default: 0,
       type: Number,
     },
+    isEditMode: {
+      default: false,
+      type: Boolean,
+    },
     preview: {
       default: true,
       type: Boolean,
     },
   },
-
-  data: () => ({
-    editMode: false,
-  }),
 
   computed: {
     ...coursePermissions,
@@ -114,8 +114,7 @@ export default {
     },
 
     onEditButtonClick() {
-      this.editMode = !this.editMode;
-      this.$emit('edit', this.editMode);
+      this.$emit('edit', !this.isEditMode);
     },
   },
 };

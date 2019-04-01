@@ -1,7 +1,7 @@
 import {
   getCollectionAttrNamesByEntity,
-  getGetterNamesNyEntity,
-  getMutationNamesByEntity,
+  getCollectionGetterNamesNyEntity,
+  getCollectionMutationNamesByEntity,
 } from './helpers';
 
 export function createCollectionEmptyState(entityName) {
@@ -47,7 +47,7 @@ export function createCollectionMutations(entityName) {
       state[attr] = emptyState[attr];
     }
   };
-  const incrementCurrentPage = (state, value) => {
+  const incrementCurrentPage = (state) => {
     state[itemCurrentPage]++;
   };
   const setItem = (state, value) => {
@@ -64,7 +64,7 @@ export function createCollectionMutations(entityName) {
     incrementName,
     setLoadingName,
     setName,
-  } = getMutationNamesByEntity(entityName);
+  } = getCollectionMutationNamesByEntity(entityName);
 
   return {
     [addName]: addItems,
@@ -89,9 +89,11 @@ export function createCollectionGetters(entityName) {
     return state[itemList].total;
   };
 
-  const { getName, getListName, getTotalName } = getGetterNamesNyEntity(
-    entityName,
-  );
+  const {
+    getName,
+    getListName,
+    getTotalName,
+  } = getCollectionGetterNamesNyEntity(entityName);
 
   return {
     [getName]: getItem,

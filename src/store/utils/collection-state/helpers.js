@@ -1,6 +1,6 @@
 import { capitalize } from '@/utils/helpers';
 
-export function getCallbacksByEntity(entityName) {
+export function getCollectionCallbacksByEntity(entityName) {
   const {
     itemCurrentPage,
     itemList,
@@ -23,17 +23,7 @@ export function getCollectionAttrNamesByEntity(entityName) {
   };
 }
 
-export function getGetterNamesNyEntity(entityName) {
-  const capitalized = capitalize(entityName);
-
-  return {
-    getName: `get${capitalized}`,
-    getListName: `get${capitalized}List`,
-    getTotalName: `get${capitalized}Total`,
-  };
-}
-
-export function getMutationNamesByEntity(entityName) {
+export function getCollectionMutationNamesByEntity(entityName) {
   const capitalized = capitalize(entityName);
 
   return {
@@ -43,5 +33,15 @@ export function getMutationNamesByEntity(entityName) {
     incrementName: `increment${capitalized}CurrentPage`,
     setLoadingName: `set${capitalized}Loading`,
     setName: `set${capitalized}`,
+  };
+}
+
+export function getCollectionGetterNamesNyEntity(entityName) {
+  const capitalized = capitalize(entityName);
+
+  return {
+    getName: `get${capitalized}`,
+    getListName: `get${capitalized}List`,
+    getTotalName: `get${capitalized}Total`,
   };
 }

@@ -1,17 +1,20 @@
-import { getCallbacksByEntity, getMutationNamesByEntity } from './helpers';
+import {
+  getCollectionCallbacksByEntity,
+  getCollectionMutationNamesByEntity,
+} from './helpers';
 
 export function createCollectionGetAction(apiCallback, entityName) {
   const {
     currentPageCallback,
     isLoadingCallback,
     totalItemsCallback,
-  } = getCallbacksByEntity(entityName);
+  } = getCollectionCallbacksByEntity(entityName);
 
   const {
     addName: addItemsMutationName,
     incrementName: incrementCurrentPageMutationName,
     setLoadingName: setLoadingMutationName,
-  } = getMutationNamesByEntity(entityName);
+  } = getCollectionMutationNamesByEntity(entityName);
 
   return async ({ state, commit }, payload) => {
     if (isLoadingCallback(state)) {
@@ -24,8 +27,6 @@ export function createCollectionGetAction(apiCallback, entityName) {
 
     const currentPage = currentPageCallback(state);
     const totalItems = totalItemsCallback(state);
-
-    console.log(page, currentPage, totalItems);
 
     if (page === 1 && currentPage > page) {
       commit(setLoadingMutationName, false);
