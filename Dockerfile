@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:lts-alpine as build-stage
 
 RUN mkdir -p /var/www/block-log-frontend/
 
@@ -14,4 +14,13 @@ COPY ./ ./
 
 RUN yarn build
 
-CMD ["sh", "-c", "tail -f /dev/null"]
+
+FROM nginx:latest as prod-stage
+
+RUN mkdir -p /var/www/block-log-frontend/dist/
+
+COPY --from=build-stage /var/www/block-log-frontend/dist/ /var/www/block-log-frontend/dist/
+
+EXPOSE 80 443
+
+CMD ["nginx", "-g", "daemon off;"]
