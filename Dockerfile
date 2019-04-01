@@ -1,8 +1,10 @@
-FROM node:lts-alpine as build-stage
+FROM node:lts-alpine
 
 RUN mkdir -p /var/www/block-log-frontend/
 
 WORKDIR /var/www/block-log-frontend/
+
+RUN apk update
 
 COPY package*.json ./
 
@@ -11,14 +13,3 @@ RUN yarn install
 COPY ./ ./
 
 RUN yarn build
-
-
-FROM nginx:latest as prod-stage
-
-RUN mkdir -p /var/www/block-log-frontend/dist/
-
-COPY --from=build-stage /var/www/block-log-frontend/dist/ /var/www/block-log-frontend/dist/
-
-EXPOSE 80 443
-
-CMD ["nginx", "-g", "daemon off;"]
