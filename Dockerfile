@@ -1,6 +1,6 @@
 FROM node:lts-alpine
 
-RUN mkdir -p /var/www/block-log-frontend/
+RUN mkdir -p /var/www/block-log-frontend/ && mkdir -p /var/www/block-log-frontend/dist
 
 WORKDIR /var/www/block-log-frontend/
 
@@ -12,4 +12,4 @@ RUN yarn install
 
 COPY ./ ./
 
-RUN yarn build
+CMD yarn build
