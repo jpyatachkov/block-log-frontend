@@ -14,4 +14,4 @@ COPY ./ ./
 
 RUN yarn build
 
-CMD /bin/sh
+CMD ["sh", "-c", "tail -f /dev/null"]
