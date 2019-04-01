@@ -1,6 +1,6 @@
 FROM node:lts-alpine
 
-RUN mkdir -p /var/www/block-log-frontend/ && mkdir -p /var/www/block-log-frontend/dist
+RUN mkdir -p /var/www/block-log-frontend/
 
 WORKDIR /var/www/block-log-frontend/
 
