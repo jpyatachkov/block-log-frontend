@@ -14,4 +14,4 @@ COPY ./ ./
 
 RUN yarn build
 
-CMD /bin/bash
+CMD /bin/sh
