@@ -49,7 +49,7 @@ export default {
     ...coursesMethods,
 
     changeEditState(isEditMode) {
-      const id = this.$route.params.id;
+      const id = `${this.$route.params.id}`;
       this.changeAssignmentsEditState({ id, isEditMode });
     },
 

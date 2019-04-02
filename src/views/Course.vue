@@ -2,6 +2,7 @@
   <div>
     <course-card
     :course="course"
+    :is-edit-mode="isEditMode"
     :preview="false"
     @edit="changeEditState"
     />
@@ -67,7 +68,7 @@ export default {
     ...coursesMethods,
 
     changeEditState(isEditMode) {
-      const id = this.$route.params.id;
+      const id = `${this.$route.params.id}`;
       this.changeCoursesEditState({ id, isEditMode });
     },
 
