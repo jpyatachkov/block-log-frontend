@@ -8,6 +8,7 @@ const createEmptyState = () => ({
   title: '',
   description: '',
   inputs: [],
+  outputs: [],
   unsaved: false,
 });
 const setItem = createItemFromFormSetter(
@@ -39,9 +40,10 @@ const actions = {
 const getters = {
   data(state) {
     return {
-      title: state.text,
+      title: state.title,
       description: state.description,
       inputs: state.inputs,
+      outputs: state.outputs,
     };
   },
 
@@ -60,11 +62,12 @@ const mutations = {
   },
 
   set(state, form) {
-    const { title, description, inputs } = form;
+    const { title, description, inputs, outputs } = form;
 
     state.title = title;
     state.description = description;
     state.inputs = inputs;
+    state.outputs = outputs;
     state.unsaved = true;
   },
 };

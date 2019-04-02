@@ -45,28 +45,26 @@ export default {
   },
 
   async mounted() {
-    if (this.update) {
-      if (this.assignmentFormUnsaved) {
-        const program = EditorService.getProgram();
+    if (this.assignmentFormUnsaved) {
+      const program = EditorService.getProgram();
 
-        this.setFormData({
-          ...this.assignmentForm,
-          program,
-        });
-      } else {
-        const courseId = this.$route.params.courseId;
-        const assignmentId = this.$route.params.id;
+      this.setFormData({
+        ...this.assignmentForm,
+        program,
+      });
+    } else if (this.update) {
+      const courseId = this.$route.params.courseId;
+      const assignmentId = this.$route.params.id;
 
-        const assignmentForm = await this.getAssignment({
-          courseId,
-          assignmentId,
-        });
+      const assignmentForm = await this.getAssignment({
+        courseId,
+        assignmentId,
+      });
 
-        this.setFormData(assignmentForm);
-      }
-
-      EditorService.clearButtonText().clearRedirectURL();
+      this.setFormData(assignmentForm);
     }
+
+    EditorService.clearButtonText().clearRedirectURL();
   },
 
   methods: {

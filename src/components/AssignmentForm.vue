@@ -28,7 +28,7 @@
     </blk-button>
 
     <blk-form-buttons class="mt-2">
-      <prev-page-link />
+      <prev-page-link @click="clearAutosavedData" />
 
       <blk-button
       :disabled="loading"
