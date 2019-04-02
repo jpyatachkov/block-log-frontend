@@ -18,7 +18,9 @@ export default {
   },
 
   __set(key, value, stringify = true) {
-    const stringified = stringify ? JSON.stringify(value) : value;
+    const valueIsString = typeof value === 'string' || value instanceof String;
+    const stringified =
+      stringify && !valueIsString ? JSON.stringify(value) : value;
     localStorage.setItem(key, stringified);
   },
 };

@@ -1,10 +1,18 @@
 <template>
-  <component :is="currentLayout" />
+  <div class="fill-height height-100">
+    <component
+    :is="currentLayout"
+    class="height-100"
+    />
+
+    <editor-iframe />
+  </div>
 </template>
 
 <script>
 import { rootComputed, rootMethods } from '@/store/helpers';
 
+import EditorIframe from '@/components/EditorIframe';
 import EmptyLayout from '@/components/EmptyLayout';
 import MainLayout from '@/components/MainLayout';
 import SimpleLayout from '@/components/SimpleLayout';
@@ -14,6 +22,7 @@ export default {
   name: 'App',
 
   components: {
+    EditorIframe,
     EmptyLayout,
     MainLayout,
     SimpleLayout,

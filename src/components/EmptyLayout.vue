@@ -1,5 +1,5 @@
 <template>
-  <main class="container fill-height height-100">
+  <main class="container">
     <router-view />
   </main>
 </template>

@@ -63,8 +63,6 @@ export default {
 
       this.setFormData(assignmentForm);
     }
-
-    EditorService.clearButtonText().clearRedirectURL();
   },
 
   methods: {
@@ -75,6 +73,8 @@ export default {
       this.$refs.form.clearErrors();
 
       const courseId = this.$route.params.courseId;
+
+      assignment.program = EditorService.getProgram() || assignment.program;
 
       try {
         let id;
@@ -89,8 +89,6 @@ export default {
         } else {
           id = await this.createAssignment({ courseId, assignment });
         }
-
-        EditorService.clearProgram();
 
         this.$router.push({
           name: 'assignment',

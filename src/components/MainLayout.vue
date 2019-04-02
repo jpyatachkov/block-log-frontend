@@ -1,5 +1,5 @@
 <template>
-  <main class="bg-native height-100">
+  <main class="bg-native">
     <main-layout-nav-bar />
     <main-layout-content />
   </main>
