@@ -11,6 +11,11 @@
     v-if="isEditMode"
     class="mt-3 mb-3"
     />
+
+    <solution-create-card
+    v-if="userIsEnrolled"
+    class="mt-3 mb-3"
+    />
   </div>
 </template>
 
@@ -19,11 +24,13 @@ import { FetchResourceMixin, MainLayoutMixin } from '@/mixins';
 import {
   assignmentsComputed,
   assignmentsMethods,
+  coursePermissions,
   coursesMethods,
 } from '@/store/helpers';
 
 import AssignmentCard from '@/components/AssignmentCard';
 import AssignmentEditCard from '@/components/AssignmentEditCard';
+import SolutionCreateCard from '@/components/SolutionCreateCard';
 
 export default {
   name: 'Assignment',
@@ -31,12 +38,14 @@ export default {
   components: {
     AssignmentCard,
     AssignmentEditCard,
+    SolutionCreateCard,
   },
 
   mixins: [FetchResourceMixin, MainLayoutMixin],
 
   computed: {
     ...assignmentsComputed,
+    ...coursePermissions,
 
     isEditMode() {
       const idAsString = `${this.$route.params.id}`;

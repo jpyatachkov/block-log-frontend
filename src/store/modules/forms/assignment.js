@@ -16,7 +16,9 @@ const setItem = createItemFromFormSetter(
   (rootState) => rootState.assignments.assignment.id,
 );
 
-const state = createEmptyState();
+const state = () => ({
+  ...createEmptyState(),
+});
 
 const actions = {
   async create({ commit, rootState }, { courseId, assignment }) {

@@ -14,10 +14,10 @@ import { getCollectionMutationNamesByEntity } from '@/store/utils/collection-sta
 
 const ASSIGNMENT = 'assignment';
 
-const state = {
+const state = () => ({
   ...createCollectionEmptyState(ASSIGNMENT),
   ...createEditStateEmptyState(ASSIGNMENT),
-};
+});
 
 const {
   clearName: clearMutationName,

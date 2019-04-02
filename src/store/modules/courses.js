@@ -23,11 +23,11 @@ function getUserRights(state) {
 const COURSE = 'course';
 const MY_COURSE = 'myCourse';
 
-const state = {
+const state = () => ({
   ...createCollectionEmptyState(COURSE),
   ...createCollectionEmptyState(MY_COURSE),
   ...createEditStateEmptyState(COURSE),
-};
+});
 
 const {
   clearName: clearMutationName,

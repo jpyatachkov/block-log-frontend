@@ -74,7 +74,7 @@ export default {
 
       const courseId = this.$route.params.courseId;
 
-      assignment.program = EditorService.getProgram() || assignment.program;
+      assignment.program = EditorService.getProgram();
 
       try {
         let id;
@@ -89,6 +89,8 @@ export default {
         } else {
           id = await this.createAssignment({ courseId, assignment });
         }
+
+        this.$refs.form.clearProgram();
 
         this.$router.push({
           name: 'assignment',

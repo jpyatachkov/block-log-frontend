@@ -35,21 +35,25 @@ export default {
   },
 
   clearAutosavedProgram() {
+    this.__set(LOCAL_STORAGE_KEYS.AUTOSAVE, getEmptyProgram());
     this.__setIframeKey(LOCAL_STORAGE_KEYS.AUTOSAVE, getEmptyProgram());
     return this;
   },
 
   clearButtonText() {
+    this.__set(LOCAL_STORAGE_KEYS.UPLOAD_BUTTON_TEXT, null);
     this.__setIframeKey(LOCAL_STORAGE_KEYS.UPLOAD_BUTTON_TEXT, null);
     return this;
   },
 
   clearProgram() {
+    this.__set(LOCAL_STORAGE_KEYS.PROGRAM, getEmptyProgram());
     this.__setIframeKey(LOCAL_STORAGE_KEYS.PROGRAM, getEmptyProgram());
     return this;
   },
 
   clearRedirectURL() {
+    this.__set(LOCAL_STORAGE_KEYS.REDIRECT_URL, null);
     this.__setIframeKey(LOCAL_STORAGE_KEYS.REDIRECT_URL, null);
     return this;
   },

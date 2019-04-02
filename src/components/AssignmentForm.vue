@@ -28,7 +28,12 @@
     </blk-button>
 
     <blk-form-buttons class="mt-2">
-      <prev-page-link @click="clearAutosavedData" />
+      <prev-page-link
+      @click="
+        clearAutosavedData();
+        clearProgram();
+      "
+      />
 
       <blk-button
       :disabled="loading"
@@ -103,13 +108,17 @@ export default {
       this.clearAssignmentForm();
     },
 
+    clearProgram() {
+      EditorService.clearAutosavedProgram().clearProgram();
+    },
+
     onRedirectToEditor() {
       this.setAssignmentForm(this.form);
 
-      EditorService.setButtonText('Сохранить шаблон');
-      EditorService.setProgram(this.form.program);
-      EditorService.setRedirectURL(this.$route.fullPath);
-      EditorService.openEditor();
+      EditorService.setButtonText('Сохранить шаблон')
+        .setProgram(this.form.program)
+        .setRedirectURL(this.$route.fullPath)
+        .openEditor();
     },
 
     setFormData(form) {

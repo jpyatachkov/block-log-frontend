@@ -1,8 +1,8 @@
 import { ApiService } from '@/services';
 
-const state = {
+const state = () => ({
   user: {},
-};
+});
 
 const actions = {
   async login(context, { auth }) {
