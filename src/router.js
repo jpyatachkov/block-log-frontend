@@ -148,7 +148,7 @@ router.beforeEach(async (to, from, next) => {
   }
 
   if (forLoggedIn && !userLoggedIn) {
-    return next({ name: 'login', query: { redirect: to.fullPath } });
+    return next({ name: 'login' });
   }
 
   next();
