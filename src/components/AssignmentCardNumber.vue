@@ -22,6 +22,7 @@ export default {
 <style lang="scss" scoped>
 .AssignmentCardNumber__container {
   height: 100px;
+  width: 100%;
   background-color: #75bdf1;
   color: #fff;
   display: flex;
