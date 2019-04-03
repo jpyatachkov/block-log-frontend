@@ -23,7 +23,7 @@ export default {
   },
 
   getToken() {
-    return this.__get(JWT_KEY) || '';
+    return this.__get(JWT_KEY, false) || '';
   },
 
   setToken(token) {
