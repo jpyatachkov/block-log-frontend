@@ -3,7 +3,9 @@
   class="Card Card--word-wrap"
   :class="additionalStyles"
   >
-    <slot name="image" />
+    <div class="Card__image-container">
+      <slot name="image" />
+    </div>
 
     <div class="p-3">
       <slot />
@@ -68,5 +70,12 @@ export default {
 
 .Card--word-wrap {
   word-wrap: break-word;
+}
+
+.Card__image-container {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
 }
 </style>

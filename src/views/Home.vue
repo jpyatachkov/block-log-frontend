@@ -10,7 +10,7 @@
       variant="primary"
       @click="$router.push({ name: 'my_courses' })"
       >
-        Перейти на сайт
+        Начать работу
       </blk-button>
     </div>
 
@@ -21,30 +21,42 @@
         <blk-card
         class="Home__os-card"
         hoverable
+        @click="onWindowsDownload"
         >
-          <img
-          class="Home__os-icon"
-          src="@/assets/win.png"
-          @click="onWindowsDownload"
+          <div
+          id="Home__win"
+          slot="image"
+          class="p-4"
           >
+            <img
+            class="Home__os-icon"
+            src="@/assets/win.png"
+            >
+          </div>
 
           <h3 class="mt-3 text-center">
-            Для Windows
+            Windows
           </h3>
         </blk-card>
 
         <blk-card
         class="Home__os-card"
         hoverable
+        @click="onDarwinDownload"
         >
-          <img
-          class="Home__os-icon"
-          src="@/assets/darwin.png"
-          @click="onDarwinDownload"
+          <div
+          id="Home__darwin"
+          slot="image"
+          class="p-4"
           >
+            <img
+            class="Home__os-icon"
+            src="@/assets/darwin.png"
+            >
+          </div>
 
           <h3 class="mt-3 text-center">
-            Для OS X
+            macOS
           </h3>
         </blk-card>
       </div>
@@ -80,6 +92,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#Home__win {
+  max-height: 200px;
+  max-width: 200px;
+}
+
+#Home__darwin {
+  max-height: 200px;
+  max-width: 200px;
+}
+
 .Home__container {
   display: flex;
   flex-direction: column;
@@ -112,6 +134,7 @@ export default {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  justify-content: center;
 }
 
 .Home__os-card {
@@ -119,7 +142,7 @@ export default {
 }
 
 .Home__os-icon {
-  max-height: 150px;
-  max-width: 150px;
+  width: 100%;
+  height: auto;
 }
 </style>
