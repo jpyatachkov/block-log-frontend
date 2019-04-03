@@ -21,7 +21,7 @@
         <blk-card
         class="Home__os-card"
         hoverable
-        @click="onWindowsDownload"
+        @click.native="onWindowsDownload"
         >
           <div
           id="Home__win"
@@ -42,7 +42,7 @@
         <blk-card
         class="Home__os-card"
         hoverable
-        @click="onDarwinDownload"
+        @click.native="onDarwinDownload"
         >
           <div
           id="Home__darwin"
@@ -81,11 +81,11 @@ export default {
     },
 
     onDarwinDownload() {
-      this.goToDownloadLink('block-log-darwin-x64.zip');
+      this.goToDownloadLink('api/BlockLogMac');
     },
 
     onWindowsDownload() {
-      this.goToDownloadLink('block-log-win32-x64.zip');
+      this.goToDownloadLink('api/BlockLogWindows');
     },
   },
 };
