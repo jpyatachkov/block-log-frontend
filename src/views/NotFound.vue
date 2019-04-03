@@ -1,5 +1,5 @@
 <template>
-  <div class="NotFound__container height-100">
+  <div class="NotFound__container">
     <h1>404</h1>
 
     <h3>
@@ -46,6 +46,5 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-grow: 1;
 }
 </style>

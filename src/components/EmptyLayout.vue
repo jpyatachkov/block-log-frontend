@@ -1,6 +1,6 @@
 <template>
   <main class="MainLayout__container container">
-    <router-view />
+    <router-view class="flex-grow-1" />
   </main>
 </template>
 
