@@ -18,7 +18,7 @@ export default {
     params,
     data,
     timeout,
-    redirectOn404 = true,
+    redirect = true,
   }) {
     headers = {
       ...headers,
@@ -37,54 +37,60 @@ export default {
       return response;
     } catch (err) {
       switch (true) {
-        case redirectOn404 && err.response.status === 404:
+        case redirect && err.response.status === 401:
+          router.push({ name: 'login' });
+          break;
+        case redirect && err.response.status === 404:
           router.push({ name: 'not_found' });
+          break;
+        default:
+          break;
       }
 
       throw err;
     }
   },
 
-  async doGet({ url, headers, params, timeout, redirectOn404 = true }) {
+  async doGet({ url, headers, params, timeout, redirect = true }) {
     return this.__doRequest({
       url,
       method: 'GET',
       headers,
       params,
       timeout,
-      redirectOn404,
+      redirect,
     });
   },
 
-  async doPost({ url, headers, data, timeout, redirectOn404 = true }) {
+  async doPost({ url, headers, data, timeout, redirect = true }) {
     return this.__doRequest({
       url,
       method: 'POST',
       headers,
       data,
       timeout,
-      redirectOn404,
+      redirect,
     });
   },
 
-  async doPatch({ url, headers, data, timeout, redirectOn404 = true }) {
+  async doPatch({ url, headers, data, timeout, redirect = true }) {
     return this.__doRequest({
       url,
       method: 'PATCH',
       headers,
       data,
       timeout,
-      redirectOn404,
+      redirect,
     });
   },
 
-  async doDelete({ url, headers, timeout, redirectOn404 = true }) {
+  async doDelete({ url, headers, timeout, redirect = true }) {
     return this.__doRequest({
       url,
       method: 'DELETE',
       headers,
       timeout,
-      redirectOn404,
+      redirect,
     });
   },
 };
