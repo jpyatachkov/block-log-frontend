@@ -12,18 +12,25 @@ const LOCAL_STORAGE_KEYS = {
   UPLOAD_BUTTON_TEXT: 'BLOCKLOG_UPLOAD_BUTTON',
 };
 
-function getEmptyProgram() {
-  return null;
-}
-
 export default {
   ...StorageService,
+
+  __getEmptyProgram() {
+    return null;
+  },
 
   __getIframeKey(key) {
     const payload = {
       key,
     };
     bus.$emit(EVENTS.GET_EDITOR_IFRAME_KEY, payload);
+  },
+
+  __removeIframeKey(key) {
+    const payload = {
+      key,
+    };
+    bus.$emit(EVENTS.REMOVE_EDITOR_IFRAME_KEY, payload);
   },
 
   __setIframeKey(key, value) {
@@ -35,26 +42,26 @@ export default {
   },
 
   clearAutosavedProgram() {
-    this.__set(LOCAL_STORAGE_KEYS.AUTOSAVE, getEmptyProgram());
-    this.__setIframeKey(LOCAL_STORAGE_KEYS.AUTOSAVE, getEmptyProgram());
+    this.__remove(LOCAL_STORAGE_KEYS.AUTOSAVE);
+    this.__removeIframeKey(LOCAL_STORAGE_KEYS.AUTOSAVE);
     return this;
   },
 
   clearButtonText() {
-    this.__set(LOCAL_STORAGE_KEYS.UPLOAD_BUTTON_TEXT, null);
-    this.__setIframeKey(LOCAL_STORAGE_KEYS.UPLOAD_BUTTON_TEXT, null);
+    this.__remove(LOCAL_STORAGE_KEYS.UPLOAD_BUTTON_TEXT);
+    this.__removeIframeKey(LOCAL_STORAGE_KEYS.UPLOAD_BUTTON_TEXT);
     return this;
   },
 
   clearProgram() {
-    this.__set(LOCAL_STORAGE_KEYS.PROGRAM, getEmptyProgram());
-    this.__setIframeKey(LOCAL_STORAGE_KEYS.PROGRAM, getEmptyProgram());
+    this.__remove(LOCAL_STORAGE_KEYS.PROGRAM);
+    this.__removeIframeKey(LOCAL_STORAGE_KEYS.PROGRAM);
     return this;
   },
 
   clearRedirectURL() {
-    this.__set(LOCAL_STORAGE_KEYS.REDIRECT_URL, null);
-    this.__setIframeKey(LOCAL_STORAGE_KEYS.REDIRECT_URL, null);
+    this.__remove(LOCAL_STORAGE_KEYS.REDIRECT_URL);
+    this.__removeIframeKey(LOCAL_STORAGE_KEYS.REDIRECT_URL);
     return this;
   },
 
@@ -75,7 +82,10 @@ export default {
   },
 
   setAutosavedProgram(program) {
-    this.__setIframeKey(LOCAL_STORAGE_KEYS.AUTOSAVE, program);
+    this.__setIframeKey(
+      LOCAL_STORAGE_KEYS.AUTOSAVE,
+      program || this.__getEmptyProgram(),
+    );
     return this;
   },
 
@@ -87,7 +97,7 @@ export default {
   setProgram(program) {
     this.__setIframeKey(
       LOCAL_STORAGE_KEYS.PROGRAM,
-      program || getEmptyProgram(),
+      program || this.__getEmptyProgram(),
     );
     return this;
   },
@@ -101,5 +111,6 @@ export default {
     Object.values(LOCAL_STORAGE_KEYS).forEach((iframeKey) =>
       this.__getIframeKey(iframeKey),
     );
+    return this;
   },
 };

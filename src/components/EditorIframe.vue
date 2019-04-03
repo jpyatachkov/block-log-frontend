@@ -14,6 +14,7 @@ import { EditorService } from '@/services';
 
 const ACTION_TYPES = {
   LOAD: 'LOAD',
+  REMOVE: 'REMOVE',
   SAVE: 'SAVE',
 };
 
@@ -26,6 +27,7 @@ export default {
 
   created() {
     bus.$on(EVENTS.GET_EDITOR_IFRAME_KEY, this.onGetKey);
+    bus.$on(EVENTS.REMOVE_EDITOR_IFRAME_KEY, this.onRemoveKey);
     bus.$on(EVENTS.SET_EDITOR_IFRAME_KEY, this.onSetKey);
 
     window.addEventListener('message', this.onIframeMessage, false);
@@ -33,6 +35,7 @@ export default {
 
   destroyed() {
     bus.$off(EVENTS.GET_EDITOR_IFRAME_KEY, this.onGetKey);
+    bus.$off(EVENTS.REMOVE_EDITOR_IFRAME_KEY, this.onRemoveKey);
     bus.$off(EVENTS.SET_EDITOR_IFRAME_KEY, this.onSetKey);
 
     window.removeEventListener('message', this.onIframeMessage, false);
@@ -58,13 +61,23 @@ export default {
       }
     },
 
+    onRemoveKey({ key }) {
+      this.postMessage({
+        action: ACTION_TYPES.REMOVE,
+        key,
+      });
+    },
+
     onSetKey({ key, value }) {
+      // TODO: Убрать.
       if (
         !typeof value === 'string' &&
         !(value instanceof String) &&
         value !== null
       ) {
         value = JSON.stringify(value);
+      } else if (value === 'null' || value === 'undefined') {
+        value = JSON.parse(value);
       }
 
       this.postMessage({
