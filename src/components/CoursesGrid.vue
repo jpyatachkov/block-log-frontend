@@ -2,8 +2,13 @@
   <blk-items-grid
   :items="courses"
   :loading="loading"
+  no-items="В системе пока нет ни одного курса"
   @fetch="$emit('fetch', $event)"
   >
+    <template slot="no-items">
+      <slot name="no-items" />
+    </template>
+
     <template v-slot="{ item }">
       <course-card :course="item" />
     </template>

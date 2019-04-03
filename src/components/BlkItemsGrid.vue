@@ -1,6 +1,17 @@
 <template>
   <div>
-    <div class="BlkItemsGrid__container height-100">
+    <slot
+    v-if="noItems"
+    name="no-items"
+    >
+      <h3 class="text-center">
+        {{ noItemsText }}
+      </h3>
+    </slot>
+    <div
+    v-else
+    class="BlkItemsGrid__container height-100"
+    >
       <div
       v-for="(item, index) in items"
       :key="index"
@@ -33,11 +44,21 @@ export default {
       required: true,
       type: Boolean,
     },
+    noItemsText: {
+      default: 'Пока ничего нет',
+      type: String,
+    },
   },
 
   data: () => ({
     currentPage: 1,
   }),
+
+  computed: {
+    noItems() {
+      return !this.loading && (!this.items || !this.items.length);
+    },
+  },
 
   created() {
     window.addEventListener('scroll', this.handleScroll);

@@ -3,7 +3,23 @@
   :courses="myCourses"
   :loading="loading"
   @fetch="doFetch"
-  />
+  >
+    <div
+    slot="no-items"
+    class="text-center"
+    >
+      <h3 slot="no-items">
+        Вы пока не записаны ни на один курс.
+      </h3>
+
+      <h5>
+        Нажмите <router-link :to="{ name: 'courses' }">
+          здесь
+        </router-link>,
+        чтобы посмотреть список всех курсов.
+      </h5>
+    </div>
+  </courses-grid>
 </template>
 
 <script>

@@ -2,6 +2,7 @@
   <blk-items-grid
   :items="assignments"
   :loading="loading"
+  no-items-text="У этого курса пока нет заданий"
   @fetch="$emit('fetch', $event)"
   >
     <template v-slot="{ item, index }">
