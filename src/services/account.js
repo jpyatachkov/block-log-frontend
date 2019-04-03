@@ -14,6 +14,7 @@ export default {
     const response = await this.doPost({
       url,
       data,
+      redirectOn404: false,
     });
 
     const responseData = response.data;
@@ -42,6 +43,7 @@ export default {
     const response = await this.doPost({
       url,
       data,
+      redirectOn404: false,
     });
 
     return response.data;

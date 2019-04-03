@@ -11,7 +11,15 @@ axios.defaults.timeout = process.env.VUE_APP_API_TIMEOUT;
 export default {
   ...JwtService,
 
-  async __doRequest({ url, method, headers, params, data, timeout }) {
+  async __doRequest({
+    url,
+    method,
+    headers,
+    params,
+    data,
+    timeout,
+    redirectOn404 = true,
+  }) {
     headers = {
       ...headers,
       Authorization: `Bearer ${this.getToken()}`,
@@ -28,8 +36,8 @@ export default {
       });
       return response;
     } catch (err) {
-      switch (err.response.status) {
-        case 404:
+      switch (true) {
+        case redirectOn404 && err.response.status === 404:
           router.push({ name: 'not_found' });
       }
 
@@ -37,42 +45,46 @@ export default {
     }
   },
 
-  async doGet({ url, headers, params, timeout }) {
+  async doGet({ url, headers, params, timeout, redirectOn404 = true }) {
     return this.__doRequest({
       url,
       method: 'GET',
       headers,
       params,
       timeout,
+      redirectOn404,
     });
   },
 
-  async doPost({ url, headers, data, timeout }) {
+  async doPost({ url, headers, data, timeout, redirectOn404 = true }) {
     return this.__doRequest({
       url,
       method: 'POST',
       headers,
       data,
       timeout,
+      redirectOn404,
     });
   },
 
-  async doPatch({ url, headers, data, timeout }) {
+  async doPatch({ url, headers, data, timeout, redirectOn404 = true }) {
     return this.__doRequest({
       url,
       method: 'PATCH',
       headers,
       data,
       timeout,
+      redirectOn404,
     });
   },
 
-  async doDelete({ url, headers, timeout }) {
+  async doDelete({ url, headers, timeout, redirectOn404 = true }) {
     return this.__doRequest({
       url,
       method: 'DELETE',
       headers,
       timeout,
+      redirectOn404,
     });
   },
 };
