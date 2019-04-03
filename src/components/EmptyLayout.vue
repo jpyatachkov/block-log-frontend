@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <main class="MainLayout__container container">
     <router-view />
   </main>
 </template>
@@ -9,3 +9,9 @@ export default {
   name: 'EmptyLayout',
 };
 </script>
+
+<style lang="scss" scoped>
+.MainLayout__container {
+  display: flex;
+}
+</style>

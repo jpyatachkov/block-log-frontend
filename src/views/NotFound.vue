@@ -1,12 +1,17 @@
 <template>
   <div class="NotFound__container height-100">
     <h1>404</h1>
+
     <h3>
-      Запрашиваемая страница не найдена. Нажмите
+      Запрашиваемая страница не найдена :(
+    </h3>
+
+    <h5>
+      Нажмите
       <router-link :to="redirectDestination">
         здесь
-      </router-link>, чтобы вернуться на главную
-    </h3>
+      </router-link>, чтобы вернуться на главную.
+    </h5>
   </div>
 </template>
 
@@ -41,5 +46,6 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-grow: 1;
 }
 </style>
