@@ -16,6 +16,11 @@
     v-if="userIsEnrolled"
     class="mt-3 mb-3"
     />
+
+    <solutions-list
+    v-if="userIsEnrolled"
+    class="mt-3 mb-3"
+    />
   </div>
 </template>
 
@@ -31,6 +36,7 @@ import {
 import AssignmentCard from '@/components/AssignmentCard';
 import AssignmentEditCard from '@/components/AssignmentEditCard';
 import SolutionCreateCard from '@/components/SolutionCreateCard';
+import SolutionsList from '@/components/SolutionsList';
 
 export default {
   name: 'Assignment',
@@ -39,6 +45,7 @@ export default {
     AssignmentCard,
     AssignmentEditCard,
     SolutionCreateCard,
+    SolutionsList,
   },
 
   mixins: [FetchResourceMixin, MainLayoutMixin],
