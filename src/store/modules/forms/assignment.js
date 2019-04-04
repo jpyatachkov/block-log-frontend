@@ -10,6 +10,7 @@ const createEmptyState = () => ({
   inputs: [],
   outputs: [],
   unsaved: false,
+  visited: false,
 });
 const setItem = createItemFromFormSetter(
   'assignments/setAssignment',
@@ -52,6 +53,10 @@ const getters = {
   unsaved(state) {
     return state.unsaved;
   },
+
+  visited(state) {
+    return state.visited;
+  },
 };
 
 const mutations = {
@@ -71,6 +76,10 @@ const mutations = {
     state.inputs = inputs;
     state.outputs = outputs;
     state.unsaved = true;
+  },
+
+  setVisited(state, visited) {
+    state.visited = visited;
   },
 };
 

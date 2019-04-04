@@ -49,12 +49,13 @@
 </template>
 
 <script>
+import { assignmentsComputed, assignmentsMethods } from '@/store/helpers';
+
 import { EditorService } from '@/services';
 import { FormValidationMixin } from '@/mixins';
 import PrevPageLink from './PrevPageLink';
 import { REQUIRED } from '@/utils/validators/inputs';
 import Validator from '@/utils/form-validator';
-import { assignmentsMethods } from '@/store/helpers';
 
 export default {
   name: 'AssignmentForm',
@@ -87,6 +88,8 @@ export default {
   }),
 
   computed: {
+    ...assignmentsComputed,
+
     titleErrors() {
       return this.getFieldErrors('form.title');
     },
@@ -94,6 +97,14 @@ export default {
     descriptionErrors() {
       return this.getFieldErrors('form.description');
     },
+  },
+
+  created() {
+    if (!this.assignmentFormVisited && !this.update) {
+      EditorService.clearEditorContent();
+    }
+
+    this.setAssignmentFormVisited(true);
   },
 
   validators: {
@@ -106,6 +117,7 @@ export default {
 
     clearAutosavedData() {
       this.clearAssignmentForm();
+      this.setAssignmentFormVisited(false);
     },
 
     clearEditor() {

@@ -5,6 +5,7 @@ export const assignmentsComputed = {
     assignment: 'assignments/getAssignment',
     assignmentForm: 'assignments/form/data',
     assignmentFormUnsaved: 'assignments/form/unsaved',
+    assignmentFormVisited: 'assignments/form/visited',
     assignments: 'assignments/getAssignmentList',
     assignmentsTotal: 'assignments/getAssignmentTotal',
     assignmentsEditState: 'assignments/getAssignmentEditState',
@@ -25,5 +26,6 @@ export const assignmentsMethods = {
     clearAssignments: 'assignments/clearAssignmentList',
     clearAssignmentForm: 'assignments/form/clear',
     setAssignmentForm: 'assignments/form/set',
+    setAssignmentFormVisited: 'assignments/form/setVisited',
   }),
 };
