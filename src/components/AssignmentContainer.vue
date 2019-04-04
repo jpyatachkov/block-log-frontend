@@ -90,7 +90,7 @@ export default {
           id = await this.createAssignment({ courseId, assignment });
         }
 
-        this.$refs.form.clearProgram();
+        this.$refs.form.clearEditor();
 
         this.$router.push({
           name: 'assignment',

@@ -31,7 +31,7 @@
       <prev-page-link
       @click="
         clearAutosavedData();
-        clearProgram();
+        clearEditor();
       "
       />
 
@@ -108,8 +108,8 @@ export default {
       this.clearAssignmentForm();
     },
 
-    clearProgram() {
-      EditorService.clearAutosavedProgram().clearProgram();
+    clearEditor() {
+      EditorService.clearEditorContent();
     },
 
     onRedirectToEditor() {

@@ -53,6 +53,13 @@ export default {
     return this;
   },
 
+  clearEditorContent() {
+    return this.clearAutosavedProgram()
+      .clearButtonText()
+      .clearProgram()
+      .clearRedirectURL();
+  },
+
   clearProgram() {
     this.__remove(LOCAL_STORAGE_KEYS.PROGRAM);
     this.__removeIframeKey(LOCAL_STORAGE_KEYS.PROGRAM);
