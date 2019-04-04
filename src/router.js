@@ -148,6 +148,7 @@ router.beforeEach(async (to, from, next) => {
   }
 
   if (forLoggedIn && !userLoggedIn) {
+    JwtService.clearToken();
     return next({ name: 'login' });
   }
 
