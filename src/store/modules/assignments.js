@@ -7,10 +7,13 @@ import {
   createEditStateGetters,
   createEditStateMutations,
 } from '@/store/utils';
+import {
+  getCollectionCallbacksByEntity,
+  getCollectionMutationNamesByEntity,
+} from '@/store/utils/collection-state/helpers';
 
 import { ApiService } from '@/services';
 import form from './forms/assignment';
-import { getCollectionMutationNamesByEntity } from '@/store/utils/collection-state/helpers';
 
 const ASSIGNMENT = 'assignment';
 
@@ -24,11 +27,15 @@ const {
   setName: setMutationName,
 } = getCollectionMutationNamesByEntity(ASSIGNMENT);
 
+const {
+  currentPageCallback: assignmentCurrentPage,
+} = getCollectionCallbacksByEntity(ASSIGNMENT);
+
 const actions = {
   get: createCollectionGetAction(async ({ state }, { courseId, size }) => {
     return ApiService.getAssignments({
       courseId,
-      page: state.assignmentCurrentPage + 1,
+      page: assignmentCurrentPage(state) + 1,
       size,
     });
   }, 'assignment'),

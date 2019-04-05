@@ -4,7 +4,11 @@
  * @returns {String}
  */
 export function capitalize(word) {
-  return word.charAt(0).toUpperCase() + word.slice(1);
+  if (!word) {
+    return '';
+  } else {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }
 }
 
 /**

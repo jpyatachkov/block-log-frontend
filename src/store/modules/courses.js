@@ -7,10 +7,13 @@ import {
   createEditStateGetters,
   createEditStateMutations,
 } from '@/store/utils';
+import {
+  getCollectionCallbacksByEntity,
+  getCollectionMutationNamesByEntity,
+} from '@/store/utils/collection-state/helpers';
 
 import { ApiService } from '@/services';
 import form from './forms/course';
-import { getCollectionMutationNamesByEntity } from '@/store/utils/collection-state/helpers';
 
 /**
  * @param {*} state
@@ -34,17 +37,24 @@ const {
   setName: setMutationName,
 } = getCollectionMutationNamesByEntity(COURSE);
 
+const {
+  currentPageCallback: courseCurrentPage,
+} = getCollectionCallbacksByEntity(COURSE);
+const {
+  currentPageCallback: myCourseCurrentPage,
+} = getCollectionCallbacksByEntity(MY_COURSE);
+
 const actions = {
   get: createCollectionGetAction(async ({ size }) => {
     return ApiService.getCourses({
-      page: state.courseCurrentPage + 1,
+      page: courseCurrentPage(state) + 1,
       size,
     });
   }, COURSE),
 
   getMine: createCollectionGetAction(async ({ size }) => {
     return ApiService.getMyCourses({
-      page: state.myCourseCurrentPage + 1,
+      page: myCourseCurrentPage(state) + 1,
       size,
     });
   }, MY_COURSE),

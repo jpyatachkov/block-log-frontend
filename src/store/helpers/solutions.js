@@ -1,10 +1,11 @@
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 export const solutionsComputed = {
   ...mapGetters({
-    solution: 'solutions/item',
-    solutions: 'solutions/items',
-    solutionstotal: 'solutions/total',
+    solution: 'solutions/getSolution',
+    solutions: 'solutions/getSolutionList',
+    solutionsTotal: 'solutions/getSolutionTotal',
+    solutionSent: 'solutions/sent',
   }),
 };
 
@@ -13,5 +14,10 @@ export const solutionsMethods = {
     getSolutions: 'solutions/get',
     getSolution: 'solutions/getOne',
     createSolution: 'solutions/create',
+  }),
+
+  ...mapMutations({
+    clearSolutions: 'solutions/clearSolutionList',
+    setSolutionSent: 'solutions/setSent',
   }),
 };

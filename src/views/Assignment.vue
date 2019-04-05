@@ -16,11 +16,6 @@
     v-if="userIsEnrolled"
     class="mt-3 mb-3"
     />
-
-    <solutions-list
-    v-if="userIsEnrolled"
-    class="mt-3 mb-3"
-    />
   </div>
 </template>
 
@@ -31,12 +26,14 @@ import {
   assignmentsMethods,
   coursePermissions,
   coursesMethods,
+  solutionsComputed,
+  solutionsMethods,
 } from '@/store/helpers';
 
 import AssignmentCard from '@/components/AssignmentCard';
 import AssignmentEditCard from '@/components/AssignmentEditCard';
+import { EditorService } from '@/services';
 import SolutionCreateCard from '@/components/SolutionCreateCard';
-import SolutionsList from '@/components/SolutionsList';
 
 export default {
   name: 'Assignment',
@@ -45,7 +42,6 @@ export default {
     AssignmentCard,
     AssignmentEditCard,
     SolutionCreateCard,
-    SolutionsList,
   },
 
   mixins: [FetchResourceMixin, MainLayoutMixin],
@@ -53,6 +49,7 @@ export default {
   computed: {
     ...assignmentsComputed,
     ...coursePermissions,
+    ...solutionsComputed,
 
     isEditMode() {
       const idAsString = `${this.$route.params.id}`;
@@ -60,9 +57,17 @@ export default {
     },
   },
 
+  async created() {
+    if (this.solutionSent) {
+      this.setSolutionSent(false);
+      await this.doTests();
+    }
+  },
+
   methods: {
     ...assignmentsMethods,
     ...coursesMethods,
+    ...solutionsMethods,
 
     changeEditState(isEditMode) {
       const id = `${this.$route.params.id}`;
@@ -75,6 +80,29 @@ export default {
 
       await this.getCourse({ courseId });
       await this.getAssignment({ courseId, assignmentId });
+    },
+
+    async doTests() {
+      return new Promise((resolve) => {
+        if (window.Worker) {
+          const programToTest = EditorService.getProgram();
+
+          const testWorker = new Worker('/test-worker.js');
+          testWorker.postMessage({
+            testsArray: this.assignment.tests || [],
+            fileContent: programToTest,
+          });
+
+          testWorker.onmessage = (message) => {
+            const { programIsCorrect } = message.data;
+            console.log(programIsCorrect);
+            // TODO: Сохраняем в API.
+            resolve(programIsCorrect);
+          };
+        } else {
+          // TODO: Graceful degragation, если нет воркеров.
+        }
+      });
     },
   },
 };

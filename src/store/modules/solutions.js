@@ -1,23 +1,33 @@
-import { ApiService } from '@/services';
+import {
+  createCollectionEmptyState,
+  createCollectionGetAction,
+  createCollectionGetters,
+  createCollectionMutations,
+} from '@/store/utils';
 
-const state = {
-  solution: {},
-  solutions: {
-    total: 0,
-    items: [],
-  },
-};
+import { ApiService } from '@/services';
+import { getCollectionCallbacksByEntity } from '@/store/utils/collection-state/helpers';
+
+const SOLUTION = 'solution';
+
+const state = () => ({
+  ...createCollectionEmptyState(SOLUTION),
+  sent: false,
+});
+
+const {
+  currentPageCallback: solutionCurrentPage,
+} = getCollectionCallbacksByEntity(SOLUTION);
 
 const actions = {
-  async get({ commit }, { courseId, assignmentId, page, size }) {
-    const response = await ApiService.getSolutions({
+  get: createCollectionGetAction(async ({ courseId, assignmentId, size }) => {
+    return ApiService.getSolutions({
       courseId,
       assignmentId,
-      page,
+      page: solutionCurrentPage(state) + 1,
       size,
     });
-    commit('setItems', response);
-  },
+  }),
 
   async getOne({ commit }, { solutionId }) {
     const response = await ApiService.getSolution({ solutionId });
@@ -31,36 +41,18 @@ const actions = {
 };
 
 const mutations = {
-  setItem(state, response) {
-    state.solution = response.solution;
-  },
+  ...createCollectionMutations(SOLUTION),
 
-  addItems(state, solutions) {
-    const { total, items } = solutions;
-
-    state.solutions.total += total;
-    state.solutions.items.push(...items);
-  },
-
-  clearItems(state) {
-    state.solutions = {
-      total: 0,
-      items: [],
-    };
+  setSent(state, sent) {
+    state.sent = sent;
   },
 };
 
 const getters = {
-  item(state) {
-    return state.solution;
-  },
+  ...createCollectionGetters(SOLUTION),
 
-  items(state) {
-    return state.solutions.items;
-  },
-
-  total(state) {
-    return state.solutions.total;
+  sent(state) {
+    return state.sent;
   },
 };
 

@@ -2,7 +2,6 @@
   <blk-card>
     <blk-card-actions>
       <blk-button
-      block
       round
       variant="primary"
       @click="onClick"
@@ -14,8 +13,9 @@
 </template>
 
 <script>
+import { assignmentsComputed, solutionsMethods } from '@/store/helpers';
+
 import { EditorService } from '@/services';
-import { assignmentsComputed } from '@/store/helpers';
 
 export default {
   name: 'SolutionCreateCard',
@@ -25,13 +25,16 @@ export default {
   },
 
   methods: {
+    ...solutionsMethods,
+
     onClick() {
-      EditorService.clearAutosavedProgram()
-        .clearProgram()
-        .setButtonText('Загрузить решение')
-        .setProgram(this.assignment.program)
-        .setRedirectURL(this.$route.fullPath)
-        .openEditor();
+      this.setSolutionSent(true);
+
+      EditorService.clearEditorContent();
+      // .setButtonText('Загрузить решение')
+      // .setProgram(this.assignment.program)
+      // .setRedirectURL(this.$route.fullPath)
+      // .openEditor();
     },
   },
 };
