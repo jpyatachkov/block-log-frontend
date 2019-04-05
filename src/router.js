@@ -134,6 +134,7 @@ router.beforeEach(async (to, from, next) => {
   // при первом входе на сайт показываем ему не лендинг,
   // а список его курсов.
   if (initialPageLoad && to.name === 'home' && userLoggedIn) {
+    initialPageLoad = false;
     return next({ name: 'my_courses' });
   }
 
