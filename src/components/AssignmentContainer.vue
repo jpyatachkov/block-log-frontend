@@ -75,6 +75,10 @@ export default {
       const courseId = this.$route.params.courseId;
 
       assignment.program = EditorService.getProgram();
+      assignment.tests = assignment.tests.map((test) => ({
+        inputArray: test.inputArray.trim().split(/\s+/),
+        outputArray: test.outputArray.trim().split(/\s+/),
+      }));
 
       try {
         let id;

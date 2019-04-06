@@ -36,3 +36,20 @@ export function getScrollHeight() {
     document.documentElement.scrollTop
   );
 }
+
+/**
+ * Глубокое копирование объекта.
+ * @param {*} obj
+ */
+export function deepCopy(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
+/**
+ * Удаляет из массива элемент по индексу.
+ * @param {Array} array
+ * @param {Number} index
+ */
+export function deleteByIndex(array, index) {
+  array.splice(index, 1);
+}

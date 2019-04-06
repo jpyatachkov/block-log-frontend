@@ -27,7 +27,28 @@
       {{ update ? 'Обновить' : 'Создать' }} шаблон решения
     </blk-button>
 
-    <blk-form-buttons class="mt-2">
+    <div
+    v-for="(_, index) in form.tests"
+    :key="index"
+    class="mt-3"
+    >
+      <h5>Тест {{ index + 1 }}</h5>
+      <test-array
+      v-model="form.tests[index]"
+      :index="index"
+      class="mt-2"
+      deletable
+      @delete="onDeleteTest"
+      />
+    </div>
+
+    <test-form
+    ref="testForm"
+    class="mt-3"
+    @submit="onAddTest"
+    />
+
+    <blk-form-buttons class="mt-2 mb-2">
       <prev-page-link
       @click="
         clearAutosavedData();
@@ -55,13 +76,25 @@ import { EditorService } from '@/services';
 import { FormValidationMixin } from '@/mixins';
 import PrevPageLink from './PrevPageLink';
 import { REQUIRED } from '@/utils/validators/inputs';
+import TestArray from './TestArray';
+import TestForm from './TestForm';
 import Validator from '@/utils/form-validator';
+import { deleteByIndex } from '@/utils/helpers';
+
+export function buildEmptyTest() {
+  return {
+    inputArray: '',
+    outputArray: '',
+  };
+}
 
 export default {
   name: 'AssignmentForm',
 
   components: {
     PrevPageLink,
+    TestArray,
+    TestForm,
   },
 
   mixins: [FormValidationMixin],
@@ -82,8 +115,7 @@ export default {
       title: '',
       description: '',
       program: null,
-      inputs: [''],
-      outputs: [''],
+      tests: [],
     },
   }),
 
@@ -96,6 +128,11 @@ export default {
 
     descriptionErrors() {
       return this.getFieldErrors('form.description');
+    },
+
+    lastTestIsFilled() {
+      const lastTest = this.form.tests[this.form.tests.length - 1];
+      return !!lastTest.inputArray.length && !!lastTest.outputArray.length;
     },
   },
 
@@ -124,6 +161,15 @@ export default {
       EditorService.clearEditorContent();
     },
 
+    onAddTest(formData) {
+      this.form.tests.push(formData);
+      this.$refs.testForm.clear();
+    },
+
+    onDeleteTest({ index }) {
+      deleteByIndex(this.form.tests, index);
+    },
+
     onRedirectToEditor() {
       this.setAssignmentForm(this.form);
 
@@ -134,14 +180,22 @@ export default {
     },
 
     setFormData(form) {
-      const { title, description, program, inputs, outputs } = form;
+      let { title, description, program, tests } = form;
+
+      if (!tests || !tests.length) {
+        tests = [buildEmptyTest()];
+      } else {
+        tests = tests.map((test) => ({
+          inputArray: test.inputArray.join(' '),
+          outputArray: test.outputArray.join(' '),
+        }));
+      }
 
       this.form = {
         title,
         description,
         program,
-        inputs,
-        outputs,
+        tests,
       };
     },
   },

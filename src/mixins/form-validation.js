@@ -1,5 +1,6 @@
+import { capitalize, deepCopy } from '@/utils/helpers';
+
 import Vue from 'vue';
-import { capitalize } from '@/utils/helpers';
 
 export default {
   data: () => ({
@@ -8,6 +9,7 @@ export default {
 
   methods: {
     clearErrors() {
+      this.validation.reset();
       this.fieldErrors = {};
     },
 
@@ -34,7 +36,8 @@ export default {
         return;
       }
 
-      this.$emit('submit', this.form);
+      const copy = deepCopy(this.form);
+      this.$emit('submit', copy);
     },
 
     pushFieldError(fieldName, errorContent) {
