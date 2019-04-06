@@ -4,9 +4,12 @@ import {
   createCollectionGetters,
   createCollectionMutations,
 } from '@/store/utils';
+import {
+  getCollectionCallbacksByEntity,
+  getCollectionMutationNamesByEntity,
+} from '@/store/utils/collection-state/helpers';
 
 import { ApiService } from '@/services';
-import { getCollectionCallbacksByEntity } from '@/store/utils/collection-state/helpers';
 
 const SOLUTION = 'solution';
 
@@ -18,6 +21,10 @@ const state = () => ({
 const {
   currentPageCallback: solutionCurrentPage,
 } = getCollectionCallbacksByEntity(SOLUTION);
+
+const { setName: setMutationName } = getCollectionMutationNamesByEntity(
+  SOLUTION,
+);
 
 const actions = {
   get: createCollectionGetAction(async ({ courseId, assignmentId, size }) => {
@@ -31,12 +38,13 @@ const actions = {
 
   async getOne({ commit }, { solutionId }) {
     const response = await ApiService.getSolution({ solutionId });
-    commit('setItem', response);
+    commit(setMutationName, response);
   },
 
   async create({ commit }, { solution }) {
     const response = await ApiService.createSolution({ solution });
-    commit('setItem', response);
+    console.log(response);
+    commit(setMutationName, response);
   },
 };
 

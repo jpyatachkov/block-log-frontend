@@ -11,6 +11,7 @@
 import bus, { EVENTS } from '@/bus';
 
 import { EditorService } from '@/services';
+import { LOCAL_STORAGE_KEYS } from '@/services/editor';
 
 const ACTION_TYPES = {
   LOAD: 'LOAD',
@@ -58,6 +59,12 @@ export default {
 
       if (action === ACTION_TYPES.LOAD) {
         EditorService.__set(key, value);
+
+        // Нужно из-за того, что тестирование можно запускать
+        // только после того, как из iframe будет извлечена программа.
+        if (key === LOCAL_STORAGE_KEYS.PROGRAM) {
+          bus.$emit(EVENTS.PROGRAM_LOADED);
+        }
       }
     },
 

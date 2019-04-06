@@ -1,6 +1,6 @@
 <template>
   <blk-card>
-    <blk-card-actions>
+    <div class="SolutionCreateCard__container">
       <blk-button
       round
       variant="primary"
@@ -8,7 +8,7 @@
       >
         Решить задачу
       </blk-button>
-    </blk-card-actions>
+    </div>
   </blk-card>
 </template>
 
@@ -30,12 +30,20 @@ export default {
     onClick() {
       this.setSolutionSent(true);
 
-      EditorService.clearEditorContent();
-      // .setButtonText('Загрузить решение')
-      // .setProgram(this.assignment.program)
-      // .setRedirectURL(this.$route.fullPath)
-      // .openEditor();
+      EditorService.clearEditorContent()
+        .setButtonText('Загрузить решение')
+        .setProgram(this.assignment.program)
+        .setRedirectURL(this.$route.fullPath)
+        .openEditor();
     },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.SolutionCreateCard__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>

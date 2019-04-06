@@ -5,7 +5,7 @@ import StorageService from './storage';
 const DOMAIN = process.env.VUE_APP_DOMAIN;
 const EDITOR_REDIRECT_URL = process.env.VUE_APP_EDITOR_REDIRECT_URL;
 
-const LOCAL_STORAGE_KEYS = {
+export const LOCAL_STORAGE_KEYS = {
   AUTOSAVE: 'BLOCKLOG_AUTOSAVE',
   PROGRAM: 'BLOCKLOG_PROGRAM',
   REDIRECT_URL: 'BLOCKLOG_REDIRECT',

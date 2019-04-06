@@ -39,7 +39,12 @@ export default new Vuex.Store({
   getters,
   plugins: [
     createPersistedState({
-      paths: ['assignments.form', 'solutions.sent'],
+      paths: [
+        'assignments.assignment',
+        'assignments.form',
+        'courses.course',
+        'solutions.sent',
+      ],
     }),
   ],
   modules: {
