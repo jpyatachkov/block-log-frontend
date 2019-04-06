@@ -2,6 +2,7 @@ import 'babel-polyfill';
 import './assets/index.scss';
 import './plugins/bootstrap-vue';
 import './plugins/simple-vue-validator';
+import './plugins/vue-toasted';
 import './global-components';
 
 import App from './App.vue';

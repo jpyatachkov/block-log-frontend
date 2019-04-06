@@ -133,8 +133,17 @@ export default {
     },
 
     async onProgramLoaded() {
-      console.log(this.assignment.tests);
-      await this.doTests();
+      const ok = await this.doTests();
+
+      if (ok) {
+        bus.$emit(EVENTS.SHOW_TOAST, { message: 'Решение засчитано!' });
+      } else {
+        bus.$emit(EVENTS.SHOW_TOAST, {
+          message: 'Решение неверно',
+          isCorrect: false,
+        });
+      }
+
       this.testing = false;
     },
   },

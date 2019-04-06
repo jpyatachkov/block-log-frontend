@@ -8,3 +8,4 @@ export { default as MainLayoutMixin } from './main-layout';
 export { default as RootMixin } from './root';
 export { default as ShortenMixin } from './shorten';
 export { default as SimpleLayoutMixin } from './simple-layout';
+export { default as ToastMixin } from './toast';

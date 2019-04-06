@@ -16,6 +16,7 @@ import EditorIframe from '@/components/EditorIframe';
 import EmptyLayout from '@/components/EmptyLayout';
 import MainLayout from '@/components/MainLayout';
 import SimpleLayout from '@/components/SimpleLayout';
+import { ToastMixin } from '@/mixins';
 import layoutNames from '@/layouts';
 
 export default {
@@ -27,6 +28,8 @@ export default {
     MainLayout,
     SimpleLayout,
   },
+
+  mixins: [ToastMixin],
 
   computed: {
     ...rootComputed,
