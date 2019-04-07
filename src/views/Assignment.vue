@@ -81,6 +81,7 @@ export default {
   async created() {
     if (this.solutionSent) {
       bus.$on(EVENTS.WAIT_PROGRAM_TO_TEST, this.onWaitProgramToTest);
+      await this.onSolutionsFetch();
     } else {
       await this.doFetch();
     }
@@ -156,13 +157,13 @@ export default {
       }
 
       this.testing = false;
+      this.setSolutionSent(false);
 
+      this.clearSolutions();
       await this.onSolutionsFetch();
     },
 
     async onSolutionsFetch({ page = 1 } = {}) {
-      this.setSolutionSent(false);
-
       const courseId = this.$route.params.courseId;
       const assignmentId = this.$route.params.id;
 

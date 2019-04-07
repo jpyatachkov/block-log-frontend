@@ -17,7 +17,7 @@
     label="Текст задания"
     />
 
-    <blk-button
+    <!-- <blk-button
     :disabled="loading"
     :loading="loading"
     round
@@ -25,7 +25,7 @@
     @click.prevent="onRedirectToEditor"
     >
       {{ update ? 'Обновить' : 'Создать' }} шаблон решения
-    </blk-button>
+    </blk-button> -->
 
     <div
     v-for="(_, index) in form.tests"
@@ -180,10 +180,12 @@ export default {
       if (!tests || !tests.length) {
         tests = [buildEmptyTest()];
       } else {
+        console.log(tests);
         tests = tests.map((test) => ({
-          inputArray: test.inputArray.join(' '),
-          outputArray: test.outputArray.join(' '),
+          inputArray: test.inputArray.map((x) => `${x}`).join(' '),
+          outputArray: test.outputArray.map((x) => `${x}`).join(' '),
         }));
+        console.log(tests);
       }
 
       this.form = {

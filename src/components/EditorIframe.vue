@@ -17,7 +17,6 @@ import { LOCAL_STORAGE_KEYS } from '@/services/editor';
 const ACTION_TYPES = {
   LOAD: 'LOAD',
   REMOVE: 'REMOVE',
-  REMOVE_BEFOREUNLOAD: 'REMOVE_BEFOREUNLOAD',
   SAVE: 'SAVE',
 };
 
@@ -58,9 +57,6 @@ export default {
     },
 
     onIframeLoad() {
-      this.postMessage({
-        action: ACTION_TYPES.REMOVE_BEFOREUNLOAD,
-      });
       // Если пользователь решал задачу или редактировал/создавал задание,
       // мы будем проверять, что работа с редактором завершена.
       if (this.solutionSent || this.assignmentFormUnsaved) {
@@ -82,9 +78,6 @@ export default {
           key === LOCAL_STORAGE_KEYS.EDITOR_ACTIVE_KEY &&
           !EditorService.editorIsActive()
         ) {
-          // Если EDITOR_ACTIVE_KEY === false, то пользователь нажал на кнопку "Загрузить решение"
-          // и хочет, чтобы с его решением работали. В этом случае мы запускаем метод извлечения программы.
-          // Иначе ничего не делаем.
           bus.$emit(EVENTS.WAIT_PROGRAM_TO_TEST);
           EditorService.fetchProgram();
         }
