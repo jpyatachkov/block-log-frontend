@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { assignmentsComputed, solutionsComputed } from '@/store/helpers';
 import bus, { EVENTS } from '@/bus';
 
 import { EditorService } from '@/services';
@@ -16,6 +17,7 @@ import { LOCAL_STORAGE_KEYS } from '@/services/editor';
 const ACTION_TYPES = {
   LOAD: 'LOAD',
   REMOVE: 'REMOVE',
+  REMOVE_BEFOREUNLOAD: 'REMOVE_BEFOREUNLOAD',
   SAVE: 'SAVE',
 };
 
@@ -25,6 +27,11 @@ export default {
   data: () => ({
     src: process.env.VUE_APP_EDITOR_REDIRECT_URL,
   }),
+
+  computed: {
+    ...assignmentsComputed,
+    ...solutionsComputed,
+  },
 
   created() {
     bus.$on(EVENTS.GET_EDITOR_IFRAME_KEY, this.onGetKey);
@@ -51,7 +58,14 @@ export default {
     },
 
     onIframeLoad() {
-      EditorService.updateLocalStorage();
+      this.postMessage({
+        action: ACTION_TYPES.REMOVE_BEFOREUNLOAD,
+      });
+      // Если пользователь решал задачу или редактировал/создавал задание,
+      // мы будем проверять, что работа с редактором завершена.
+      if (this.solutionSent || this.assignmentFormUnsaved) {
+        EditorService.checkEditorIsActive();
+      }
     },
 
     onIframeMessage(evt) {
@@ -60,10 +74,19 @@ export default {
       if (action === ACTION_TYPES.LOAD) {
         EditorService.__set(key, value);
 
-        // Нужно из-за того, что тестирование можно запускать
-        // только после того, как из iframe будет извлечена программа.
         if (key === LOCAL_STORAGE_KEYS.PROGRAM) {
+          // Нужно из-за того, что тестирование можно запускать
+          // только после того, как из iframe будет извлечена программа.
           bus.$emit(EVENTS.PROGRAM_LOADED);
+        } else if (
+          key === LOCAL_STORAGE_KEYS.EDITOR_ACTIVE_KEY &&
+          !EditorService.editorIsActive()
+        ) {
+          // Если EDITOR_ACTIVE_KEY === false, то пользователь нажал на кнопку "Загрузить решение"
+          // и хочет, чтобы с его решением работали. В этом случае мы запускаем метод извлечения программы.
+          // Иначе ничего не делаем.
+          bus.$emit(EVENTS.WAIT_PROGRAM_TO_TEST);
+          EditorService.fetchProgram();
         }
       }
     },

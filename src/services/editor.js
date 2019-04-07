@@ -5,9 +5,15 @@ import StorageService from './storage';
 const DOMAIN = process.env.VUE_APP_DOMAIN;
 const EDITOR_REDIRECT_URL = process.env.VUE_APP_EDITOR_REDIRECT_URL;
 
-export const LOCAL_STORAGE_KEYS = {
+export const LOCAL_STORAGE_UPDATE_KEYS = {
   AUTOSAVE: 'BLOCKLOG_AUTOSAVE',
   PROGRAM: 'BLOCKLOG_PROGRAM',
+};
+
+export const LOCAL_STORAGE_KEYS = {
+  ...LOCAL_STORAGE_UPDATE_KEYS,
+
+  EDITOR_ACTIVE_KEY: 'BLOCKLOG_EDITOR_ACTIVE',
   REDIRECT_URL: 'BLOCKLOG_REDIRECT',
   UPLOAD_BUTTON_TEXT: 'BLOCKLOG_UPLOAD_BUTTON',
 };
@@ -41,6 +47,10 @@ export default {
     bus.$emit(EVENTS.SET_EDITOR_IFRAME_KEY, payload);
   },
 
+  checkEditorIsActive() {
+    this.__getIframeKey(LOCAL_STORAGE_KEYS.EDITOR_ACTIVE_KEY);
+  },
+
   clearAutosavedProgram() {
     this.__remove(LOCAL_STORAGE_KEYS.AUTOSAVE);
     this.__removeIframeKey(LOCAL_STORAGE_KEYS.AUTOSAVE);
@@ -72,6 +82,17 @@ export default {
     return this;
   },
 
+  editorIsActive() {
+    return this.__get(LOCAL_STORAGE_KEYS.EDITOR_ACTIVE_KEY);
+  },
+
+  fetchProgram() {
+    Object.values(LOCAL_STORAGE_UPDATE_KEYS).forEach((iframeKey) =>
+      this.__getIframeKey(iframeKey),
+    );
+    return this;
+  },
+
   getAutosavedProgram() {
     return this.__get(LOCAL_STORAGE_KEYS.AUTOSAVE, false);
   },
@@ -85,7 +106,7 @@ export default {
   },
 
   openEditor() {
-    location.replace(EDITOR_REDIRECT_URL);
+    location.assign(EDITOR_REDIRECT_URL);
   },
 
   setAutosavedProgram(program) {
@@ -111,13 +132,6 @@ export default {
 
   setRedirectURL(url) {
     this.__setIframeKey(LOCAL_STORAGE_KEYS.REDIRECT_URL, `${DOMAIN}${url}`);
-    return this;
-  },
-
-  updateLocalStorage() {
-    Object.values(LOCAL_STORAGE_KEYS).forEach((iframeKey) =>
-      this.__getIframeKey(iframeKey),
-    );
     return this;
   },
 };

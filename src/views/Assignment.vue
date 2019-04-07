@@ -80,16 +80,14 @@ export default {
 
   async created() {
     if (this.solutionSent) {
-      this.setSolutionSent(false);
-      this.testing = true;
-
-      bus.$on(EVENTS.PROGRAM_LOADED, this.onProgramLoaded);
+      bus.$on(EVENTS.WAIT_PROGRAM_TO_TEST, this.onWaitProgramToTest);
     } else {
       await this.doFetch();
     }
   },
 
   destroyed() {
+    bus.$off(EVENTS.WAIT_PROGRAM_TO_TEST, this.onWaitProgramToTest);
     bus.$off(EVENTS.PROGRAM_LOADED, this.onProgramLoaded);
   },
 
@@ -163,10 +161,17 @@ export default {
     },
 
     async onSolutionsFetch({ page = 1 } = {}) {
+      this.setSolutionSent(false);
+
       const courseId = this.$route.params.courseId;
       const assignmentId = this.$route.params.id;
 
       await this.getSolutions({ courseId, assignmentId, page });
+    },
+
+    onWaitProgramToTest() {
+      this.testing = true;
+      bus.$on(EVENTS.PROGRAM_LOADED, this.onProgramLoaded);
     },
   },
 };

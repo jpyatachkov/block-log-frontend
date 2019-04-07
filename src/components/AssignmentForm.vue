@@ -129,11 +129,6 @@ export default {
     descriptionErrors() {
       return this.getFieldErrors('form.description');
     },
-
-    lastTestIsFilled() {
-      const lastTest = this.form.tests[this.form.tests.length - 1];
-      return !!lastTest.inputArray.length && !!lastTest.outputArray.length;
-    },
   },
 
   created() {
