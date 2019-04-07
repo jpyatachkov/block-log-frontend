@@ -20,6 +20,7 @@ const state = () => ({
 
 const {
   currentPageCallback: solutionCurrentPage,
+  totalItemsCallback: solutionListTotal,
 } = getCollectionCallbacksByEntity(SOLUTION);
 
 const { setName: setMutationName } = getCollectionMutationNamesByEntity(
@@ -27,14 +28,17 @@ const { setName: setMutationName } = getCollectionMutationNamesByEntity(
 );
 
 const actions = {
-  get: createCollectionGetAction(async ({ courseId, assignmentId, size }) => {
-    return ApiService.getSolutions({
-      courseId,
-      assignmentId,
-      page: solutionCurrentPage(state) + 1,
-      size,
-    });
-  }),
+  get: createCollectionGetAction(
+    async ({ state }, { courseId, assignmentId, size }) => {
+      return ApiService.getSolutions({
+        courseId,
+        assignmentId,
+        page: solutionCurrentPage(state) + 1,
+        size,
+      });
+    },
+    SOLUTION,
+  ),
 
   async getOne({ commit }, { solutionId }) {
     const response = await ApiService.getSolution({ solutionId });
@@ -58,6 +62,10 @@ const mutations = {
 
 const getters = {
   ...createCollectionGetters(SOLUTION),
+
+  canLoadMore(state) {
+    return solutionCurrentPage(state) < solutionListTotal(state);
+  },
 
   sent(state) {
     return state.sent;

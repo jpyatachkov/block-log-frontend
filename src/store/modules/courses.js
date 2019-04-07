@@ -45,14 +45,14 @@ const {
 } = getCollectionCallbacksByEntity(MY_COURSE);
 
 const actions = {
-  get: createCollectionGetAction(async ({ size }) => {
+  get: createCollectionGetAction(async ({ state }, { size }) => {
     return ApiService.getCourses({
       page: courseCurrentPage(state) + 1,
       size,
     });
   }, COURSE),
 
-  getMine: createCollectionGetAction(async ({ size }) => {
+  getMine: createCollectionGetAction(async ({ state }, { size }) => {
     return ApiService.getMyCourses({
       page: myCourseCurrentPage(state) + 1,
       size,

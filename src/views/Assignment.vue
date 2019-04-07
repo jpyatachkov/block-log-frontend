@@ -24,10 +24,17 @@
       <h6>Тестируем решение...</h6>
       <blk-loader />
     </blk-card>
+    <blk-card v-else>
+      <solutions-table
+      :loading="loading"
+      @fetch="onSolutionsFetch"
+      />
+    </blk-card>
   </div>
 </template>
 
 <script>
+import { LoadingMixin, MainLayoutMixin } from '@/mixins';
 import {
   assignmentsComputed,
   assignmentsMethods,
@@ -41,8 +48,8 @@ import bus, { EVENTS } from '@/bus';
 import AssignmentCard from '@/components/AssignmentCard';
 import AssignmentEditCard from '@/components/AssignmentEditCard';
 import { EditorService } from '@/services';
-import { MainLayoutMixin } from '@/mixins';
 import SolutionCreateCard from '@/components/SolutionCreateCard';
+import SolutionsTable from '@/components/SolutionsTable';
 
 export default {
   name: 'Assignment',
@@ -51,9 +58,10 @@ export default {
     AssignmentCard,
     AssignmentEditCard,
     SolutionCreateCard,
+    SolutionsTable,
   },
 
-  mixins: [MainLayoutMixin],
+  mixins: [LoadingMixin, MainLayoutMixin],
 
   data: () => ({
     testing: false,
@@ -96,11 +104,16 @@ export default {
     },
 
     async doFetch() {
+      this.setLoading(true);
+
       const courseId = this.$route.params.courseId;
       const assignmentId = this.$route.params.id;
 
       await this.getCourse({ courseId });
       await this.getAssignment({ courseId, assignmentId });
+      await this.getSolutions({ courseId, assignmentId });
+
+      this.setLoading(false);
     },
 
     async doTests() {
@@ -145,6 +158,15 @@ export default {
       }
 
       this.testing = false;
+
+      await this.onSolutionsFetch();
+    },
+
+    async onSolutionsFetch({ page = 1 } = {}) {
+      const courseId = this.$route.params.courseId;
+      const assignmentId = this.$route.params.id;
+
+      await this.getSolutions({ courseId, assignmentId, page });
     },
   },
 };
