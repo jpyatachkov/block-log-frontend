@@ -5,7 +5,9 @@ const createEmptyState = () => ({
   title: '',
   shortDescription: '',
   description: '',
+  isVisible: false,
 });
+
 const setItem = createItemFromFormSetter(
   'courses/setCourse',
   (rootState) => rootState.courses.course.id,
@@ -30,9 +32,7 @@ const actions = {
 const getters = {
   data(state) {
     return {
-      title: state.title,
-      shortDescription: state.shortDescription,
-      description: state.description,
+      ...state,
     };
   },
 };
@@ -47,11 +47,12 @@ const mutations = {
   },
 
   set(state, form) {
-    const { title, shortDescription, description } = form;
+    const { title, shortDescription, description, isVisible } = form;
 
     state.title = title;
     state.shortDescription = shortDescription;
     state.description = description;
+    state.isVisible = isVisible;
   },
 };
 
