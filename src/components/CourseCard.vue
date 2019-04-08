@@ -39,7 +39,7 @@
           variant="primary"
           @click="onEnrollClick"
           >
-            {{ enrollButtonText }}
+            Записаться
           </blk-button>
           <div
           v-else-if="userCanEdit"

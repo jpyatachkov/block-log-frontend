@@ -8,7 +8,11 @@
 </template>
 
 <script>
-import { assignmentsComputed, solutionsComputed } from '@/store/helpers';
+import {
+  assignmentsComputed,
+  solutionsComputed,
+  solutionsMethods,
+} from '@/store/helpers';
 import bus, { EVENTS } from '@/bus';
 
 import { EditorService } from '@/services';
@@ -49,6 +53,8 @@ export default {
   },
 
   methods: {
+    ...solutionsMethods,
+
     onGetKey({ key }) {
       this.postMessage({
         action: ACTION_TYPES.LOAD,
@@ -74,12 +80,13 @@ export default {
           // Нужно из-за того, что тестирование можно запускать
           // только после того, как из iframe будет извлечена программа.
           bus.$emit(EVENTS.PROGRAM_LOADED);
-        } else if (
-          key === LOCAL_STORAGE_KEYS.EDITOR_ACTIVE_KEY &&
-          !EditorService.editorIsActive()
-        ) {
-          bus.$emit(EVENTS.WAIT_PROGRAM_TO_TEST);
-          EditorService.fetchProgram();
+        } else if (key === LOCAL_STORAGE_KEYS.EDITOR_ACTIVE_KEY) {
+          if (!EditorService.editorIsActive()) {
+            bus.$emit(EVENTS.WAIT_PROGRAM_TO_TEST);
+            EditorService.fetchProgram();
+          } else {
+            this.setSolutionSent(false);
+          }
         }
       }
     },

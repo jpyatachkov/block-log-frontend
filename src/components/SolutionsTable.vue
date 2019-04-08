@@ -17,8 +17,6 @@
 
     <blk-button
     v-if="canLoadMoreSolutions"
-    :disabled="loading"
-    :loading="loading"
     round
     type="submit"
     variant="outline-primary"
@@ -34,13 +32,6 @@ import { solutionsComputed } from '@/store/helpers';
 
 export default {
   name: 'SolutionsTable',
-
-  props: {
-    loading: {
-      required: true,
-      type: Boolean,
-    },
-  },
 
   data: () => ({
     currentPage: 1,

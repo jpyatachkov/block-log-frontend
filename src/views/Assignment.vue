@@ -26,9 +26,10 @@
     </blk-card>
     <blk-card v-else>
       <solutions-table
-      :loading="loading"
+      v-if="!loading"
       @fetch="onSolutionsFetch"
       />
+      <blk-loader v-else />
     </blk-card>
   </div>
 </template>
@@ -79,6 +80,8 @@ export default {
   },
 
   async created() {
+    this.clearSolutions();
+
     if (this.solutionSent) {
       bus.$on(EVENTS.WAIT_PROGRAM_TO_TEST, this.onWaitProgramToTest);
       await this.onSolutionsFetch();
