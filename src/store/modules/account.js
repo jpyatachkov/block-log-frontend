@@ -15,7 +15,7 @@ const actions = {
     commit('assignments/clearAssignmentList', null, { root: true });
     commit('courses/clearCourseList', null, { root: true });
     commit('courses/clearMyCourseList', null, { root: true });
-    commit('solutions/clearItems', null, { root: true });
+    commit('solutions/clearSolutionList', null, { root: true });
   },
 
   async me({ commit }) {
