@@ -17,20 +17,22 @@
     class="mt-3 mb-3"
     />
 
-    <blk-card
-    v-if="testing"
-    class="Assignment__test-placeholder mt-3 mb-3"
-    >
-      <h6>Тестируем решение...</h6>
-      <blk-loader />
-    </blk-card>
-    <blk-card v-else>
-      <solutions-table
-      v-if="!loading"
-      @fetch="onSolutionsFetch"
-      />
-      <blk-loader v-else />
-    </blk-card>
+    <div v-if="userIsEnrolled">
+      <blk-card
+      v-if="testing"
+      class="Assignment__test-placeholder mt-3 mb-3"
+      >
+        <h6>Тестируем решение...</h6>
+        <blk-loader />
+      </blk-card>
+      <blk-card v-else>
+        <solutions-table
+        v-if="!loading"
+        @fetch="onSolutionsFetch"
+        />
+        <blk-loader v-else />
+      </blk-card>
+    </div>
   </div>
 </template>
 
