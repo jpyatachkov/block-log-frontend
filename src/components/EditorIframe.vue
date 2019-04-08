@@ -90,9 +90,14 @@ export default {
           // только после того, как из iframe будет извлечена программа.
           bus.$emit(EVENTS.PROGRAM_LOADED);
         } else if (key === LOCAL_STORAGE_KEYS.EDITOR_ACTIVE_KEY) {
-          if (!value) {
+          if (
+            !value ||
+            value === 'false' ||
+            value === 'null' ||
+            value === 'undefined'
+          ) {
             console.log(
-              'editor is active',
+              'editor is not active',
               value,
               EditorService.editorIsActive(),
             );
@@ -100,7 +105,7 @@ export default {
             EditorService.fetchProgram();
           } else {
             console.log(
-              'editor is not active',
+              'editor is active',
               value,
               EditorService.editorIsActive(),
             );
