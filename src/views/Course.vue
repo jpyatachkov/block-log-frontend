@@ -80,7 +80,7 @@ export default {
     },
 
     async doFetchAssignments({ page = 1 } = {}) {
-      const courseId = this.course.id;
+      const courseId = this.$route.params.id;
 
       this.setLoading(true);
       await this.getAssignments({ courseId, page });
