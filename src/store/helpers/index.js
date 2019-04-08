@@ -1,12 +1,12 @@
 import { mapGetters, mapMutations, mapState } from 'vuex';
 
 export const rootComputed = {
-  ...mapGetters(['online', 'offline']),
+  ...mapGetters(['iframeLoading', 'online', 'offline']),
   ...mapState(['layout']),
 };
 
 export const rootMethods = {
-  ...mapMutations(['setLayout', 'setOnline']),
+  ...mapMutations(['setIframeLoading', 'setLayout', 'setOnline']),
 };
 
 export * from './account';

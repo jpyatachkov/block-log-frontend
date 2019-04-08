@@ -9,11 +9,16 @@ import solutions from './modules/solutions';
 Vue.use(Vuex);
 
 const state = {
+  iframeLoading: true,
   layout: null,
   online: true,
 };
 
 const mutations = {
+  setIframeLoading(state, loading) {
+    state.iframeLoading = loading;
+  },
+
   setLayout(state, layout) {
     state.layout = layout;
   },
@@ -24,6 +29,10 @@ const mutations = {
 };
 
 const getters = {
+  iframeLoading(state) {
+    return state.iframeLoading;
+  },
+
   online(state) {
     return state.online;
   },

@@ -1,7 +1,7 @@
 <template>
   <div class="bg-native">
     <div
-    v-if="iframeIsLoading"
+    v-if="iframeLoading"
     class="MainLayout__loader height-100 fill-height"
     >
       <blk-loader />
@@ -18,6 +18,7 @@
 
 <script>
 import bus, { EVENTS } from '@/bus';
+import { rootComputed, rootMethods } from '@/store/helpers';
 
 import MainLayoutContent from './MainLayoutContent';
 import MainLayoutNavBar from './MainLayoutNavBar';
@@ -30,9 +31,9 @@ export default {
     MainLayoutNavBar,
   },
 
-  data: () => ({
-    iframeIsLoading: true,
-  }),
+  computed: {
+    ...rootComputed,
+  },
 
   created() {
     bus.$on(EVENTS.IFRAME_LOADED, this.onIframeLoaded);
@@ -43,8 +44,10 @@ export default {
   },
 
   methods: {
+    ...rootMethods,
+
     onIframeLoaded() {
-      this.iframeIsLoading = false;
+      this.setIframeLoading(false);
     },
   },
 };
