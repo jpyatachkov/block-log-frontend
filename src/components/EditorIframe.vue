@@ -63,6 +63,7 @@ export default {
     },
 
     onIframeLoad() {
+      bus.$emit(EVENTS.IFRAME_LOADED);
       // Если пользователь решал задачу или редактировал/создавал задание,
       // мы будем проверять, что работа с редактором завершена.
       if (this.solutionSent || this.assignmentFormUnsaved) {
