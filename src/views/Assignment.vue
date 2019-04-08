@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { EditorService, VuexService } from '@/services';
 import { LoadingMixin, MainLayoutMixin } from '@/mixins';
 import {
   assignmentsComputed,
@@ -50,7 +51,6 @@ import bus, { EVENTS } from '@/bus';
 
 import AssignmentCard from '@/components/AssignmentCard';
 import AssignmentEditCard from '@/components/AssignmentEditCard';
-import { EditorService } from '@/services';
 import SolutionCreateCard from '@/components/SolutionCreateCard';
 import SolutionsTable from '@/components/SolutionsTable';
 
@@ -98,6 +98,10 @@ export default {
   destroyed() {
     bus.$off(EVENTS.WAIT_PROGRAM_TO_TEST, this.onWaitProgramToTest);
     bus.$off(EVENTS.PROGRAM_LOADED, this.onProgramLoaded);
+
+    if (!this.solutionSent) {
+      VuexService.clear();
+    }
   },
 
   methods: {

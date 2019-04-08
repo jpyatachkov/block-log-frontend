@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { VuexService } from '@/services';
 import account from './modules/account';
 import assignments from './modules/assignments';
 import courses from './modules/courses';
@@ -48,6 +49,7 @@ export default new Vuex.Store({
   getters,
   plugins: [
     createPersistedState({
+      key: VuexService.VUEX_KEY,
       paths: [
         'assignments.assignment',
         'assignments.form',
