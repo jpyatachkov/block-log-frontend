@@ -82,11 +82,13 @@ export default {
   },
 
   async created() {
+    bus.$on(EVENTS.WAIT_PROGRAM_TO_TEST, this.onWaitProgramToTest);
+    bus.$on(EVENTS.PROGRAM_LOADED, this.onProgramLoaded);
+
     this.clearSolutions();
 
     if (this.solutionSent) {
       console.log('Wait program to test');
-      bus.$on(EVENTS.WAIT_PROGRAM_TO_TEST, this.onWaitProgramToTest);
       await this.onSolutionsFetch();
     } else {
       await this.doFetch();
@@ -193,7 +195,6 @@ export default {
     onWaitProgramToTest() {
       console.log('onWaitProgramToTest');
       this.testing = true;
-      bus.$on(EVENTS.PROGRAM_LOADED, this.onProgramLoaded);
     },
   },
 };

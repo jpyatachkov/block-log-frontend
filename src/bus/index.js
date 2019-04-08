@@ -1,5 +1,11 @@
 import Vue from 'vue';
 
-export default new Vue();
+let EventBus = new Vue();
+
+export function initEventBus() {
+  EventBus = new Vue();
+}
+
+export default EventBus;
 
 export { default as EVENTS } from './events';

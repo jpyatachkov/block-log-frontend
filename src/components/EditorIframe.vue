@@ -152,6 +152,6 @@ export default {
 
 <style lang="scss" scoped>
 .EditorIframe {
-  display: none;
+  opacity: 0;
 }
 </style>
