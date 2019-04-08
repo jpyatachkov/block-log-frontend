@@ -87,9 +87,11 @@ export default {
   },
 
   fetchProgram() {
-    Object.values(LOCAL_STORAGE_UPDATE_KEYS).forEach((iframeKey) =>
-      this.__getIframeKey(iframeKey),
-    );
+    console.log('FETCH PROGRAM');
+    Object.values(LOCAL_STORAGE_UPDATE_KEYS).forEach((iframeKey) => {
+      console.log(iframeKey);
+      this.__getIframeKey(iframeKey);
+    });
     return this;
   },
 

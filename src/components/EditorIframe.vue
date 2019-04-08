@@ -83,6 +83,8 @@ export default {
       const { action, key, value } = evt.data;
 
       if (action === ACTION_TYPES.LOAD) {
+        console.log(key, value);
+
         EditorService.__set(key, value);
 
         if (key === LOCAL_STORAGE_KEYS.PROGRAM) {
