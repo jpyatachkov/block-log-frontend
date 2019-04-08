@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import { JwtService } from '@/services';
 import RegisterContainer from '@/components/RegisterContainer';
 import { SimpleLayoutMixin } from '@/mixins';
 
@@ -14,5 +15,9 @@ export default {
   },
 
   mixins: [SimpleLayoutMixin],
+
+  created() {
+    JwtService.clearToken();
+  },
 };
 </script>

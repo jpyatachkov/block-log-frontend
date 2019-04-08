@@ -38,7 +38,6 @@ export default {
     } catch (err) {
       switch (true) {
         case redirect && err.response.status === 401:
-          JwtService.clearToken();
           router.push({ name: 'login' });
           break;
         case redirect && err.response.status === 404:
