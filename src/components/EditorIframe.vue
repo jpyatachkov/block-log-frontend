@@ -63,10 +63,18 @@ export default {
     },
 
     onIframeLoad() {
+      console.log(
+        'EDITOR_IFRAME_LOAD',
+        'solutionSent',
+        this.solutionSent,
+        'assignmentFormUnsaved',
+        this.assignmentFormUnsaved,
+      );
       bus.$emit(EVENTS.IFRAME_LOADED);
       // Если пользователь решал задачу или редактировал/создавал задание,
       // мы будем проверять, что работа с редактором завершена.
       if (this.solutionSent || this.assignmentFormUnsaved) {
+        console.log('checkEditorActive');
         EditorService.checkEditorIsActive();
       }
     },
@@ -82,10 +90,20 @@ export default {
           // только после того, как из iframe будет извлечена программа.
           bus.$emit(EVENTS.PROGRAM_LOADED);
         } else if (key === LOCAL_STORAGE_KEYS.EDITOR_ACTIVE_KEY) {
-          if (!EditorService.editorIsActive()) {
+          if (!value) {
+            console.log(
+              'editor is active',
+              value,
+              EditorService.editorIsActive(),
+            );
             bus.$emit(EVENTS.WAIT_PROGRAM_TO_TEST);
             EditorService.fetchProgram();
           } else {
+            console.log(
+              'editor is not active',
+              value,
+              EditorService.editorIsActive(),
+            );
             this.setSolutionSent(false);
           }
         }

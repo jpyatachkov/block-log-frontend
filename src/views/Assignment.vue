@@ -85,6 +85,7 @@ export default {
     this.clearSolutions();
 
     if (this.solutionSent) {
+      console.log('Wait program to test');
       bus.$on(EVENTS.WAIT_PROGRAM_TO_TEST, this.onWaitProgramToTest);
       await this.onSolutionsFetch();
     } else {
@@ -122,9 +123,17 @@ export default {
 
     async doTests() {
       return new Promise((resolve) => {
+        console.log('Worker', window.Worker);
+
         if (window.Worker) {
           const programToTest = EditorService.getProgram();
           const testWorker = new Worker('/test-worker.js');
+
+          console.log('Program to test', programToTest);
+          console.log({
+            testsArray: this.assignment.tests,
+            fileContent: programToTest,
+          });
 
           testWorker.postMessage({
             testsArray: this.assignment.tests,
@@ -133,6 +142,8 @@ export default {
 
           testWorker.onmessage = async (message) => {
             const { programIsCorrect } = message.data;
+
+            console.log('Worker message', programIsCorrect);
 
             const solution = {
               assignmentId: this.assignment.id,
@@ -150,7 +161,11 @@ export default {
     },
 
     async onProgramLoaded() {
+      console.log('onProgramLoaded');
+
       const ok = await this.doTests();
+
+      console.log('Result', ok);
 
       if (ok) {
         bus.$emit(EVENTS.SHOW_TOAST, { message: 'Решение засчитано!' });
@@ -176,6 +191,7 @@ export default {
     },
 
     onWaitProgramToTest() {
+      console.log('onWaitProgramToTest');
       this.testing = true;
       bus.$on(EVENTS.PROGRAM_LOADED, this.onProgramLoaded);
     },

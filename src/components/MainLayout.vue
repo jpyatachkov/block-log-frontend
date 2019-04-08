@@ -36,6 +36,7 @@ export default {
   },
 
   created() {
+    console.log('IFRAME LOADED');
     bus.$on(EVENTS.IFRAME_LOADED, this.onIframeLoaded);
   },
 
