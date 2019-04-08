@@ -83,7 +83,7 @@ export default {
     onKeyPress(evt) {
       const { key } = evt;
 
-      if (/[\d ]/.test(key)) {
+      if (/[\d -]/.test(key)) {
         return true;
       }
 
