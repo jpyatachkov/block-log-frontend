@@ -1,10 +1,12 @@
 <template>
-  <iframe
-  ref="iframe"
-  :src="src"
-  class="EditorIframe"
-  @load="onIframeLoad"
-  />
+  <div class="bg-native">
+    <iframe
+    ref="iframe"
+    :src="src"
+    class="EditorIframe"
+    @load="onIframeLoad"
+    />
+  </div>
 </template>
 
 <script>
@@ -228,5 +230,8 @@ export default {
 <style lang="scss" scoped>
 .EditorIframe {
   opacity: 0;
+  width: 0;
+  height: 0;
+  border: 0;
 }
 </style>
