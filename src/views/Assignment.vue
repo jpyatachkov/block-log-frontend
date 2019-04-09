@@ -37,22 +37,22 @@
 </template>
 
 <script>
-import { EditorService, VuexService } from '@/services';
 import { LoadingMixin, MainLayoutMixin } from '@/mixins';
 import {
   assignmentsComputed,
   assignmentsMethods,
   coursePermissions,
   coursesMethods,
+  rootComputed,
   solutionsComputed,
   solutionsMethods,
 } from '@/store/helpers';
-import bus, { EVENTS } from '@/bus';
 
 import AssignmentCard from '@/components/AssignmentCard';
 import AssignmentEditCard from '@/components/AssignmentEditCard';
 import SolutionCreateCard from '@/components/SolutionCreateCard';
 import SolutionsTable from '@/components/SolutionsTable';
+import { VuexService } from '@/services';
 
 export default {
   name: 'Assignment',
@@ -66,13 +66,10 @@ export default {
 
   mixins: [LoadingMixin, MainLayoutMixin],
 
-  data: () => ({
-    testing: false,
-  }),
-
   computed: {
     ...assignmentsComputed,
     ...coursePermissions,
+    ...rootComputed,
     ...solutionsComputed,
 
     isEditMode() {
@@ -82,22 +79,26 @@ export default {
   },
 
   async created() {
-    bus.$on(EVENTS.WAIT_PROGRAM_TO_TEST, this.onWaitProgramToTest);
-    bus.$on(EVENTS.PROGRAM_LOADED, this.onProgramLoaded);
+    // bus.$on(EVENTS.WAIT_PROGRAM_TO_TEST, this.onWaitProgramToTest);
+    // bus.$on(EVENTS.PROGRAM_LOADED, this.onProgramLoaded);
 
     this.clearSolutions();
 
-    if (this.solutionSent) {
-      console.log('Wait program to test');
-      await this.onSolutionsFetch();
-    } else {
+    if (!this.solutionSent) {
       await this.doFetch();
     }
+
+    // if (this.solutionSent) {
+    //   console.log('Wait program to test');
+    //   await this.onSolutionsFetch();
+    // } else {
+    //   await this.doFetch();
+    // }
   },
 
   destroyed() {
-    bus.$off(EVENTS.WAIT_PROGRAM_TO_TEST, this.onWaitProgramToTest);
-    bus.$off(EVENTS.PROGRAM_LOADED, this.onProgramLoaded);
+    // bus.$off(EVENTS.WAIT_PROGRAM_TO_TEST, this.onWaitProgramToTest);
+    // bus.$off(EVENTS.PROGRAM_LOADED, this.onProgramLoaded);
 
     if (!this.solutionSent) {
       VuexService.clear();
@@ -125,68 +126,6 @@ export default {
       await this.getSolutions({ courseId, assignmentId });
 
       this.setLoading(false);
-    },
-
-    async doTests() {
-      return new Promise((resolve) => {
-        console.log('Worker', window.Worker);
-
-        if (window.Worker) {
-          const programToTest = EditorService.getProgram();
-          const testWorker = new Worker('/test-worker.js');
-
-          console.log('Program to test', programToTest);
-          console.log({
-            testsArray: this.assignment.tests,
-            fileContent: programToTest,
-          });
-
-          testWorker.postMessage({
-            testsArray: this.assignment.tests,
-            fileContent: programToTest,
-          });
-
-          testWorker.onmessage = async (message) => {
-            const { programIsCorrect } = message.data;
-
-            console.log('Worker message', programIsCorrect);
-
-            const solution = {
-              assignmentId: this.assignment.id,
-              isCorrect: programIsCorrect,
-              program: programToTest,
-            };
-            await this.createSolution({ solution });
-
-            resolve(programIsCorrect);
-          };
-        } else {
-          // TODO: Graceful degragation, если нет воркеров.
-        }
-      });
-    },
-
-    async onProgramLoaded() {
-      console.log('onProgramLoaded');
-
-      const ok = await this.doTests();
-
-      console.log('Result', ok);
-
-      if (ok) {
-        bus.$emit(EVENTS.SHOW_TOAST, { message: 'Решение засчитано!' });
-      } else {
-        bus.$emit(EVENTS.SHOW_TOAST, {
-          message: 'Решение неверно',
-          isCorrect: false,
-        });
-      }
-
-      this.testing = false;
-      this.setSolutionSent(false);
-
-      this.clearSolutions();
-      await this.onSolutionsFetch();
     },
 
     async onSolutionsFetch({ page = 1 } = {}) {

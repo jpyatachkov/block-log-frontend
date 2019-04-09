@@ -17,11 +17,9 @@
 </template>
 
 <script>
-import bus, { EVENTS } from '@/bus';
-import { rootComputed, rootMethods } from '@/store/helpers';
-
 import MainLayoutContent from './MainLayoutContent';
 import MainLayoutNavBar from './MainLayoutNavBar';
+import { rootComputed } from '@/store/helpers';
 
 export default {
   name: 'MainLayout',
@@ -33,23 +31,6 @@ export default {
 
   computed: {
     ...rootComputed,
-  },
-
-  created() {
-    console.log('IFRAME LOADED');
-    bus.$on(EVENTS.IFRAME_LOADED, this.onIframeLoaded);
-  },
-
-  destroyed() {
-    bus.$off(EVENTS.IFRAME_LOADED, this.onIframeLoaded);
-  },
-
-  methods: {
-    ...rootMethods,
-
-    onIframeLoaded() {
-      this.setIframeLoading(false);
-    },
   },
 };
 </script>

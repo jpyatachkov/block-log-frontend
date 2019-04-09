@@ -13,6 +13,7 @@ const state = {
   iframeLoading: true,
   layout: null,
   online: true,
+  testing: false,
 };
 
 const mutations = {
@@ -27,6 +28,10 @@ const mutations = {
   setOnline(state, online) {
     state.online = online;
   },
+
+  setTesting(state, testing) {
+    state.testing = testing;
+  },
 };
 
 const getters = {
@@ -40,6 +45,10 @@ const getters = {
 
   offline(state) {
     return !state.online;
+  },
+
+  testing(state) {
+    return state.testing;
   },
 };
 
