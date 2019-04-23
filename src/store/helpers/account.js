@@ -3,6 +3,9 @@ import { mapActions, mapGetters } from 'vuex';
 export const accountComputed = {
   ...mapGetters({
     user: 'account/user',
+    userCanCreateCourses: 'account/canCreateCourses',
+    userDisplayName: 'account/displayName',
+    userIsStaff: 'account/isStaff',
   }),
 };
 

@@ -1,4 +1,4 @@
-import { ApiService } from '@/services';
+import { AccountService } from '@/services';
 
 const state = () => ({
   user: {},
@@ -6,11 +6,11 @@ const state = () => ({
 
 const actions = {
   async login(context, { auth }) {
-    return ApiService.login({ auth });
+    return AccountService.login({ auth });
   },
 
   async logout({ commit }) {
-    await ApiService.logout();
+    await AccountService.logout();
 
     commit('assignments/clearAssignmentList', null, { root: true });
     commit('courses/clearCourseList', null, { root: true });
@@ -19,12 +19,12 @@ const actions = {
   },
 
   async me({ commit }) {
-    const response = await ApiService.me();
+    const response = await AccountService.me();
     commit('setUser', response);
   },
 
   async register({ dispatch }, { user }) {
-    const response = await ApiService.register({ user });
+    const response = await AccountService.register({ user });
 
     const auth = {
       username: response.user.username,
@@ -43,6 +43,27 @@ const mutations = {
 };
 
 const getters = {
+  canCreateCourses(state) {
+    // Для того, чтобы значение свойства менялось и обзервер не кешировался.
+    if (state.user.id) {
+      return AccountService.userCanCreateCourses();
+    } else {
+      return false;
+    }
+  },
+
+  displayName(state) {
+    if (state.user && (state.user.firstName || state.user.lastName)) {
+      return `${state.user.firstName} ${state.user.lastName}`.trim();
+    } else {
+      return 'Неизвестный Пользователь';
+    }
+  },
+
+  isStaff() {
+    return AccountService.userIsStaff();
+  },
+
   user(state) {
     return state.user;
   },

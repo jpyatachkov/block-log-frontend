@@ -1,8 +1,9 @@
 <template>
   <blk-button
-  v-show="show"
+  v-show="userCanCreateCourses"
+  class="CourseCreateButton"
   round
-  variant="primary"
+  variant="light"
   @click="$router.push({ name: 'course_create' })"
   >
     Новый курс
@@ -10,17 +11,19 @@
 </template>
 
 <script>
-import { AccountService } from '@/services';
+import { accountComputed } from '@/store/helpers';
 
 export default {
   name: 'CourseCreateButton',
 
   computed: {
-    show() {
-      return AccountService.userCanCreateCourses();
-    },
+    ...accountComputed,
   },
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.CourseCreateButton {
+  color: #75bdf1;
+}
+</style>

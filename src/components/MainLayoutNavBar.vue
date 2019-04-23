@@ -1,12 +1,12 @@
 <template>
   <b-navbar
   sticky
+  style="background-color: #76bdf1;"
   toggleable="lg"
-  type="light"
-  variant="white"
+  type="dark"
   >
     <b-navbar-brand :to="{ name: 'home' }">
-      <blk-logo class="MainLayoutNavBar__logo mr-2" />
+      <blk-logo class="MainLayoutNavBar__logo bg-white mr-2" />
       BlockLog
     </b-navbar-brand>
 
@@ -16,10 +16,13 @@
     id="nav_collapse"
     is-nav
     >
-      <b-navbar-nav class="ml-auto">
-        <blk-form class="form-inline my-2 my-lg-0 mr-2">
-          <course-create-button />
-        </blk-form>
+      <b-navbar-nav>
+        <b-nav-item
+        :active="coursesIsActive"
+        :to="{ name: 'courses' }"
+        >
+          Каталог
+        </b-nav-item>
 
         <b-nav-item
         :active="myCoursesIsActive"
@@ -28,59 +31,35 @@
           Мои Курсы
         </b-nav-item>
 
-        <b-nav-item
-        :active="coursesIsActive"
-        :to="{ name: 'courses' }"
-        >
-          Все курсы
-        </b-nav-item>
-
-        <b-nav-item-dropdown right>
-          <template slot="button-content">
-            Аккаунт
-          </template>
-          <!-- <b-dropdown-item href="#">
-            Профиль
-          </b-dropdown-item> -->
-          <b-dropdown-item @click="onLogout">
-            Выход
-          </b-dropdown-item>
-        </b-nav-item-dropdown>
+        <blk-form class="form-inline my-2 my-lg-0 ml-2 mr-2">
+          <course-create-button />
+        </blk-form>
       </b-navbar-nav>
+
+      <account-dropdown />
     </b-collapse>
   </b-navbar>
 </template>
 
 <script>
-import { accountComputed, accountMethods } from '@/store/helpers';
-
+import AccountDropdown from './AccountDropdown';
 import CourseCreateButton from './CourseCreateButton';
 
 export default {
   name: 'MainLayoutNavBar',
 
   components: {
+    AccountDropdown,
     CourseCreateButton,
   },
 
   computed: {
-    ...accountComputed,
-
     coursesIsActive() {
       return this.$route.name === 'courses';
     },
 
     myCoursesIsActive() {
       return this.$route.name === 'my_courses';
-    },
-  },
-
-  methods: {
-    ...accountMethods,
-
-    async onLogout() {
-      await this.logout();
-      this.$router.push({ name: 'login' });
     },
   },
 };
