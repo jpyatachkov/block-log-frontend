@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <div class="card-body">
+    <div class="card-body d-flex flex-column">
       <h4 class="card-title">
         {{ title }}
       </h4>

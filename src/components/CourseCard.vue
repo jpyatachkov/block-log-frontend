@@ -1,8 +1,8 @@
 <template>
   <app-card
   :title="title"
-  align="center"
   :img-src="require('@/assets/default.png')"
+  class="CourseCard text-center"
   subtitle="Команда Block Log"
   @click.native="onCardClick"
   >
@@ -12,7 +12,7 @@
 
     <div
     v-if="$route.name == 'my_courses'"
-    class="d-flex justify-content-center align-items-center"
+    class="mt-auto d-flex justify-content-center align-items-center"
     >
       <blk-button variant="success">
         Продолжить
@@ -116,3 +116,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.CourseCard {
+  height: 430px;
+}
+</style>
