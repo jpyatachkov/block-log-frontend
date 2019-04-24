@@ -1,25 +1,30 @@
 <template>
-  <courses-grid
-  :courses="myCourses"
-  :loading="loading"
-  @fetch="doFetch"
-  >
-    <div
-    slot="no-items"
-    class="text-center"
-    >
-      <h3 slot="no-items">
-        Вы пока не записаны ни на один курс.
-      </h3>
+  <div class="d-flex flex-column justify-content-start align-items-start pt-4">
+    <h4>Мои курсы</h4>
 
-      <h5>
-        Нажмите <router-link :to="{ name: 'courses' }">
-          здесь
-        </router-link>,
-        чтобы посмотреть список всех курсов.
-      </h5>
-    </div>
-  </courses-grid>
+    <courses-grid
+    :courses="myCourses"
+    :loading="loading"
+    class="pt-3 width-100"
+    @fetch="doFetch"
+    >
+      <div
+      slot="no-items"
+      class="text-center"
+      >
+        <h5 slot="no-items">
+          Вы пока не записаны ни на один курс.
+        </h5>
+
+        <h6>
+          Нажмите
+          <router-link :to="{ name: 'courses' }">
+            здесь
+          </router-link>, чтобы посмотреть список всех курсов.
+        </h6>
+      </div>
+    </courses-grid>
+  </div>
 </template>
 
 <script>

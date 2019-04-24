@@ -1,9 +1,23 @@
 <template>
-  <courses-grid
-  :courses="courses"
-  :loading="loading"
-  @fetch="doFetch"
-  />
+  <div class="d-flex flex-column justify-content-start align-items-start pt-4">
+    <h4>Доступные курсы</h4>
+
+    <courses-grid
+    :courses="courses"
+    :loading="loading"
+    class="pt-3 width-100"
+    @fetch="doFetch"
+    >
+      <div
+      slot="no-items"
+      class="text-center"
+      >
+        <h5 slot="no-items">
+          В системе пока нет ни одного курса.
+        </h5>
+      </div>
+    </courses-grid>
+  </div>
 </template>
 
 <script>

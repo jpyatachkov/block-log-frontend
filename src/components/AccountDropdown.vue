@@ -1,5 +1,8 @@
 <template>
-  <b-navbar-nav class="ml-auto d-flex align-items-center">
+  <b-navbar-nav
+  v-if="userDisplayName"
+  class="ml-auto d-flex align-items-center"
+  >
     <b-nav-item>
       <img
       v-if="userCanCreateCourses"

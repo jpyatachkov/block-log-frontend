@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-native">
+  <div>
     <div
     v-if="iframeLoading"
     class="MainLayout__loader height-100 fill-height"

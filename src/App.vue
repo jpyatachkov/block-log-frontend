@@ -1,5 +1,5 @@
 <template>
-  <div class="fill-height height-100">
+  <div class="bg-white fill-height height-100">
     <component
     :is="currentLayout"
     class="height-100"

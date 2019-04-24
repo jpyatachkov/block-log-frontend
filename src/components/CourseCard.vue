@@ -1,63 +1,24 @@
 <template>
-  <blk-card
-  :class="classes"
-  :hoverable="preview"
+  <app-card
+  :title="title"
+  align="center"
+  :img-src="require('@/assets/default.png')"
+  subtitle="Команда Block Log"
   @click.native="onCardClick"
   >
-    <blk-card-header>
-      {{ title }}
+    <app-card-text>
+      {{ shortDescription }}
+    </app-card-text>
 
-      <div
-      v-if="!preview"
-      slot="link-back"
-      class="mb-2"
-      >
-        <router-link :to="{ name: 'my_courses' }">
-          К моим курсам
-        </router-link>
-      </div>
-    </blk-card-header>
-
-    <p>{{ description }}</p>
-
-    <b-row class="mt-3">
-      <b-col
-      md="8"
-      lg="9"
-      />
-
-      <b-col
-      xs="12"
-      md="4"
-      lg="3"
-      >
-        <blk-card-actions v-if="!preview">
-          <blk-button
-          v-if="userCanEnroll"
-          block
-          round
-          variant="primary"
-          @click="onEnrollClick"
-          >
-            Записаться
-          </blk-button>
-          <div
-          v-else-if="userCanEdit"
-          class="d-flex fill-width"
-          >
-            <blk-button
-            block
-            round
-            variant="outline-primary"
-            @click="onEditButtonClick"
-            >
-              {{ isEditMode ? 'Просмотр' : 'Редактирование' }}
-            </blk-button>
-          </div>
-        </blk-card-actions>
-      </b-col>
-    </b-row>
-  </blk-card>
+    <div
+    v-if="$route.name == 'my_courses'"
+    class="d-flex justify-content-center align-items-center"
+    >
+      <blk-button variant="success">
+        Продолжить
+      </blk-button>
+    </div>
+  </app-card>
 </template>
 
 <script>
@@ -93,13 +54,13 @@ export default {
       };
     },
 
-    description() {
+    shortDescription() {
       let description;
 
       if (this.preview) {
         description = this.shorten(this.course.shortDescription, 100);
       } else {
-        description = this.course.description;
+        description = this.course.shortDescription;
       }
 
       return description;

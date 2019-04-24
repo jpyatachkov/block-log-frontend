@@ -31,7 +31,7 @@
           Мои Курсы
         </b-nav-item>
 
-        <blk-form class="form-inline my-2 my-lg-0 ml-2 mr-2">
+        <blk-form class="form-inline my-2 my-lg-0">
           <course-create-button />
         </blk-form>
       </b-navbar-nav>

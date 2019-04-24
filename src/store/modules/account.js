@@ -56,7 +56,7 @@ const getters = {
     if (state.user && (state.user.firstName || state.user.lastName)) {
       return `${state.user.firstName} ${state.user.lastName}`.trim();
     } else {
-      return 'Неизвестный Пользователь';
+      return null;
     }
   },
 
