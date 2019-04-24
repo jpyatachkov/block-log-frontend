@@ -29,6 +29,7 @@ const {
 
 const {
   currentPageCallback: assignmentCurrentPage,
+  totalItemsCallback: assignmentListTotal,
 } = getCollectionCallbacksByEntity(ASSIGNMENT);
 
 const actions = {
@@ -60,6 +61,10 @@ const mutations = {
 const getters = {
   ...createCollectionGetters(ASSIGNMENT),
   ...createEditStateGetters(ASSIGNMENT),
+
+  canLoadMore(state) {
+    return assignmentCurrentPage(state) < assignmentListTotal(state);
+  },
 };
 
 export default {

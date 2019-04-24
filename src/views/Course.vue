@@ -1,25 +1,19 @@
 <template>
   <div>
-    <course-header />
-    <course-info />
-    <!-- <course-card
-    :course="course"
-    :is-edit-mode="isEditMode"
-    :preview="false"
-    @edit="changeEditState"
+    <course-header
+    class="mb-4"
+    @nav-changed="currentNav = $event"
     />
 
-    <course-edit-card
-    v-if="isEditMode"
-    class="mt-3 mb-3"
-    />
+    <div class="container">
+      <course-info v-if="currentNav === 0" />
 
-    <assignments-grid
-    :assignments="assignments"
-    :loading="loading"
-    class="mt-3 mb-3"
-    @fetch="doFetchAssignments"
-    /> -->
+      <course-assignments
+      v-if="currentNav === 1"
+      :loading="loading"
+      @fetch-assignments="onFetchAssignments"
+      />
+    </div>
   </div>
 </template>
 
@@ -29,13 +23,9 @@ import {
   LoadingMixin,
   MainFluidLayoutMixin,
 } from '@/mixins';
-import {
-  assignmentsComputed,
-  assignmentsMethods,
-  coursesComputed,
-  coursesMethods,
-} from '@/store/helpers';
+import { assignmentsMethods, coursesMethods } from '@/store/helpers';
 
+import CourseAssignments from '@/components/CourseAssignments';
 import CourseHeader from '@/components/CourseHeader';
 import CourseInfo from '@/components/CourseInfo';
 
@@ -43,27 +33,26 @@ export default {
   name: 'Course',
 
   components: {
+    CourseAssignments,
     CourseHeader,
     CourseInfo,
   },
 
   mixins: [FetchResourceMixin, LoadingMixin, MainFluidLayoutMixin],
 
-  data: () => ({
-    editMode: false,
-  }),
-
-  computed: {
-    ...assignmentsComputed,
-    ...coursesComputed,
-
-    isEditMode() {
-      const idAsString = `${this.$route.params.id}`;
-      return this.coursesEditState.includes(idAsString);
+  props: {
+    nav: {
+      default: 0,
+      type: Number,
     },
   },
 
+  data: () => ({
+    currentNav: 0,
+  }),
+
   created() {
+    this.currentNav = this.nav || this.currentNav;
     this.clearAssignments();
   },
 
@@ -80,10 +69,10 @@ export default {
       const courseId = this.$route.params.id;
       await this.getCourse({ courseId });
 
-      await this.doFetchAssignments();
+      await this.onFetchAssignments();
     },
 
-    async doFetchAssignments({ page = 1 } = {}) {
+    async onFetchAssignments({ page = 1 } = {}) {
       const courseId = this.$route.params.id;
 
       this.setLoading(true);

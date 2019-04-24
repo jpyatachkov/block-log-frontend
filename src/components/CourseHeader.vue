@@ -76,6 +76,8 @@ export default {
     onNavChange({ oldIndex, newIndex }) {
       this.navs[oldIndex].active = false;
       this.navs[newIndex].active = true;
+
+      this.$emit('nav-changed', newIndex);
     },
   },
 };

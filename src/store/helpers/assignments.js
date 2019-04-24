@@ -9,6 +9,7 @@ export const assignmentsComputed = {
     assignments: 'assignments/getAssignmentList',
     assignmentsTotal: 'assignments/getAssignmentTotal',
     assignmentsEditState: 'assignments/getAssignmentEditState',
+    canLoadMoreAssignments: 'assignments/canLoadMore',
   }),
 };
 
