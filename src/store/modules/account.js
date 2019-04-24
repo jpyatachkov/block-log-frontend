@@ -1,5 +1,9 @@
 import { AccountService } from '@/services';
 
+function userIsFetched(state) {
+  return !!state.user.id;
+}
+
 const state = () => ({
   user: {},
 });
@@ -45,7 +49,7 @@ const mutations = {
 const getters = {
   canCreateCourses(state) {
     // Для того, чтобы значение свойства менялось и обзервер не кешировался.
-    if (state.user.id) {
+    if (userIsFetched(state)) {
       return AccountService.userCanCreateCourses();
     } else {
       return false;
@@ -53,15 +57,19 @@ const getters = {
   },
 
   displayName(state) {
-    if (state.user && (state.user.firstName || state.user.lastName)) {
+    if (state.user.firstName || state.user.lastName) {
       return `${state.user.firstName} ${state.user.lastName}`.trim();
     } else {
       return null;
     }
   },
 
-  isStaff() {
-    return AccountService.userIsStaff();
+  isStaff(state) {
+    if (userIsFetched(state)) {
+      return AccountService.userIsStaff();
+    } else {
+      return false;
+    }
   },
 
   user(state) {

@@ -11,7 +11,7 @@
     </app-card-text>
 
     <div
-    v-if="$route.name == 'my_courses'"
+    v-if="$route.name == 'my_courses' && !userIsStaff"
     class="mt-auto d-flex justify-content-center align-items-center"
     >
       <blk-button variant="success">
@@ -23,9 +23,9 @@
 
 <script>
 import { CoursePermissionsMixin, ShortenMixin } from '@/mixins';
+import { accountComputed, coursesMethods } from '@/store/helpers';
 
 import { AccountService } from '@/services';
-import { coursesMethods } from '@/store/helpers';
 
 export default {
   name: 'CourseCard',
@@ -48,6 +48,8 @@ export default {
   },
 
   computed: {
+    ...accountComputed,
+
     classes() {
       return {
         pointer: this.preview,
