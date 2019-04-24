@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-center align-items-end">
       <div class="Card__img-container">
         <img
-        class="card-img-top Card__img"
+        class="card-img-top max-height-100 max-width-100"
         :src="imgSrc"
         :alt="imgAlt"
         >
@@ -107,11 +107,6 @@ export default {
     width: 120px;
     height: 120px;
     margin-top: 27px;
-  }
-
-  &__img {
-    max-width: 100%;
-    max-height: 100%;
   }
 }
 </style>

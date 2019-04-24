@@ -1,8 +1,6 @@
 <template>
   <base-layout>
-    <div class="container mt-3 mb-3">
-      <router-view />
-    </div>
+    <router-view />
   </base-layout>
 </template>
 
@@ -10,7 +8,7 @@
 import BaseLayout from './BaseLayout';
 
 export default {
-  name: 'MainLayout',
+  name: 'MainFluidLayout',
 
   components: {
     BaseLayout,

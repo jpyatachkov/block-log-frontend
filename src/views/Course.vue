@@ -1,6 +1,7 @@
 <template>
   <div>
-    <course-card
+    <course-header />
+    <!-- <course-card
     :course="course"
     :is-edit-mode="isEditMode"
     :preview="false"
@@ -17,12 +18,16 @@
     :loading="loading"
     class="mt-3 mb-3"
     @fetch="doFetchAssignments"
-    />
+    /> -->
   </div>
 </template>
 
 <script>
-import { FetchResourceMixin, LoadingMixin, MainLayoutMixin } from '@/mixins';
+import {
+  FetchResourceMixin,
+  LoadingMixin,
+  MainFluidLayoutMixin,
+} from '@/mixins';
 import {
   assignmentsComputed,
   assignmentsMethods,
@@ -30,20 +35,16 @@ import {
   coursesMethods,
 } from '@/store/helpers';
 
-import AssignmentsGrid from '@/components/AssignmentsGrid';
-import CourseCard from '@/components/CourseCard';
-import CourseEditCard from '@/components/CourseEditCard';
+import CourseHeader from '@/components/CourseHeader';
 
 export default {
   name: 'Course',
 
   components: {
-    AssignmentsGrid,
-    CourseCard,
-    CourseEditCard,
+    CourseHeader,
   },
 
-  mixins: [FetchResourceMixin, LoadingMixin, MainLayoutMixin],
+  mixins: [FetchResourceMixin, LoadingMixin, MainFluidLayoutMixin],
 
   data: () => ({
     editMode: false,

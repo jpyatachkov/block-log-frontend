@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-native">
+  <div>
     <iframe
     ref="iframe"
     :src="src"

@@ -14,6 +14,7 @@ import { rootComputed, rootMethods } from '@/store/helpers';
 
 import EditorIframe from '@/components/EditorIframe';
 import EmptyLayout from '@/components/EmptyLayout';
+import MainFluidLayout from '@/components/MainFluidLayout';
 import MainLayout from '@/components/MainLayout';
 import SimpleLayout from '@/components/SimpleLayout';
 import { ToastMixin } from '@/mixins';
@@ -26,6 +27,7 @@ export default {
     EditorIframe,
     EmptyLayout,
     MainLayout,
+    MainFluidLayout,
     SimpleLayout,
   },
 
@@ -40,6 +42,8 @@ export default {
           return EmptyLayout;
         case this.layout === layoutNames.MAIN_LAYOUT:
           return MainLayout;
+        case this.layout === layoutNames.MAIN_FLUID_LAYOUT:
+          return MainFluidLayout;
         case this.layout === layoutNames.SIMPLE_LAYOUT:
           return SimpleLayout;
         default:

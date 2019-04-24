@@ -46,6 +46,10 @@ body {
   min-height: 100%;
 }
 
+.max-height-100 {
+  max-height: 100%;
+}
+
 .pointer {
   cursor: pointer;
 }
@@ -54,8 +58,16 @@ body {
   text-align: center;
 }
 
+.text-overflow-ellipsis {
+  text-overflow: ellipsis;
+}
+
 .width-100 {
   min-width: 100%;
+}
+
+.max-width-100 {
+  max-width: 100%;
 }
 
 .circle {
