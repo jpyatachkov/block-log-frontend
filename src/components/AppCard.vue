@@ -3,7 +3,10 @@
   class="card Card Card--word--wrap"
   :class="additionalClasses"
   >
-    <div class="d-flex justify-content-center align-items-end">
+    <div
+    v-if="imgSrc"
+    class="d-flex justify-content-center align-items-end"
+    >
       <div class="Card__img-container">
         <img
         class="card-img-top max-height-100 max-width-100"
@@ -14,11 +17,17 @@
     </div>
 
     <div class="card-body d-flex flex-column">
-      <h4 class="card-title">
+      <h4
+      v-if="title"
+      class="card-title"
+      >
         {{ title }}
       </h4>
 
-      <h6 class="card-subtitle text-muted mb-2">
+      <h6
+      v-if="subtitle"
+      class="card-subtitle text-muted mb-2"
+      >
         {{ subtitle }}
       </h6>
 
@@ -43,15 +52,15 @@ export default {
       type: String,
     },
     imgSrc: {
-      required: true,
+      default: '',
       type: String,
     },
     subtitle: {
-      required: true,
+      default: '',
       type: String,
     },
     title: {
-      required: true,
+      default: '',
       type: String,
     },
   },

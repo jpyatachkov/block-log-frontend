@@ -1,6 +1,7 @@
 <template>
   <div>
     <course-header />
+    <course-info />
     <!-- <course-card
     :course="course"
     :is-edit-mode="isEditMode"
@@ -36,12 +37,14 @@ import {
 } from '@/store/helpers';
 
 import CourseHeader from '@/components/CourseHeader';
+import CourseInfo from '@/components/CourseInfo';
 
 export default {
   name: 'Course',
 
   components: {
     CourseHeader,
+    CourseInfo,
   },
 
   mixins: [FetchResourceMixin, LoadingMixin, MainFluidLayoutMixin],
