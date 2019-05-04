@@ -22,6 +22,7 @@
     <b-dropdown
     v-if="userIsModerator"
     class="ml-1"
+    right
     variant="light"
     >
       <b-dropdown-item @click="showConfirmDialog = true">

@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-xs-12 col-md-7 col-lg-8">
+    <div class="col-xs-12 col-md-7 col-lg-8 mb-2">
       <course-content-card />
     </div>
 

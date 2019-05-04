@@ -3,14 +3,20 @@
     <h5>Требования</h5>
 
     <app-card-text>
-      Для усвоения курса требуются базовые знания школьной программы.
+      {{ course.requirements }}
     </app-card-text>
   </app-card>
 </template>
 
 <script>
+import { coursesComputed } from '@/store/helpers';
+
 export default {
   name: 'CourseRequirementsCard',
+
+  computed: {
+    ...coursesComputed,
+  },
 };
 </script>
 

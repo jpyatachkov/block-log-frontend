@@ -58,7 +58,7 @@ export default {
 
 <style lang="scss" scoped>
 .CourseHeaderNav {
-  padding: 5px;
+  padding: 10px;
   border: solid 1px #ffffff;
   border-bottom: none;
   border-top-left-radius: 3px;
