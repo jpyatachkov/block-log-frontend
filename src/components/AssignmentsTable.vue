@@ -6,7 +6,7 @@
   >
     <b-table
     :fields="fields"
-    :items="assignments"
+    :items="coloredAssignments"
     >
       <template v-slot:index="{ index }">
         {{ index + 1 }}
@@ -15,15 +15,32 @@
       <template v-slot:title="{ value }">
         {{ value }}
       </template>
+
+      <template v-slot:countAttempts="{ value }">
+        {{ value }}
+      </template>
+
+      <template v-slot:passed="{ value }">
+        <app-status
+        v-if="value !== -1"
+        :success="value"
+        />
+      </template>
     </b-table>
   </app-lazy-container>
 </template>
 
 <script>
-import { assignmentsComputed } from '@/store/helpers';
+import { assignmentsComputed, coursesComputed } from '@/store/helpers';
+
+import AppStatus from './AppStatus';
 
 export default {
   name: 'AssignmentsTable',
+
+  components: {
+    AppStatus,
+  },
 
   props: {
     loading: {
@@ -32,21 +49,57 @@ export default {
     },
   },
 
-  data: () => ({
-    fields: {
-      index: {
-        label: '#',
-        sortable: false,
-      },
-      title: {
-        label: 'Задание',
-        sortable: false,
-      },
-    },
-  }),
-
   computed: {
     ...assignmentsComputed,
+    ...coursesComputed,
+
+    coloredAssignments() {
+      return Array.from((this.assignments || []).entries()).map(
+        ([num, assignment]) => {
+          if (num < this.course.countPassed && !assignment.passed) {
+            assignment['_rowVariant'] = 'danger';
+          }
+
+          if (num === this.course.countPassed) {
+            assignment['_rowVariant'] = 'warning';
+          }
+
+          if (num > this.course.countPassed) {
+            assignment['passed'] = -1;
+          }
+
+          return assignment;
+        },
+      );
+    },
+
+    fields() {
+      const fields = {
+        index: {
+          label: '#',
+          sortable: false,
+        },
+        title: {
+          label: 'Задание',
+          sortable: false,
+        },
+      };
+
+      if (this.userIsCollaborator || this.userIsModerator) {
+        fields['countAttempts'] = {
+          label: 'Попытки',
+          class: 'text-center',
+          sortable: false,
+        };
+        fields['passed'] = {
+          label: '',
+          class: 'text-center',
+          sortable: false,
+        };
+      }
+
+      return fields;
+    },
   },
 };
 </script>
