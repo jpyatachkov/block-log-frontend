@@ -1,5 +1,5 @@
 <template>
-  <main class="MainLayout__container container">
+  <main class="MainLayout__container">
     <router-view class="flex-grow-1" />
   </main>
 </template>

@@ -14,8 +14,10 @@ export const coursesComputed = {
     courseForm: 'courses/form/data',
     courses: 'courses/getCourseList',
     coursesTotal: 'courses/getCourseTotal',
-    myCourses: 'courses/getMyCourseList',
-    myCoursesTotal: 'courses/getMyCourseTotal',
+    myActiveCourses: 'courses/getMyActiveCourseList',
+    myActiveCoursesTotal: 'courses/getMyActiveCourseTotal',
+    myInactiveCourses: 'courses/getMyInactiveCourseList',
+    myInactiveCoursesTotal: 'courses/getMyInactiveCourseTotal',
     coursesEditState: 'courses/getCourseEditState',
   }),
 
@@ -25,7 +27,8 @@ export const coursesComputed = {
 export const coursesMethods = {
   ...mapActions({
     getCourses: 'courses/get',
-    getMyCourses: 'courses/getMine',
+    getMyActiveCourses: 'courses/getMineActive',
+    getMyInactiveCourses: 'courses/getMineInactive',
     getCourse: 'courses/getOne',
     enrollCourse: 'courses/enroll',
     fillCourseForm: 'courses/form/fill',

@@ -8,10 +8,13 @@ const AssignmentUpdate = () => import('@/views/AssignmentUpdate');
 const Course = () => import('@/views/Course');
 const CourseCreate = () => import('@/views/CourseCreate');
 const CoursesList = () => import('@/views/CoursesList');
+const CourseProgress = () => import('@/views/CourseProgress');
 const CourseUpdate = () => import('@/views/CourseUpdate');
 const Home = () => import('@/views/Home');
 const Login = () => import('@/views/Login');
 const MyCoursesList = () => import('@/views/MyCoursesList');
+const MyCoursesActiveList = () => import('@/views/MyCoursesActiveList');
+const MyCoursesInactiveList = () => import('@/views/MyCoursesInactiveList');
 const NotFound = () => import('@/views/NotFound');
 const Register = () => import('@/views/Register');
 
@@ -70,6 +73,22 @@ const router = new Router({
       },
     },
     {
+      path: '/courses/mine/active',
+      name: 'my_courses_active',
+      component: MyCoursesActiveList,
+      meta: {
+        forLoggedIn: true,
+      },
+    },
+    {
+      path: '/courses/mine/inactive',
+      name: 'my_courses_inactive',
+      component: MyCoursesInactiveList,
+      meta: {
+        forLoggedIn: true,
+      },
+    },
+    {
       path: '/course/new',
       name: 'course_create',
       component: CourseCreate,
@@ -81,6 +100,14 @@ const router = new Router({
       path: '/course/:id',
       name: 'course',
       component: Course,
+      meta: {
+        forLoggedIn: true,
+      },
+    },
+    {
+      path: '/course/:id/progress',
+      name: 'course_progress',
+      component: CourseProgress,
       meta: {
         forLoggedIn: true,
       },

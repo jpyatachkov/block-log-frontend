@@ -6,7 +6,7 @@
   type="dark"
   >
     <b-navbar-brand :to="{ name: 'home' }">
-      <blk-logo class="MainLayoutNavBar__logo bg-white mr-2" />
+      <blk-logo class="MainLayoutNavBar__logo mr-2" />
       BlockLog
     </b-navbar-brand>
 

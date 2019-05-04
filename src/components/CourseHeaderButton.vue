@@ -111,7 +111,10 @@ export default {
     },
 
     onGoOn() {
-      // TODO: Сделать перекидывание на список заданий.
+      this.$router.push({
+        name: 'course_progress',
+        params: { id: this.course.id },
+      });
     },
 
     async onDelete() {

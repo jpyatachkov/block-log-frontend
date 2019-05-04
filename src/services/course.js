@@ -14,8 +14,17 @@ export default {
     return response.data;
   },
 
-  async getMyCourses({ page, size = 16 }) {
-    const url = this.myCoursesRoute();
+  async getMyActiveCourses({ page, size = 16 }) {
+    const url = this.myActiveCoursesRoute();
+    const response = await this.doGet({
+      url,
+      params: { page, size },
+    });
+    return response.data;
+  },
+
+  async getMyInactiveCourses({ page, size = 16 }) {
+    const url = this.myInactiveCoursesRoute();
     const response = await this.doGet({
       url,
       params: { page, size },

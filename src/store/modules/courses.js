@@ -3,9 +3,6 @@ import {
   createCollectionGetAction,
   createCollectionGetters,
   createCollectionMutations,
-  createEditStateEmptyState,
-  createEditStateGetters,
-  createEditStateMutations,
 } from '@/store/utils';
 import {
   getCollectionCallbacksByEntity,
@@ -24,12 +21,13 @@ function getUserRights(state) {
 }
 
 const COURSE = 'course';
-const MY_COURSE = 'myCourse';
+const MY_ACTIVE_COURSE = 'myActiveCourse';
+const MY_INACTIVE_COURSE = 'myInactiveCourse';
 
 const state = () => ({
   ...createCollectionEmptyState(COURSE),
-  ...createCollectionEmptyState(MY_COURSE),
-  ...createEditStateEmptyState(COURSE),
+  ...createCollectionEmptyState(MY_ACTIVE_COURSE),
+  ...createCollectionEmptyState(MY_INACTIVE_COURSE),
 });
 
 const {
@@ -41,8 +39,11 @@ const {
   currentPageCallback: courseCurrentPage,
 } = getCollectionCallbacksByEntity(COURSE);
 const {
-  currentPageCallback: myCourseCurrentPage,
-} = getCollectionCallbacksByEntity(MY_COURSE);
+  currentPageCallback: myActiveCourseCurrentPage,
+} = getCollectionCallbacksByEntity(MY_ACTIVE_COURSE);
+const {
+  currentPageCallback: myInactiveCourseCurrentPage,
+} = getCollectionCallbacksByEntity(MY_INACTIVE_COURSE);
 
 const actions = {
   get: createCollectionGetAction(async ({ state }, { size }) => {
@@ -52,12 +53,19 @@ const actions = {
     });
   }, COURSE),
 
-  getMine: createCollectionGetAction(async ({ state }, { size }) => {
-    return ApiService.getMyCourses({
-      page: myCourseCurrentPage(state) + 1,
+  getMineActive: createCollectionGetAction(async ({ state }, { size }) => {
+    return ApiService.getMyActiveCourses({
+      page: myActiveCourseCurrentPage(state) + 1,
       size,
     });
-  }, MY_COURSE),
+  }, MY_ACTIVE_COURSE),
+
+  getMineInactive: createCollectionGetAction(async ({ state }, { size }) => {
+    return ApiService.getMyInactiveCourses({
+      page: myInactiveCourseCurrentPage(state) + 1,
+      size,
+    });
+  }, MY_INACTIVE_COURSE),
 
   async getOne({ commit }, { courseId }) {
     const response = await ApiService.getCourse({ courseId });
@@ -76,16 +84,36 @@ const actions = {
   },
 };
 
+const {
+  clearListName: clearMyActiveCoursesMutationName,
+} = getCollectionMutationNamesByEntity(MY_ACTIVE_COURSE);
+const {
+  clearListName: clearMyInactiveCoursesMutationName,
+} = getCollectionMutationNamesByEntity(MY_INACTIVE_COURSE);
+
+const {
+  [clearMyActiveCoursesMutationName]: clearActive,
+} = createCollectionMutations(MY_ACTIVE_COURSE);
+
+const {
+  [clearMyInactiveCoursesMutationName]: clearInactive,
+} = createCollectionMutations(MY_INACTIVE_COURSE);
+
 const mutations = {
   ...createCollectionMutations(COURSE),
-  ...createCollectionMutations(MY_COURSE),
-  ...createEditStateMutations(COURSE),
+  ...createCollectionMutations(MY_ACTIVE_COURSE),
+  ...createCollectionMutations(MY_INACTIVE_COURSE),
+
+  clearMyCourseList(state) {
+    clearActive(state);
+    clearInactive(state);
+  },
 };
 
 const getters = {
   ...createCollectionGetters(COURSE),
-  ...createCollectionGetters(MY_COURSE),
-  ...createEditStateGetters(COURSE),
+  ...createCollectionGetters(MY_ACTIVE_COURSE),
+  ...createCollectionGetters(MY_INACTIVE_COURSE),
 
   userIsEnrolled(state) {
     return getUserRights(state).includes('user');

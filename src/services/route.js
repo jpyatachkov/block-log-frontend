@@ -4,7 +4,8 @@ export default {
   meRoute: () => 'users/me',
 
   coursesRoute: () => 'courses',
-  myCoursesRoute: () => 'courses/mine',
+  myActiveCoursesRoute: () => 'courses/mine/active',
+  myInactiveCoursesRoute: () => 'courses/mine/inactive',
   courseRoute: (courseId) => `courses/${courseId}`,
   courseEnrollRoute: (courseId) => `courses/${courseId}/enroll`,
 

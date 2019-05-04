@@ -1,11 +1,11 @@
 <template>
   <div class="d-flex flex-column justify-content-start align-items-start pt-4">
     <h5 class="text-bold">
-      Доступные курсы
+      Активные курсы
     </h5>
 
     <courses-grid
-    :courses="courses"
+    :courses="myActiveCourses"
     :loading="loading"
     class="pt-4 width-100"
     @fetch="doFetch"
@@ -13,8 +13,14 @@
       <app-card
       slot="no-items"
       class="text-center"
+      title="Пока Вы не проходите ни один курс."
       >
-        <app-card-text>В системе пока нет ни одного курса.</app-card-text>
+        <app-card-text>
+          Нажмите
+          <router-link :to="{ name: 'courses' }">
+            здесь
+          </router-link>, чтобы посмотреть список всех курсов.
+        </app-card-text>
       </app-card>
     </courses-grid>
   </div>
@@ -27,7 +33,7 @@ import { coursesComputed, coursesMethods } from '@/store/helpers';
 import CoursesGrid from '@/components/CoursesGrid';
 
 export default {
-  name: 'CourseList',
+  name: 'MyCoursesActiveList',
 
   components: {
     CoursesGrid,
@@ -44,7 +50,7 @@ export default {
 
     async doFetch({ page = 1 } = {}) {
       this.setLoading(true);
-      await this.getCourses({ page });
+      await this.getMyActiveCourses({ page });
       this.setLoading(false);
     },
   },
