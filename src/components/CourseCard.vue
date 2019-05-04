@@ -1,9 +1,9 @@
 <template>
   <app-card
   :title="title"
-  :img-src="require('@/assets/default.png')"
+  :img-src="avatar"
   class="CourseCard text-center"
-  subtitle="Команда Block Log"
+  :subtitle="author"
   @click.native="onCardClick"
   >
     <app-card-text>
@@ -14,7 +14,12 @@
     v-if="$route.name == 'my_courses' && !userIsStaff"
     class="mt-auto d-flex justify-content-center align-items-center"
     >
-      <blk-button variant="success">
+      <blk-button
+      variant="success"
+      @click="
+        $router.push({ name: 'course_progress', params: { id: course.id } })
+      "
+      >
         Продолжить
       </blk-button>
     </div>
@@ -50,6 +55,16 @@ export default {
   computed: {
     ...accountComputed,
 
+    author() {
+      return this.course.user
+        ? `${this.course.user.firstName} ${this.course.user.lastName}`
+        : '';
+    },
+
+    avatar() {
+      return this.course.avatarBase64 || require('@/assets/default.png');
+    },
+
     classes() {
       return {
         pointer: this.preview,
@@ -57,37 +72,21 @@ export default {
     },
 
     shortDescription() {
-      let description;
-
-      if (this.preview) {
-        description = this.shorten(this.course.shortDescription, 100);
-      } else {
-        description = this.course.shortDescription;
-      }
-
-      return description;
+      return this.preview
+        ? this.shorten(this.course.shortDescription, 100)
+        : this.course.shortDescription;
     },
 
     enrollButtonText() {
-      let text;
-
-      if (AccountService.userIsStaff()) {
-        text = 'Преподавать курс';
-      } else {
-        text = 'Записаться на курс';
-      }
-
-      return text;
+      return AccountService.userIsStaff()
+        ? 'Преподавать курс'
+        : 'Записаться на курс';
     },
 
     title() {
-      let title = this.course.title;
-
-      if (this.preview) {
-        title = this.shorten(title, 50);
-      }
-
-      return title;
+      return this.preview
+        ? this.shorten(this.course.title, 50)
+        : this.course.title;
     },
   },
 

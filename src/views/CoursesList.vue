@@ -1,6 +1,8 @@
 <template>
   <div class="d-flex flex-column justify-content-start align-items-start pt-4">
-    <h4>Доступные курсы</h4>
+    <h5 class="text-bold">
+      Доступные курсы
+    </h5>
 
     <courses-grid
     :courses="courses"
