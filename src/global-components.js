@@ -1,6 +1,9 @@
 import AppCard from '@/components/AppCard';
 import AppCardText from '@/components/AppCardText';
-import AppLAzyContainer from '@/components/AppLazyContainer';
+import AppCheckbox from '@/components/AppCheckbox';
+import AppFormFile from '@/components/AppFormFile';
+import AppFormSelect from '@/components/AppFormSelect';
+import AppLazyContainer from '@/components/AppLazyContainer';
 import BlkAlert from '@/components/BlkAlert';
 import BlkButton from '@/components/BlkButton';
 import BlkCard from '@/components/BlkCard';
@@ -19,7 +22,10 @@ import Vue from 'vue';
 
 Vue.component('app-card', AppCard);
 Vue.component('app-card-text', AppCardText);
-Vue.component('app-lazy-container', AppLAzyContainer);
+Vue.component('app-checkbox', AppCheckbox);
+Vue.component('app-form-file', AppFormFile);
+Vue.component('app-form-select', AppFormSelect);
+Vue.component('app-lazy-container', AppLazyContainer);
 Vue.component('blk-alert', BlkAlert);
 Vue.component('blk-button', BlkButton);
 Vue.component('blk-card', BlkCard);

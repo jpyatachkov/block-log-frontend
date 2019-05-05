@@ -1,6 +1,8 @@
 <template>
   <div>
     <course-header
+    :avatar="course.avatarBase64"
+    :title="course.title"
     class="mb-4"
     @nav-changed="currentNav = $event"
     />
@@ -23,7 +25,11 @@ import {
   LoadingMixin,
   MainFluidLayoutMixin,
 } from '@/mixins';
-import { assignmentsMethods, coursesMethods } from '@/store/helpers';
+import {
+  assignmentsMethods,
+  coursesComputed,
+  coursesMethods,
+} from '@/store/helpers';
 
 import CourseAssignments from '@/components/CourseAssignments';
 import CourseHeader from '@/components/CourseHeader';
@@ -51,6 +57,10 @@ export default {
     currentNav: 0,
   }),
 
+  computed: {
+    ...coursesComputed,
+  },
+
   created() {
     this.currentNav = this.nav || this.currentNav;
     this.clearAssignments();
@@ -60,10 +70,10 @@ export default {
     ...assignmentsMethods,
     ...coursesMethods,
 
-    changeEditState(isEditMode) {
-      const id = `${this.$route.params.id}`;
-      this.changeCoursesEditState({ id, isEditMode });
-    },
+    // changeEditState(isEditMode) {
+    //   const id = `${this.$route.params.id}`;
+    //   this.changeCoursesEditState({ id, isEditMode });
+    // },
 
     async doFetch() {
       const courseId = this.$route.params.id;

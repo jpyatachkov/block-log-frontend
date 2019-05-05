@@ -116,7 +116,12 @@ const getters = {
   ...createCollectionGetters(MY_INACTIVE_COURSE),
 
   userIsEnrolled(state) {
-    return getUserRights(state).includes('user');
+    const rights = getUserRights(state);
+    return (
+      rights.includes('user') ||
+      rights.includes('collaborator') ||
+      rights.includes('moderator')
+    );
   },
 
   userIsCollaborator(state) {

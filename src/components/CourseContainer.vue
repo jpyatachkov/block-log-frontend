@@ -1,16 +1,10 @@
 <template>
-  <div>
-    <blk-card-header>
-      {{ title }}
-    </blk-card-header>
-
-    <course-form
-    ref="form"
-    :loading="loading"
-    :update="update"
-    @submit="onSubmit"
-    />
-  </div>
+  <course-form
+  ref="form"
+  :loading="loading"
+  :update="update"
+  @submit="onSubmit"
+  />
 </template>
 
 <script>
@@ -37,10 +31,6 @@ export default {
 
   computed: {
     ...coursesComputed,
-
-    title() {
-      return this.update ? 'Изменение курса' : 'Создание курса';
-    },
   },
 
   async mounted() {

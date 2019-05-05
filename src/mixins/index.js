@@ -1,3 +1,4 @@
+export { default as CourseComplexityMixin } from './course-complexity';
 export { default as CoursePermissionsMixin } from './course-premissions';
 export { default as EmptyLayoutMixin } from './empty-layout';
 export { default as ErrorsMixin } from './errors';

@@ -4,23 +4,24 @@
   :class="additionalClasses"
   >
     <div class="CourseHeader__row container">
-      <div class="CourseHeader__img-container">
-        <img
-        class="max-height-100 max-width-100"
-        :src="require('@/assets/default.png')"
-        >
-      </div>
+      <course-avatar
+      :src="avatar"
+      class="CourseHeader__avatar"
+      />
 
       <h2 class="CourseHeader__title text-overflow-ellipsis">
-        {{ course.title }}
+        {{ title }}
       </h2>
 
-      <course-header-button class="ml-auto" />
+      <course-header-button
+      v-if="!update"
+      class="ml-auto"
+      />
     </div>
 
     <div class="container mt-auto">
       <course-header-navs
-      :navs="navs"
+      :navs="displayNavs"
       @change-active="onNavChange"
       />
     </div>
@@ -28,19 +29,28 @@
 </template>
 
 <script>
+import CourseAvatar from './CourseAvatar';
 import CourseHeaderButton from './CourseHeaderButton';
 import CourseHeaderNavs from './CourseHeaderNavs';
-import { coursesComputed } from '@/store/helpers';
 
 export default {
   name: 'CourseHeader',
 
   components: {
+    CourseAvatar,
     CourseHeaderButton,
     CourseHeaderNavs,
   },
 
   props: {
+    avatar: {
+      default: null,
+      validator: (v) => !v || v instanceof String || typeof v === 'string',
+    },
+    title: {
+      required: true,
+      validator: (v) => !v || v instanceof String || typeof v === 'string',
+    },
     update: {
       default: false,
       type: Boolean,
@@ -62,13 +72,23 @@ export default {
   }),
 
   computed: {
-    ...coursesComputed,
-
     additionalClasses() {
       return {
         'CourseHeader__container--base': !this.update,
         'CourseHeader__container--edit': this.update,
       };
+    },
+
+    displayNavs() {
+      let navs;
+
+      if (this.update) {
+        navs = this.navs.filter(({ name }) => name === 'info');
+      } else {
+        navs = this.navs;
+      }
+
+      return navs;
     },
   },
 
@@ -102,9 +122,7 @@ export default {
     }
   }
 
-  &__img-container {
-    width: 120px;
-    height: 120px;
+  &__avatar {
     margin-top: 27px;
   }
 
@@ -112,7 +130,7 @@ export default {
     margin-top: 25px;
     width: 100%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
   }

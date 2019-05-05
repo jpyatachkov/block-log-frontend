@@ -1,25 +1,42 @@
 <template>
-  <div class="row">
-    <div class="col-xs-12 col-md-7 col-lg-8 mb-2">
-      <course-content-card />
+  <div class="container-fluid">
+    <div class="row mt-3 mb-3">
+      <div class="col d-flex justify-content-end">
+        <blk-button
+        @click="
+          $router.push({
+            name: 'course_update',
+            params: { id: $route.params.id },
+          })
+        "
+        >
+          Редактировать информацию
+        </blk-button>
+      </div>
     </div>
 
-    <div class="col-xs-12 col-md-5 col-lg-4">
-      <div class="row mb-2">
-        <div class="col">
-          <course-complexity-card />
-        </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-7 col-lg-8 mb-2">
+        <course-content-card />
       </div>
 
-      <div class="row mb-2">
-        <div class="col">
-          <course-requirements-card />
+      <div class="col-xs-12 col-md-5 col-lg-4">
+        <div class="row mb-2">
+          <div class="col">
+            <course-complexity-card />
+          </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col">
-          <course-info-card />
+        <div class="row mb-2">
+          <div class="col">
+            <course-requirements-card />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <course-info-card />
+          </div>
         </div>
       </div>
     </div>

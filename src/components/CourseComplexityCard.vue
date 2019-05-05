@@ -4,8 +4,11 @@
       Сложность курса:
     </p>
 
-    <div class="mb-2 d-flex justify-content-between align-items-start">
-      <div class="d-flex justify-content-center align-items-start">
+    <div class="mb-2 mr-2 d-flex justify-content-between align-items-start">
+      <div
+      v-if="course.complexity"
+      class="d-flex justify-content-center align-items-start"
+      >
         <div
         v-for="i in course.complexity"
         :key="`star${i}`"
@@ -29,7 +32,7 @@
         </div>
       </div>
 
-      <p class="ml-2 mb-0">
+      <p class="mb-0">
         {{ complexityAsWord }}
       </p>
     </div>
@@ -45,6 +48,7 @@
 </template>
 
 <script>
+import { CourseComplexityMixin } from '@/mixins';
 import { coursesComputed } from '@/store/helpers';
 
 const MAX_COMPLEXITY = 5;
@@ -52,24 +56,13 @@ const MAX_COMPLEXITY = 5;
 export default {
   name: 'CourseComplexityCard',
 
+  mixins: [CourseComplexityMixin],
+
   computed: {
     ...coursesComputed,
 
     complexityAsWord() {
-      switch (this.course.complexity) {
-        case 1:
-          return 'Низкая';
-        case 2:
-          return 'Ниже средней';
-        case 3:
-          return 'Средняя';
-        case 4:
-          return 'Выше средней';
-        case 5:
-          return 'Высокая';
-        default:
-          return 'Не задана';
-      }
+      return this.complexityToWord(this.course.complexity);
     },
 
     emptyStarsCount() {

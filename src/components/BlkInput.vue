@@ -11,6 +11,8 @@
       :state="isInvalid"
       v-on="$listeners"
       />
+
+      <b-form-text>{{ hint }}</b-form-text>
     </b-form-group>
   </div>
 </template>
@@ -29,6 +31,10 @@ export default {
     errors: {
       default: () => [],
       type: Array,
+    },
+    hint: {
+      default: '',
+      type: String,
     },
     label: {
       required: true,

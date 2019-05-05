@@ -4,7 +4,7 @@
 
 <script>
 import CourseContainer from '@/components/CourseContainer';
-import { EmptyLayoutMixin } from '@/mixins';
+import { MainFluidLayoutMixin } from '@/mixins';
 
 export default {
   name: 'CourseUpdate',
@@ -13,6 +13,6 @@ export default {
     CourseContainer,
   },
 
-  mixins: [EmptyLayoutMixin],
+  mixins: [MainFluidLayoutMixin],
 };
 </script>
