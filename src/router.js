@@ -3,13 +3,14 @@ import Router from 'vue-router';
 import Vue from 'vue';
 
 const Assignment = () => import('@/views/Assignment');
-const AssignmentCreate = () => import('@/views/AssignmentCreate');
-const AssignmentUpdate = () => import('@/views/AssignmentUpdate');
+// const AssignmentCreate = () => import('@/views/AssignmentCreate');
+// const AssignmentUpdate = () => import('@/views/AssignmentUpdate');
 const Course = () => import('@/views/Course');
 const CourseCreate = () => import('@/views/CourseCreate');
 const CoursesList = () => import('@/views/CoursesList');
 const CourseProgress = () => import('@/views/CourseProgress');
 const CourseUpdate = () => import('@/views/CourseUpdate');
+const CourseAssignmentsList = () => import('@/views/CourseAssignmentsList');
 const Home = () => import('@/views/Home');
 const Login = () => import('@/views/Login');
 const MyCoursesList = () => import('@/views/MyCoursesList');
@@ -105,6 +106,14 @@ const router = new Router({
       },
     },
     {
+      path: '/course/:id/assignments',
+      name: 'course_assignments',
+      component: CourseAssignmentsList,
+      meta: {
+        forLoggedIn: true,
+      },
+    },
+    {
       path: '/course/:id/progress',
       name: 'course_progress',
       component: CourseProgress,
@@ -120,14 +129,14 @@ const router = new Router({
         forLoggedIn: true,
       },
     },
-    {
-      path: '/course/:courseId/assignment/new',
-      name: 'assignment_create',
-      component: AssignmentCreate,
-      meta: {
-        forLoggedIn: true,
-      },
-    },
+    // {
+    //   path: '/course/:courseId/assignment/new',
+    //   name: 'assignment_create',
+    //   component: AssignmentCreate,
+    //   meta: {
+    //     forLoggedIn: true,
+    //   },
+    // },
     {
       path: '/course/:courseId/assignment/:id',
       name: 'assignment',
@@ -136,14 +145,14 @@ const router = new Router({
         forLoggedIn: true,
       },
     },
-    {
-      path: '/course/:courseId/assignment/:id/edit',
-      name: 'assignment_update',
-      component: AssignmentUpdate,
-      meta: {
-        forLoggedIn: true,
-      },
-    },
+    // {
+    //   path: '/course/:courseId/assignment/:id/edit',
+    //   name: 'assignment_update',
+    //   component: AssignmentUpdate,
+    //   meta: {
+    //     forLoggedIn: true,
+    //   },
+    // },
   ],
 });
 
