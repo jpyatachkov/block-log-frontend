@@ -13,19 +13,35 @@
       </div>
 
       <div class="col-xs-12 col-md-6">
-        <h4 class="text-overflow-ellipsis">
-          {{ assignment.title }}
-        </h4>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col">
+              <h4 class="text-overflow-ellipsis">
+                {{ assignment.title }}
+              </h4>
+            </div>
+          </div>
 
-        <app-card-text class="text-overflow-ellipsis">
-          {{ description }}
-        </app-card-text>
+          <div class="row">
+            <div class="col">
+              <app-card-text>
+                {{ description }}
+              </app-card-text>
+            </div>
+          </div>
 
-        <a
-        v-if="preview && canShowMore"
-        href="#"
-        @click.prevent="preview = false"
-        >Показать полностью...</a>
+          <div
+          v-if="preview && canShowMore"
+          class="row"
+          >
+            <div class="col">
+              <a
+              href="#"
+              @click.prevent="preview = false"
+              >Показать полностью...</a>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div
