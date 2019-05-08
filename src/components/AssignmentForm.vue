@@ -222,7 +222,7 @@ export default {
       let { title, description, program, tests } = form;
 
       if (!tests || !tests.length) {
-        tests = [buildEmptyTest()];
+        tests = [];
       } else {
         tests = tests.map((test) => ({
           inputArray: test.inputArray.map((x) => `${x}`).join(' '),
