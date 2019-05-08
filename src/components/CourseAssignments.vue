@@ -3,9 +3,9 @@
     <div class="container-fluid">
       <div class="row mt-3 mb-3">
         <div class="col d-flex justify-content-end">
-          <blk-button @click="$router.push({ name: 'course_assignments' })">
+          <edit-button @click="onEditProgramClick">
             Редактировать программу
-          </blk-button>
+          </edit-button>
         </div>
       </div>
     </div>
@@ -21,6 +21,8 @@
 <script>
 import AssignmentsProgress from './AssignmentsProgress';
 import AssignmentsTable from './AssignmentsTable';
+import EditButton from './EditButton';
+import { assignmentsMethods } from '@/store/helpers';
 
 export default {
   name: 'CourseAssignments',
@@ -28,6 +30,16 @@ export default {
   components: {
     AssignmentsProgress,
     AssignmentsTable,
+    EditButton,
+  },
+
+  methods: {
+    ...assignmentsMethods,
+
+    onEditProgramClick() {
+      this.clearAssignments();
+      this.$router.push({ name: 'course_assignments' });
+    },
   },
 };
 </script>

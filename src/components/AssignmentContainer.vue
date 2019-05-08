@@ -1,13 +1,10 @@
 <template>
-  <div>
-    <blk-card-header>
-      {{ title }}
-    </blk-card-header>
-
+  <div class="container-fluid">
     <assignment-form
     ref="form"
     :loading="loading"
     :update="update"
+    @close-edit-mode="$emit('hide')"
     @submit="onSubmit"
     />
   </div>
@@ -15,6 +12,7 @@
 
 <script>
 import { assignmentsComputed, assignmentsMethods } from '@/store/helpers';
+import eventBus, { EVENTS } from '@/bus';
 
 import AssignmentForm from './AssignmentForm';
 import { EditorService } from '@/services';
@@ -30,6 +28,14 @@ export default {
   mixins: [LoadingMixin],
 
   props: {
+    assignmentId: {
+      required: true,
+      validator: (v) =>
+        v instanceof Number ||
+        typeof v === 'number' ||
+        v instanceof String ||
+        typeof v === 'string',
+    },
     update: {
       default: false,
       type: Boolean,
@@ -38,23 +44,21 @@ export default {
 
   computed: {
     ...assignmentsComputed,
-
-    title() {
-      return this.update ? 'Изменение задания' : 'Создание задания';
-    },
   },
 
   async mounted() {
-    if (this.assignmentFormUnsaved) {
+    /* if (this.assignmentFormUnsaved) {
       const program = EditorService.getProgram();
 
       this.setFormData({
         ...this.assignmentForm,
         program,
       });
-    } else if (this.update) {
-      const courseId = this.$route.params.courseId;
-      const assignmentId = this.$route.params.id;
+    } else */ if (
+      this.update
+    ) {
+      const courseId = this.$route.params.id;
+      const assignmentId = this.assignmentId;
 
       const assignmentForm = await this.getAssignment({
         courseId,
@@ -72,7 +76,7 @@ export default {
       this.setLoading(true);
       this.$refs.form.clearErrors();
 
-      const courseId = this.$route.params.courseId;
+      const courseId = this.$route.params.id;
 
       assignment.program = EditorService.getProgram();
       assignment.tests = assignment.tests.map((test) => ({
@@ -81,25 +85,22 @@ export default {
       }));
 
       try {
-        let id;
-
         if (this.update) {
-          const assignmentId = this.$route.params.id;
-          id = await this.updateAssignment({
+          const assignmentId = this.assignmentId;
+          await this.updateAssignment({
             courseId,
             assignmentId,
             assignment,
           });
+          eventBus.$emit(EVENTS.SHOW_TOAST, {
+            message: 'Задача успешно обновлена',
+          });
         } else {
-          id = await this.createAssignment({ courseId, assignment });
+          await this.createAssignment({ courseId, assignment });
         }
 
         this.$refs.form.clearEditor();
-
-        this.$router.push({
-          name: 'assignment',
-          params: { courseId: courseId, id },
-        });
+        this.$emit('hide');
       } catch (error) {
         this.$refs.form.mapBackendErrorsToFields(error);
       } finally {

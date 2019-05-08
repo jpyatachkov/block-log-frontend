@@ -3,19 +3,23 @@
   class="AssignmentRow container-fluid"
   :class="additionalStyles"
   >
-    <div class="row">
+    <div class="AssignmentRow__preview row">
       <div
-      class="hidden-sm-down col-md-3 d-flex flex-column justify-content-center align-items-start"
+      class="pl-0 d-none col-md-2 d-md-flex flex-column justify-content-center align-items-start"
       >
         <div class="AssignmentRow__number">
           {{ number }}
         </div>
       </div>
 
-      <div class="col-xs-12 col-md-5">
-        <h4>{{ assignment.title }}</h4>
+      <div class="col-xs-12 col-md-6">
+        <h4 class="text-overflow-ellipsis">
+          {{ assignment.title }}
+        </h4>
 
-        {{ description }}
+        <app-card-text class="text-overflow-ellipsis">
+          {{ description }}
+        </app-card-text>
 
         <a
         v-if="preview && canShowMore"
@@ -25,37 +29,89 @@
       </div>
 
       <div
-      class="col-xs-12 col-md-4 d-flex justify-content-center align-items-end pa-4"
+      class="col-xs-12 col-md-4 d-flex flex-column justify-content-center align-items-end pa-4"
       >
         <div v-if="!isEditMode">
-          <blk-button
-          class="mr-2"
+          <edit-button
+          class="mb-2 mr-2"
           variant="primary"
           @click="isEditMode = true"
           >
             Редактировать
-          </blk-button>
-          <blk-button
-          variant="danger"
-          @click="$emit('delete', assignment.id)"
-          >
-            Удалить
-          </blk-button>
+          </edit-button>
+
+          <delete-button
+          class="mb-2 mr-2"
+          @click="showModal = true"
+          />
         </div>
       </div>
     </div>
+
+    <div
+    v-if="isEditMode"
+    class="row pt-4 pb-4 AssignmentRow__form"
+    >
+      <assignment-container
+      :assignment-id="assignment.id"
+      update
+      @hide="isEditMode = false"
+      />
+    </div>
+
+    <b-modal
+    v-model="showModal"
+    busy
+    centered
+    title="Удалить курс?"
+    >
+      <p class="my-4">
+        Это действие приведет к безвозвратному удалению курса. Вы уверены?
+      </p>
+
+      <blk-form-buttons slot="modal-footer">
+        <blk-button
+        :disabled="loading"
+        class="mr-2"
+        @click="showModal = false"
+        >
+          Отмена
+        </blk-button>
+
+        <blk-button
+        :disabled="loading"
+        :loading="loading"
+        variant="danger"
+        @click="onDeleteClick"
+        >
+          Удалить
+        </blk-button>
+      </blk-form-buttons>
+    </b-modal>
   </div>
 </template>
 
 <script>
-import { ShortenMixin } from '@/mixins';
+import { LoadingMixin, ShortenMixin } from '@/mixins';
+import eventBus, { EVENTS } from '@/bus';
+
+import AssignmentContainer from './AssignmentContainer';
+import DeleteButton from './DeleteButton';
+import EditButton from './EditButton';
+import { assignmentsMethods } from '@/store/helpers';
 
 const MAX_PREVIEW_LENGTH = 150;
 
 export default {
   name: 'AssignmentRow',
 
-  mixins: [ShortenMixin],
+  components: {
+    AssignmentContainer,
+    DeleteButton,
+    EditButton,
+  },
+
+  mixins: [LoadingMixin, ShortenMixin],
 
   props: {
     assignment: {
@@ -77,14 +133,16 @@ export default {
   },
 
   data: () => ({
-    preview: true,
     isEditMode: false,
+    preview: true,
+    showModal: false,
   }),
 
   computed: {
     additionalStyles() {
       return {
         'AssignmentRow--first': this.isFirst,
+        'AssignmentRow--not-last': !this.isLast,
         'AssignmentRow--last': this.isLast,
       };
     },
@@ -99,33 +157,70 @@ export default {
         : this.assignment.description;
     },
   },
+
+  methods: {
+    ...assignmentsMethods,
+
+    async onDeleteClick() {
+      this.setLoading(true);
+
+      const courseId = this.$route.params.id;
+      const assignmentId = this.assignment.id;
+      await this.deleteAssignment({ courseId, assignmentId });
+
+      eventBus.$emit(EVENTS.SHOW_TOAST, { message: 'Задача удалена' });
+
+      this.showModal = false;
+      this.setLoading(false);
+    },
+  },
 };
 </script>
 
 <style lang="scss">
+$row-border-radius: 4px;
+$list-border-radius: $row-border-radius * 2;
+
 .AssignmentRow {
   width: 100%;
+  border: solid 1px #dddddd;
 
   &--first {
-    border-radius: 4px;
-    border-bottom-left-radius: none;
-    border-bottom-right-radius: none;
+    border-top-left-radius: $row-border-radius;
+    border-top-right-radius: $row-border-radius;
+  }
+
+  &--not-last {
+    border-bottom: 0px;
   }
 
   &--last {
-    border-radius: 4px;
-    border-top-left-radius: none;
-    border-top-right-radius: none;
+    border-bottom-left-radius: $row-border-radius;
+    border-bottom-right-radius: $row-border-radius;
+  }
+
+  &__preview {
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 
   &__number {
     width: 48px;
     height: 110px;
     background-color: #f4f6fb;
+
     border: solid 1px #dddddd;
+    border-left: 0px;
+    border-top-right-radius: $list-border-radius;
+    border-bottom-right-radius: $list-border-radius;
+
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  &__form {
+    background-color: #f4f6fb;
   }
 }
 </style>

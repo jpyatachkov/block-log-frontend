@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row mt-3 mb-3">
       <div class="col d-flex justify-content-end">
-        <blk-button
+        <edit-button
         @click="
           $router.push({
             name: 'course_update',
@@ -11,7 +11,7 @@
         "
         >
           Редактировать информацию
-        </blk-button>
+        </edit-button>
       </div>
     </div>
 
@@ -48,6 +48,7 @@ import CourseComplexityCard from './CourseComplexityCard';
 import CourseContentCard from './CourseContentCard';
 import CourseInfoCard from './CourseInfoCard';
 import CourseRequirementsCard from './CourseRequirementsCard';
+import EditButton from './EditButton';
 
 export default {
   name: 'CourseInfo',
@@ -57,6 +58,7 @@ export default {
     CourseContentCard,
     CourseInfoCard,
     CourseRequirementsCard,
+    EditButton,
   },
 };
 </script>

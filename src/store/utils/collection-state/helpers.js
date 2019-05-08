@@ -10,6 +10,7 @@ export function getCollectionCallbacksByEntity(entityName) {
   return {
     currentPageCallback: (state) => state[itemCurrentPage],
     isLoadingCallback: (state) => state[itemLoading],
+    itemListCallback: (state) => state[itemList],
     totalItemsCallback: (state) => state[itemList].total,
   };
 }

@@ -1,36 +1,48 @@
 <template>
-  <blk-form
-  class="TestForm__container"
-  @submit="onSubmit"
-  >
-    <blk-input
-    v-model.lazy="form.inputArray"
-    :errors="inputArrayErrors"
-    class="TestForm__item mr-3"
-    label="Исходные данные"
-    placeholder="Вводите числа через пробел"
-    @keypress="onKeyPress"
-    />
+  <blk-form @submit="onSubmit">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <blk-input
+          v-model.lazy="form.inputArray"
+          :errors="inputArrayErrors"
+          class="TestForm__item"
+          label="Исходные данные"
+          placeholder="Вводите числа через пробел"
+          @keypress="onKeyPress"
+          />
+        </div>
+      </div>
 
-    <blk-input
-    v-model.lazy="form.outputArray"
-    :errors="outputArrayErrors"
-    class="TestForm__item mr-3"
-    label="Ожидаемый результат"
-    placeholder="Вводите числа через пробел"
-    @keypress="onKeyPress"
-    />
+      <div class="row">
+        <div class="col">
+          <blk-input
+          v-model.lazy="form.outputArray"
+          :errors="outputArrayErrors"
+          class="TestForm__item"
+          label="Ожидаемый результат"
+          placeholder="Вводите числа через пробел"
+          @keypress="onKeyPress"
+          />
+        </div>
+      </div>
 
-    <blk-button
-    :disabled="loading"
-    :loading="loading"
-    class="TestForm__item--bottom"
-    type="submit"
-    round
-    variant="success"
-    >
-      Добавить
-    </blk-button>
+      <div class="row">
+        <div class="col d-flex justify-content-end align-items-center">
+          <div>
+            <blk-button
+            :disabled="loading"
+            :loading="loading"
+            class="TestForm__item mb-0"
+            type="submit"
+            variant="success"
+            >
+              Добавить
+            </blk-button>
+          </div>
+        </div>
+      </div>
+    </div>
   </blk-form>
 </template>
 

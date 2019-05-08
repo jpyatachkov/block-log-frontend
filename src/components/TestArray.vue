@@ -1,23 +1,41 @@
 <template>
-  <div class="TestArray__container">
-    <div
-    v-if="deletable"
-    class="TestArray__header"
-    >
-      <blk-button
-      :disabled="loading"
-      :loading="loading"
-      round
-      variant="outline-danger"
-      @click="$emit('delete', { index })"
-      >
-        Удалить
-      </blk-button>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <blk-input
+        :value="value.inputArray"
+        label="Исходные данные"
+        disabled
+        />
+      </div>
     </div>
 
-    <div class="TestArray__content">
-      <p>Исходные данные: {{ value.inputArray }}</p>
-      <p>Ожидаемый результат: {{ value.outputArray }}</p>
+    <div class="row">
+      <div class="col">
+        <blk-input
+        :value="value.outputArray"
+        label="Ожидаемый результат"
+        disabled
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col d-flex justify-content-end align-items-center">
+        <div
+        v-if="deletable"
+        class="TestArray__header"
+        >
+          <blk-button
+          :disabled="loading"
+          :loading="loading"
+          variant="outline-danger"
+          @click="$emit('delete', { index })"
+          >
+            Удалить
+          </blk-button>
+        </div>
+      </div>
     </div>
   </div>
 </template>

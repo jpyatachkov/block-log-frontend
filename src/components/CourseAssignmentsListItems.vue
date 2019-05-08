@@ -1,21 +1,24 @@
 <template>
-  <div class="width-100">
+  <div class="w-100 mt-3">
     <app-lazy-container
     v-if="assignmentsTotal"
     :can-load-more="canLoadMoreAssignments"
     :loading="loading"
     @fetch="$emit('fetch-assignments', $event)"
     >
-      <div
-      v-for="(assignment, index) in assignments"
-      :key="assignment.id"
-      >
-        <assignment-row
-        :assignment="assignment"
-        :is-first="index === 0"
-        :is-last="index === assignmentsTotal - 1"
-        :number="index"
-        />
+      <div class="w-100 mb-3">
+        <div
+        v-for="(assignment, index) in assignments"
+        :key="assignment.id"
+        class="w-100"
+        >
+          <assignment-row
+          :assignment="assignment"
+          :is-first="index === 0"
+          :is-last="index === assignments.length - 1"
+          :number="index + 1"
+          />
+        </div>
       </div>
     </app-lazy-container>
     <div

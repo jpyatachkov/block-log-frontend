@@ -68,6 +68,7 @@ import {
   coursesComputed,
   coursesMethods,
 } from '@/store/helpers';
+import eventBus, { EVENTS } from '@/bus';
 
 import { LoadingMixin } from '@/mixins';
 
@@ -135,6 +136,7 @@ export default {
 
       this.showConfirmDialog = false;
       this.$router.push({ name: 'my_courses' });
+      eventBus.$emit(EVENTS.SHOW_TOAST, { message: 'Курс удален' });
     },
   },
 };

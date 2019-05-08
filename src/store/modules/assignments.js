@@ -50,12 +50,45 @@ const actions = {
   async delete({ commit }, { courseId, assignmentId }) {
     await ApiService.deleteAssignment({ courseId, assignmentId });
     commit(clearMutationName);
+    commit('deleteById', { id: assignmentId });
   },
 };
 
 const mutations = {
   ...createCollectionMutations(ASSIGNMENT),
   ...createEditStateMutations(ASSIGNMENT),
+
+  updateById(state, { id, response }) {
+    if (!state.assignmentList) {
+      return;
+    }
+
+    id = parseInt(id);
+    const assignment = response.assignment;
+
+    state.assignmentList = {
+      total: state.assignmentList.total,
+      items: state.assignmentList.items.map((a) => {
+        if (a.id === id) {
+          return assignment;
+        } else {
+          return a;
+        }
+      }),
+    };
+  },
+
+  deleteById(state, { id }) {
+    if (!state.assignmentList) {
+      return;
+    }
+
+    id = parseInt(id);
+
+    state.assignmentList.items = state.assignmentList.items.filter(
+      (a) => a.id !== id,
+    );
+  },
 };
 
 const getters = {

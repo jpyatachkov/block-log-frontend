@@ -9,6 +9,7 @@
 
 <script>
 import { coursesComputed, coursesMethods } from '@/store/helpers';
+import eventBus, { EVENTS } from '@/bus';
 
 import CourseForm from './CourseForm';
 import { LoadingMixin } from '@/mixins';
@@ -68,6 +69,7 @@ export default {
         this.clearMyCourses();
 
         this.$router.push({ name: 'course', params: { id } });
+        eventBus.$emit(EVENTS.SHOW_TOAST, { message: 'Курс обновлен' });
       } catch (error) {
         this.$refs.form.mapBackendErrorsToFields(error);
       } finally {

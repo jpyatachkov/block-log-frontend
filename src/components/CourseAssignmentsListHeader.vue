@@ -9,18 +9,20 @@
     </div>
 
     <div class="row mt-2">
-      <div class="col">
+      <div class="col-xs-12 col-lg-6">
         <h5>Редактирование программы курса</h5>
       </div>
 
-      <div class="col d-flex justify-content-end">
-        <blk-button
+      <div
+      class="col-xs-12 col-lg-6 d-flex justify-content-end align-items-center"
+      >
+        <add-button
         class="mr-2"
-        variant="outline-success"
         @click="$emit('add-assignment')"
         >
           Добавить задачу
-        </blk-button>
+        </add-button>
+
         <blk-button @click="$router.go(-1)">
           Отмена
         </blk-button>
@@ -30,10 +32,15 @@
 </template>
 
 <script>
+import AddButton from './AddButton';
 import { coursesComputed } from '@/store/helpers';
 
 export default {
   name: 'CourseAssignmentsListHeader',
+
+  components: {
+    AddButton,
+  },
 
   computed: {
     ...coursesComputed,

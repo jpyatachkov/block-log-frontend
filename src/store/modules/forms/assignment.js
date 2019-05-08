@@ -36,6 +36,11 @@ const actions = {
       assignmentId,
       assignment,
     });
+    commit(
+      'assignments/updateById',
+      { id: assignmentId, response },
+      { root: true },
+    );
     return setItem({ rootState, commit, response });
   },
 };
