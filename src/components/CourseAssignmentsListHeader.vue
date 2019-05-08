@@ -17,6 +17,7 @@
       class="col-xs-12 col-lg-6 d-flex justify-content-end align-items-center"
       >
         <add-button
+        v-if="showAddButton"
         class="mr-2"
         @click="$emit('add-assignment')"
         >
@@ -24,7 +25,7 @@
         </add-button>
 
         <blk-button @click="$router.go(-1)">
-          Отмена
+          Завершить
         </blk-button>
       </div>
     </div>
@@ -40,6 +41,13 @@ export default {
 
   components: {
     AddButton,
+  },
+
+  props: {
+    showAddButton: {
+      default: true,
+      type: Boolean,
+    },
   },
 
   computed: {

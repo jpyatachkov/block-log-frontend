@@ -27,6 +27,7 @@ const actions = {
       courseId,
       assignment,
     });
+    commit('assignments/addToEnd', { response }, { root: true });
     return setItem({ rootState, commit, response });
   },
 

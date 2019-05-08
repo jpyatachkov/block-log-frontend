@@ -58,6 +58,19 @@ const mutations = {
   ...createCollectionMutations(ASSIGNMENT),
   ...createEditStateMutations(ASSIGNMENT),
 
+  addToEnd(state, { response }) {
+    if (!state.assignmentList) {
+      return;
+    }
+
+    const assignment = response.assignment;
+
+    state.assignmentList = {
+      total: state.assignmentList.total,
+      items: [assignment, ...state.assignmentList.items],
+    };
+  },
+
   updateById(state, { id, response }) {
     if (!state.assignmentList) {
       return;

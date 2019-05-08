@@ -29,8 +29,9 @@ export default {
 
   props: {
     assignmentId: {
-      required: true,
+      default: null,
       validator: (v) =>
+        v === null ||
         v instanceof Number ||
         typeof v === 'number' ||
         v instanceof String ||
@@ -97,6 +98,9 @@ export default {
           });
         } else {
           await this.createAssignment({ courseId, assignment });
+          eventBus.$emit(EVENTS.SHOW_TOAST, {
+            message: 'Задача создана',
+          });
         }
 
         this.$refs.form.clearEditor();
