@@ -20,6 +20,9 @@ const ASSIGNMENT = 'assignment';
 const state = () => ({
   ...createCollectionEmptyState(ASSIGNMENT),
   ...createEditStateEmptyState(ASSIGNMENT),
+
+  // Для того, чтобы отслеживать, какая задача решается при возврате.
+  assignmentIndex: null,
 });
 
 const {
@@ -102,6 +105,10 @@ const mutations = {
       (a) => a.id !== id,
     );
   },
+
+  setAssignmentIndex(state, { idx }) {
+    state.assignmentIndex = idx;
+  },
 };
 
 const getters = {
@@ -110,6 +117,10 @@ const getters = {
 
   canLoadMore(state) {
     return assignmentCurrentPage(state) < assignmentListTotal(state);
+  },
+
+  assignmentIndex(state) {
+    return state.assignmentIndex;
   },
 };
 

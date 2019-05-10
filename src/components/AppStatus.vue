@@ -1,10 +1,5 @@
 <template>
-  <div class="AppStatus__container">
-    <img
-    class="max-height-100 max-width-100"
-    :src="imgSrc"
-    >
-  </div>
+  <img :src="imgSrc">
 </template>
 
 <script>
@@ -20,7 +15,6 @@ export default {
 
   computed: {
     imgSrc() {
-      console.log(this.success);
       return this.success
         ? require('@/assets/success.png')
         : require('@/assets/error.png');

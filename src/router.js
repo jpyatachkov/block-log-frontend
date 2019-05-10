@@ -2,7 +2,7 @@ import { JwtService } from '@/services';
 import Router from 'vue-router';
 import Vue from 'vue';
 
-const Assignment = () => import('@/views/Assignment');
+// const Assignment = () => import('@/views/Assignment');
 // const AssignmentCreate = () => import('@/views/AssignmentCreate');
 // const AssignmentUpdate = () => import('@/views/AssignmentUpdate');
 const Course = () => import('@/views/Course');
@@ -114,7 +114,7 @@ const router = new Router({
       },
     },
     {
-      path: '/course/:id/progress',
+      path: '/course/:courseId/assignment/:id',
       name: 'course_progress',
       component: CourseProgress,
       meta: {
@@ -137,14 +137,14 @@ const router = new Router({
     //     forLoggedIn: true,
     //   },
     // },
-    {
-      path: '/course/:courseId/assignment/:id',
-      name: 'assignment',
-      component: Assignment,
-      meta: {
-        forLoggedIn: true,
-      },
-    },
+    // {
+    //   path: '/course/:courseId/assignment/:id',
+    //   name: 'assignment',
+    //   component: Assignment,
+    //   meta: {
+    //     forLoggedIn: true,
+    //   },
+    // },
     // {
     //   path: '/course/:courseId/assignment/:id/edit',
     //   name: 'assignment_update',

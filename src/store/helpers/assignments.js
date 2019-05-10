@@ -10,6 +10,7 @@ export const assignmentsComputed = {
     assignmentsTotal: 'assignments/getAssignmentTotal',
     assignmentsEditState: 'assignments/getAssignmentEditState',
     canLoadMoreAssignments: 'assignments/canLoadMore',
+    assignmentIndex: 'assignments/assignmentIndex',
   }),
 };
 
@@ -28,5 +29,6 @@ export const assignmentsMethods = {
     clearAssignmentForm: 'assignments/form/clear',
     setAssignmentForm: 'assignments/form/set',
     setAssignmentFormVisited: 'assignments/form/setVisited',
+    setAssignmentIndex: 'assignments/setAssignmentIndex',
   }),
 };

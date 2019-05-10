@@ -5,7 +5,7 @@ export default {
   ...HttpService,
   ...RouteService,
 
-  async getAssignments({ courseId, page, size = 50 }) {
+  async getAssignments({ courseId, page, size = 100 }) {
     const url = this.assignmentsRoute(courseId);
     const response = await this.doGet({
       url,

@@ -5,7 +5,7 @@ export default {
   ...HttpService,
   ...RouteService,
 
-  async getSolutions({ courseId, assignmentId, page, size = 16 }) {
+  async getSolutions({ courseId, assignmentId, page, size = 100 }) {
     const url = this.solutionsRoute(courseId, assignmentId);
     const params = {
       page,

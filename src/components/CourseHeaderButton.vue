@@ -115,7 +115,7 @@ export default {
     onGoOn() {
       this.$router.push({
         name: 'course_progress',
-        params: { id: this.course.id },
+        params: { courseId: this.course.id, id: null },
       });
     },
 

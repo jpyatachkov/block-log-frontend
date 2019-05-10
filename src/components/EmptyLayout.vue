@@ -1,5 +1,5 @@
 <template>
-  <main class="MainLayout__container">
+  <main class="EmptyLayout__container">
     <router-view class="flex-grow-1" />
   </main>
 </template>
@@ -11,7 +11,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.MainLayout__container {
-  display: flex;
+.EmptyLayout {
+  &__container {
+    display: flex;
+    height: 100%;
+    min-height: 100%;
+  }
 }
 </style>
