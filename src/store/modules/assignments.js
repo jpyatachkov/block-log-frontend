@@ -69,7 +69,7 @@ const mutations = {
     const assignment = response.assignment;
 
     state.assignmentList = {
-      total: state.assignmentList.total,
+      total: state.assignmentList.total || 1,
       items: [assignment, ...state.assignmentList.items],
     };
   },
