@@ -183,7 +183,11 @@ router.beforeEach(async (to, from, next) => {
   initialPageLoad = false;
 
   if (forLoggedIn && userLoggedIn) {
-    await router.app.$store.dispatch('account/me');
+    try {
+      await router.app.$store.dispatch('account/me');
+    } catch (err) {
+      JwtService.clearToken();
+    }
   }
 
   if (forAnonymous && userLoggedIn) {
