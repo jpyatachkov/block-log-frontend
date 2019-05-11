@@ -43,6 +43,9 @@ export default {
         case redirect && err.response.status === 404:
           router.push({ name: 'not_found' });
           break;
+        case err.response.status === 500:
+          router.push({ name: 'internal_server_error' });
+          break;
         default:
           break;
       }

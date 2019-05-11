@@ -12,6 +12,7 @@ const CourseProgress = () => import('@/views/CourseProgress');
 const CourseUpdate = () => import('@/views/CourseUpdate');
 const CourseAssignmentsList = () => import('@/views/CourseAssignmentsList');
 const Home = () => import('@/views/Home');
+const InternalServerError = () => import('@/views/InternalServerError');
 const Login = () => import('@/views/Login');
 const MyCoursesList = () => import('@/views/MyCoursesList');
 const MyCoursesActiveList = () => import('@/views/MyCoursesActiveList');
@@ -29,6 +30,11 @@ const router = new Router({
       path: '/404',
       name: 'not_found',
       component: NotFound,
+    },
+    {
+      path: '/500',
+      name: 'internal_server_error',
+      component: InternalServerError,
     },
     {
       path: '/login',
