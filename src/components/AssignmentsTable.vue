@@ -13,7 +13,9 @@
       </template>
 
       <template v-slot:title="{ value }">
-        {{ value }}
+        <div class="break-all">
+          {{ value }}
+        </div>
       </template>
 
       <template v-slot:countAttempts="{ value }">

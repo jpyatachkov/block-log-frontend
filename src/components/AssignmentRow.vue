@@ -16,7 +16,7 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col">
-              <h4 class="text-overflow-ellipsis">
+              <h4 :class="shortenClasses">
                 {{ assignment.title }}
               </h4>
             </div>
@@ -24,21 +24,27 @@
 
           <div class="row">
             <div class="col">
-              <app-card-text>
-                {{ description }}
+              <app-card-text :class="shortenClasses">
+                {{ assignment.description }}
               </app-card-text>
             </div>
           </div>
 
           <div
-          v-if="preview && canShowMore"
+          v-if="canShowMore"
           class="row"
           >
             <div class="col">
               <a
+              v-if="preview"
               href="#"
               @click.prevent="preview = false"
-              >Показать полностью...</a>
+              >Показать полностью</a>
+              <a
+              v-else
+              href="#"
+              @click.prevent="preview = true"
+              >Скрыть</a>
             </div>
           </div>
         </div>
@@ -108,12 +114,12 @@
 </template>
 
 <script>
-import { LoadingMixin, ShortenMixin } from '@/mixins';
 import eventBus, { EVENTS } from '@/bus';
 
 import AssignmentContainer from './AssignmentContainer';
 import DeleteButton from './DeleteButton';
 import EditButton from './EditButton';
+import { LoadingMixin } from '@/mixins';
 import { assignmentsMethods } from '@/store/helpers';
 
 const MAX_PREVIEW_LENGTH = 150;
@@ -127,7 +133,7 @@ export default {
     EditButton,
   },
 
-  mixins: [LoadingMixin, ShortenMixin],
+  mixins: [LoadingMixin],
 
   props: {
     assignment: {
@@ -167,10 +173,12 @@ export default {
       return this.assignment.description.length > MAX_PREVIEW_LENGTH;
     },
 
-    description() {
-      return this.preview
-        ? this.shorten(this.assignment.description, MAX_PREVIEW_LENGTH)
-        : this.assignment.description;
+    shortenClasses() {
+      return {
+        'overflow-hidden': true,
+        'text-overflow-ellipsis': this.preview,
+        'break-all': !this.preview,
+      };
     },
   },
 

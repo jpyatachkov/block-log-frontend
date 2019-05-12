@@ -65,18 +65,37 @@
           </div>
 
           <div class="col-xs-12 col-md-4">
-            <p>Обложка курса</p>
+            <p class="mb-2">
+              Обложка курса
+            </p>
+
+            <blk-alert
+            :show="avatarNotUploaded"
+            variant="danger"
+            >
+              Изображение курса не загружено
+            </blk-alert>
+
+            <blk-alert
+            :show="avatarIncorrectFormat"
+            variant="danger"
+            >
+              Неверный формат изображения курса
+            </blk-alert>
 
             <app-form-file
             v-model="file"
             :state="avatarBase64Errors"
+            accept=".jpg, .png"
             browse-text="Загрузить"
             class="mb-3"
             placeholder="Выберите файл..."
             drop-placeholder="Перетащите файл..."
             />
 
-            <p>Сложность курса</p>
+            <p class="mb-2">
+              Сложность курса
+            </p>
 
             <app-form-select
             v-model.lazy="form.complexity"
@@ -85,7 +104,7 @@
             class="mb-3"
             />
 
-            <app-checkbox v-model="form.visible">
+            <app-checkbox v-model="form.isVisible">
               Курс видят другие пользователи
             </app-checkbox>
           </div>
@@ -131,11 +150,19 @@ export default {
       avatarBase64: '',
       complexity: null,
       requirements: '',
-      visible: false,
+      isVisible: false,
     },
   }),
 
   computed: {
+    avatarNotUploaded() {
+      return this.avatarBase64Errors === false && !this.file;
+    },
+
+    avatarIncorrectFormat() {
+      return this.avatarBase64Errors === false && !!this.file;
+    },
+
     titleErrors() {
       return this.getFieldErrors('form.title');
     },
@@ -178,6 +205,8 @@ export default {
 
   methods: {
     setFormData(form) {
+      console.log(form);
+
       const {
         title,
         shortDescription,
@@ -185,7 +214,7 @@ export default {
         avatarBase64,
         complexity,
         requirements,
-        visible,
+        isVisible,
       } = form;
 
       this.form = {
@@ -195,7 +224,7 @@ export default {
         avatarBase64,
         complexity,
         requirements,
-        visible,
+        isVisible,
       };
     },
   },

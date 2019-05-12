@@ -26,6 +26,10 @@ body {
   background-color: white;
 }
 
+.break-all {
+  word-break: break-all;
+}
+
 .color-white {
   color: white !important;
 }
@@ -48,6 +52,10 @@ body {
 
 .max-height-100 {
   max-height: 100%;
+}
+
+.overflow-hidden {
+  overflow: ellipsis;
 }
 
 .pointer {

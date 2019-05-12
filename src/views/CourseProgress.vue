@@ -69,7 +69,7 @@ export default {
 
       let idx;
 
-      if (assignmentId) {
+      if (assignmentId !== -1) {
         idx = this.assignments.findIndex((value) => value.id === assignmentId);
 
         if (idx === -1) {

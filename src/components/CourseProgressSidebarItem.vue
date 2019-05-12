@@ -9,7 +9,12 @@
         {{ number + 1 }}
       </div>
 
-      {{ assignment.title }}
+      <div
+      v-if="window.width >= 400"
+      class="break-all"
+      >
+        {{ assignment.title }}
+      </div>
     </div>
 
     <div
@@ -38,6 +43,13 @@ export default {
     },
   },
 
+  data: () => ({
+    window: {
+      width: 0,
+      height: 0,
+    },
+  }),
+
   computed: {
     additionalClasses() {
       return {
@@ -46,12 +58,18 @@ export default {
     },
   },
 
+  created() {
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
+  },
+
   mounted() {
     this.$refs.container.addEventListener('click', this.onClick);
   },
 
   beforeDestroy() {
     this.$refs.container.removeEventListener('click', this.onClick);
+    window.removeEventListener('resize', this.handleResize);
   },
 
   methods: {
@@ -63,6 +81,11 @@ export default {
         name: 'course_progress',
         params: { courseId, id: assignmentId },
       });
+    },
+
+    handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
     },
   },
 };

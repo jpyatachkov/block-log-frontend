@@ -3,7 +3,10 @@
     <div class="container-fluid">
       <div class="row mt-3 mb-3">
         <div class="col d-flex justify-content-end">
-          <edit-button @click="onEditProgramClick">
+          <edit-button
+          v-if="userIsCollaborator || userIsModerator"
+          @click="onEditProgramClick"
+          >
             Редактировать программу
           </edit-button>
         </div>
@@ -19,10 +22,11 @@
 </template>
 
 <script>
+import { assignmentsMethods, coursePermissions } from '@/store/helpers';
+
 import AssignmentsProgress from './AssignmentsProgress';
 import AssignmentsTable from './AssignmentsTable';
 import EditButton from './EditButton';
-import { assignmentsMethods } from '@/store/helpers';
 
 export default {
   name: 'CourseAssignments',
@@ -31,6 +35,10 @@ export default {
     AssignmentsProgress,
     AssignmentsTable,
     EditButton,
+  },
+
+  computed: {
+    ...coursePermissions,
   },
 
   methods: {

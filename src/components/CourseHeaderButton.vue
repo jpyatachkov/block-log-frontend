@@ -1,26 +1,28 @@
 <template>
   <div class="d-flex justify-content-center align-items-center">
-    <blk-button
-    v-if="userIsEnrolled"
-    :disabled="loading"
-    :loading="loading"
-    variant="success"
-    @click="onGoOn"
-    >
-      {{ goOnButtonText }}
-    </blk-button>
-    <blk-button
-    v-else
-    :disabled="loading"
-    :loading="loading"
-    variant="success"
-    @click="onEnroll"
-    >
-      {{ enrollButtonText }}
-    </blk-button>
+    <div v-if="!update && hasAssignments">
+      <blk-button
+      v-if="userIsEnrolled"
+      :disabled="loading"
+      :loading="loading"
+      variant="success"
+      @click="onGoOn"
+      >
+        {{ goOnButtonText }}
+      </blk-button>
+      <blk-button
+      v-else
+      :disabled="loading"
+      :loading="loading"
+      variant="success"
+      @click="onEnroll"
+      >
+        {{ enrollButtonText }}
+      </blk-button>
+    </div>
 
     <b-dropdown
-    v-if="userIsModerator"
+    v-if="userIsModerator && !update"
     class="ml-1"
     right
     variant="light"
@@ -65,6 +67,7 @@
 <script>
 import {
   accountComputed,
+  assignmentsComputed,
   coursesComputed,
   coursesMethods,
 } from '@/store/helpers';
@@ -77,12 +80,20 @@ export default {
 
   mixins: [LoadingMixin],
 
+  props: {
+    update: {
+      required: true,
+      type: Boolean,
+    },
+  },
+
   data: () => ({
     showConfirmDialog: false,
   }),
 
   computed: {
     ...accountComputed,
+    ...assignmentsComputed,
     ...coursesComputed,
 
     enrollButtonText() {
@@ -91,6 +102,14 @@ export default {
 
     goOnButtonText() {
       return 'Продолжить';
+    },
+
+    hasAssignments() {
+      return !!(this.assignments || []).length;
+    },
+
+    userCanCreateAssignments() {
+      return this.userIsCollaborator || this.userIsModerator;
     },
   },
 
@@ -110,12 +129,13 @@ export default {
       this.clearMyCourses();
 
       this.setLoading(false);
+      eventBus.$emit(EVENTS.SHOW_TOAST, { message: 'Вы записаны на курс' });
     },
 
     onGoOn() {
       this.$router.push({
         name: 'course_progress',
-        params: { courseId: this.course.id, id: null },
+        params: { courseId: this.course.id, id: -1 },
       });
     },
 

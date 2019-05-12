@@ -2,6 +2,7 @@
   <div class="form-check">
     <input
     ref="checkbox"
+    :checked="value"
     type="checkbox"
     class="form-check-input"
     >

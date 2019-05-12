@@ -51,14 +51,17 @@ export default {
 
       try {
         let id;
+        let message;
 
         if (this.update) {
           id = await this.updateCourse({
             courseId: this.$route.params.id,
             course,
           });
+          message = 'Курс обновлен';
         } else {
           id = await this.createCourse({ course });
+          message = 'Курс создан';
         }
 
         // Нужно для того, чтобы список курсов обновился.
@@ -69,7 +72,7 @@ export default {
         this.clearMyCourses();
 
         this.$router.push({ name: 'course', params: { id } });
-        eventBus.$emit(EVENTS.SHOW_TOAST, { message: 'Курс обновлен' });
+        eventBus.$emit(EVENTS.SHOW_TOAST, { message });
       } catch (error) {
         this.$refs.form.mapBackendErrorsToFields(error);
       } finally {

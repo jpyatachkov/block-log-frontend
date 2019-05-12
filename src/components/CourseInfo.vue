@@ -3,6 +3,7 @@
     <div class="row mt-3 mb-3">
       <div class="col d-flex justify-content-end">
         <edit-button
+        v-if="userIsCollaborator || userIsModerator"
         @click="
           $router.push({
             name: 'course_update',
@@ -49,6 +50,7 @@ import CourseContentCard from './CourseContentCard';
 import CourseInfoCard from './CourseInfoCard';
 import CourseRequirementsCard from './CourseRequirementsCard';
 import EditButton from './EditButton';
+import { coursePermissions } from '@/store/helpers';
 
 export default {
   name: 'CourseInfo',
@@ -59,6 +61,10 @@ export default {
     CourseInfoCard,
     CourseRequirementsCard,
     EditButton,
+  },
+
+  computed: {
+    ...coursePermissions,
   },
 };
 </script>

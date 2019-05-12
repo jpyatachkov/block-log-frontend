@@ -1,6 +1,8 @@
 <template>
   <app-card :hoverable="false">
-    <h5>Требования</h5>
+    <p class="mb-1 text-bold">
+      Требования:
+    </p>
 
     <app-card-text>
       {{ course.requirements }}

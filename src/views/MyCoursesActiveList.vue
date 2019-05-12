@@ -12,6 +12,7 @@
     >
       <app-card
       slot="no-items"
+      :hoverable="false"
       class="text-center"
       title="Пока Вы не проходите ни один курс."
       >

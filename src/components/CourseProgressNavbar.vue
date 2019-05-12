@@ -5,7 +5,7 @@
   type="dark"
   >
     <b-navbar-brand>
-      <blk-logo class="CourseProgressNavbar__logo bg-white mr-2" />
+      <blk-logo class="CourseProgressNavbar__logo mr-2" />
       BlockLog
     </b-navbar-brand>
 

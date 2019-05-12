@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row mt-2 mb-2">
       <div class="col">
         <router-link
         :to="{ name: 'course', params: { id: $route.params.courseId } }"
@@ -36,12 +36,14 @@
 
     <div class="row mt-2">
       <div class="col">
-        <h5>{{ assignment.title }}</h5>
+        <h5 class="break-all">
+          {{ assignment.title }}
+        </h5>
       </div>
     </div>
 
     <div class="row">
-      <div class="col">
+      <div class="col break-all">
         {{ assignment.description }}
       </div>
     </div>
@@ -116,9 +118,21 @@ export default {
 </script>
 
 <style lang="scss">
+$solution-button-color: #24be74;
+
 .CourseProgressAssignment {
   &__solution-button {
-    background-color: #24be74;
+    background-color: $solution-button-color;
+    border-color: $solution-button-color;
+
+    &:active {
+      background-color: $solution-button-color !important;
+    }
+
+    &:hover {
+      border-color: $solution-button-color;
+      background-color: $solution-button-color !important;
+    }
   }
 }
 </style>

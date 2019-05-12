@@ -12,6 +12,7 @@
     >
       <app-card
       slot="no-items"
+      :hoverable="false"
       class="text-center"
       >
         <app-card-text>В системе пока нет ни одного курса.</app-card-text>

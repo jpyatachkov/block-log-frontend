@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col">
-        <h2 class="text-overflow-ellipsis">
+        <h2 class="overflow-hidden text-overflow-ellipsis">
           {{ course.title }}
         </h2>
       </div>

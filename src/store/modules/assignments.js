@@ -70,7 +70,7 @@ const mutations = {
 
     state.assignmentList = {
       total: state.assignmentList.total || 1,
-      items: [assignment, ...state.assignmentList.items],
+      items: [...state.assignmentList.items, assignment],
     };
   },
 

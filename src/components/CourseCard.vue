@@ -15,10 +15,9 @@
     class="mt-auto d-flex justify-content-center align-items-center"
     >
       <blk-button
+      v-if="!!course.countAssignments"
       variant="success"
-      @click="
-        $router.push({ name: 'course_progress', params: { id: course.id } })
-      "
+      @click.stop="onCourseProgressClick"
       >
         Продолжить
       </blk-button>
@@ -73,7 +72,7 @@ export default {
 
     shortDescription() {
       return this.preview
-        ? this.shorten(this.course.shortDescription, 100)
+        ? this.shorten(this.course.shortDescription, 90)
         : this.course.shortDescription;
     },
 
@@ -85,7 +84,7 @@ export default {
 
     title() {
       return this.preview
-        ? this.shorten(this.course.title, 50)
+        ? this.shorten(this.course.title, 35)
         : this.course.title;
     },
   },
@@ -98,6 +97,13 @@ export default {
         const id = this.course.id;
         this.$router.push({ name: 'course', params: { id } });
       }
+    },
+
+    onCourseProgressClick() {
+      this.$router.push({
+        name: 'course_progress',
+        params: { courseId: this.course.id, id: -1 },
+      });
     },
 
     onEditButtonClick() {
