@@ -18,6 +18,7 @@
         <blk-button
         class="CourseProgressAssignment__solution-button"
         variant="primary"
+        @click="onClick"
         >
           Решить задачу <img :src="require('@/assets/forward.png')">
         </blk-button>
@@ -91,6 +92,7 @@ import {
   solutionsMethods,
 } from '@/store/helpers';
 
+import { EditorService } from '@/services';
 import SolutionsTable from './SolutionsTable';
 import TestExample from './TestExample';
 
@@ -113,6 +115,16 @@ export default {
 
   methods: {
     ...solutionsMethods,
+
+    onClick() {
+      this.setSolutionSent(true);
+
+      EditorService.clearEditorContent()
+        .setButtonText('Загрузить решение')
+        .setProgram(this.assignment.program)
+        .setRedirectURL(this.$route.fullPath)
+        .openEditor();
+    },
   },
 };
 </script>
