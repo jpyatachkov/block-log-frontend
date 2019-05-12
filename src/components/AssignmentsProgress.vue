@@ -1,6 +1,7 @@
 <template>
   <b-progress
   height="17px"
+  :max="100"
   show-value
   >
     <b-progress-bar
@@ -9,6 +10,7 @@
     variant="success"
     />
     <b-progress-bar
+    v-if="willPassPercent"
     :value="willPassPercent"
     variant="warning"
     />
@@ -36,12 +38,21 @@ export default {
      * Значение на 1 больше, чем процент пройденных заданий.
      */
     willPassPercent() {
-      return this.userIsEnrolled && this.course.countAssignments
-        ? Math.round(
-          ((this.course.countPassed + 1) / this.course.countAssignments) *
-            100,
-        )
-        : 0;
+      const passed =
+        this.course.countPassed === this.course.countAssignments
+          ? 0
+          : this.course.countPassed + 1;
+
+      if (passed) {
+        const percent = Math.round(
+          (passed / this.course.countAssignments) * 100,
+        );
+        return this.userIsEnrolled && this.course.countAssignments
+          ? percent - this.passedPercent
+          : 0;
+      } else {
+        return 0;
+      }
     },
   },
 };

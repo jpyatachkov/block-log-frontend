@@ -4,11 +4,11 @@
 
     <div class="container-fluid nopadding h-100">
       <div class="row nopadding h-100">
-        <div class="col-3 nopadding">
+        <div class="col-2 nopadding">
           <course-progress-sidebar />
         </div>
 
-        <div class="col-8 nopadding">
+        <div class="col-10 nopadding">
           <course-progress-assignment />
         </div>
       </div>
@@ -62,20 +62,9 @@ export default {
       const courseId = this.$route.params.courseId;
       let assignmentId = parseInt(this.$route.params.id);
 
-      await Promise.all([
-        this.getCourse({ courseId }),
-        this.getAssignments({ courseId, page: 1 }),
-      ]);
-
       let idx;
 
-      if (assignmentId !== -1) {
-        idx = this.assignments.findIndex((value) => value.id === assignmentId);
-
-        if (idx === -1) {
-          idx = 0;
-        }
-      } else {
+      if (assignmentId === -1) {
         idx = this.assignments.findIndex((value) => !value.passed);
 
         if (idx === -1) {
@@ -83,14 +72,37 @@ export default {
         }
 
         assignmentId = this.assignments[idx].id;
+
+        this.$router.replace({
+          name: 'course_progress',
+          params: { courseId, id: assignmentId },
+        });
+
+        return;
       }
 
       await Promise.all([
-        this.getAssignment({ courseId, assignmentId }),
-        this.getSolutions({ courseId, assignmentId }),
+        this.getCourse({ courseId }),
+        this.getAssignments({ courseId, page: 1 }),
       ]);
 
+      idx = this.assignments.findIndex((value) => value.id === assignmentId);
+
+      if (idx === -1) {
+        idx = 0;
+      }
+
       this.setAssignmentIndex({ idx });
+
+      if (this.solutionSent) {
+        await this.getAssignment({ courseId, assignmentId });
+      } else {
+        this.clearSolutions();
+        await Promise.all([
+          this.getAssignment({ courseId, assignmentId }),
+          this.getSolutions({ courseId, assignmentId }),
+        ]);
+      }
     },
   },
 };

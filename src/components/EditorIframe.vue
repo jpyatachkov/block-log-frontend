@@ -217,6 +217,7 @@ export default {
       const courseId = this.$route.params.courseId;
       const assignmentId = this.$route.params.id;
 
+      await this.getAssignment({ courseId, assignmentId });
       await this.getSolutions({ courseId, assignmentId, page: 1 });
     },
 

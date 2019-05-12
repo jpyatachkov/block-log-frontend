@@ -126,6 +126,6 @@ export default {
 
 <style lang="scss" scoped>
 .CourseCard {
-  height: 430px;
+  height: 450px;
 }
 </style>
