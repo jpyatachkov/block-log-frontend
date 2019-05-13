@@ -14,6 +14,7 @@
       </h2>
 
       <course-header-button
+      v-if="!loading"
       :update="update"
       class="ml-auto"
       />
@@ -48,6 +49,10 @@ export default {
     avatar: {
       default: null,
       validator: (v) => !v || v instanceof String || typeof v === 'string',
+    },
+    loading: {
+      required: true,
+      type: Boolean,
     },
     title: {
       required: true,

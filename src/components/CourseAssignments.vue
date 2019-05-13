@@ -4,7 +4,7 @@
       <div class="row mt-3 mb-3">
         <div class="col d-flex justify-content-end">
           <edit-button
-          v-if="userIsCollaborator || userIsModerator"
+          v-if="!loading && (userIsCollaborator || userIsModerator)"
           @click="onEditProgramClick"
           >
             Редактировать программу
@@ -13,9 +13,25 @@
       </div>
     </div>
 
-    <assignments-progress class="mt-2 mb-4" />
+    <content-placeholders
+    v-if="loading"
+    class="m-3"
+    >
+      <content-placeholders-text :lines="1" />
+    </content-placeholders>
+    <assignments-progress
+    v-else
+    class="mt-2 mb-4"
+    />
 
+    <content-placeholders
+    v-if="loading"
+    class="m-3"
+    >
+      <content-placeholders-text :lines="7" />
+    </content-placeholders>
     <assignments-table
+    v-else
     @fetch-assignments="$emit('fetch-assignments', $event)"
     />
   </div>
@@ -35,6 +51,13 @@ export default {
     AssignmentsProgress,
     AssignmentsTable,
     EditButton,
+  },
+
+  props: {
+    loading: {
+      required: true,
+      type: Boolean,
+    },
   },
 
   computed: {

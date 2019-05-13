@@ -3,7 +3,7 @@
     <div class="row mt-3 mb-3">
       <div class="col d-flex justify-content-end">
         <edit-button
-        v-if="userIsCollaborator || userIsModerator"
+        v-if="!loading && (userIsCollaborator || userIsModerator)"
         @click="
           $router.push({
             name: 'course_update',
@@ -18,25 +18,49 @@
 
     <div class="row">
       <div class="col-xs-12 col-md-7 col-lg-8 mb-2">
-        <course-content-card />
+        <content-placeholders
+        v-if="loading"
+        class="m-3"
+        >
+          <content-placeholders-text :lines="3" />
+        </content-placeholders>
+        <course-content-card v-else />
       </div>
 
       <div class="col-xs-12 col-md-5 col-lg-4">
         <div class="row mb-2">
           <div class="col">
-            <course-complexity-card />
+            <content-placeholders
+            v-if="loading"
+            class="m-3"
+            >
+              <content-placeholders-text :lines="3" />
+            </content-placeholders>
+            <course-complexity-card v-else />
           </div>
         </div>
 
         <div class="row mb-2">
           <div class="col">
-            <course-requirements-card />
+            <content-placeholders
+            v-if="loading"
+            class="m-3"
+            >
+              <content-placeholders-text :lines="3" />
+            </content-placeholders>
+            <course-requirements-card v-else />
           </div>
         </div>
 
         <div class="row">
           <div class="col">
-            <course-info-card />
+            <content-placeholders
+            v-if="loading"
+            class="m-3"
+            >
+              <content-placeholders-text :lines="3" />
+            </content-placeholders>
+            <course-info-card v-else />
           </div>
         </div>
       </div>
@@ -61,6 +85,13 @@ export default {
     CourseInfoCard,
     CourseRequirementsCard,
     EditButton,
+  },
+
+  props: {
+    loading: {
+      required: true,
+      type: Boolean,
+    },
   },
 
   computed: {

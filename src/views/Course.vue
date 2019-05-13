@@ -2,13 +2,17 @@
   <div>
     <course-header
     :avatar="course.avatarBase64"
+    :loading="loading"
     :title="course.title"
     class="mb-4"
     @nav-changed="currentNav = $event"
     />
 
     <div class="container">
-      <course-info v-if="currentNav === 0" />
+      <course-info
+      v-if="currentNav === 0"
+      :loading="loading"
+      />
 
       <course-assignments
       v-if="currentNav === 1"
@@ -70,16 +74,13 @@ export default {
     ...assignmentsMethods,
     ...coursesMethods,
 
-    // changeEditState(isEditMode) {
-    //   const id = `${this.$route.params.id}`;
-    //   this.changeCoursesEditState({ id, isEditMode });
-    // },
-
     async doFetch() {
       const courseId = this.$route.params.id;
-      await this.getCourse({ courseId });
 
+      this.setLoading(true);
+      await this.getCourse({ courseId });
       await this.onFetchAssignments();
+      this.setLoading(false);
     },
 
     async onFetchAssignments({ page = 1 } = {}) {

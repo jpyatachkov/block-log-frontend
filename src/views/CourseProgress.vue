@@ -9,7 +9,14 @@
         </div>
 
         <div class="col-10 nopadding">
-          <course-progress-assignment />
+          <content-placeholders
+          v-if="solutionSent || loading"
+          class="m-3"
+          >
+            <content-placeholders-heading />
+            <content-placeholders-text :lines="3" />
+          </content-placeholders>
+          <course-progress-assignment v-else />
         </div>
       </div>
     </div>
@@ -59,6 +66,8 @@ export default {
     ...solutionsMethods,
 
     async doFetch() {
+      this.setLoading(true);
+
       const courseId = this.$route.params.courseId;
       let assignmentId = parseInt(this.$route.params.id);
 
@@ -103,6 +112,8 @@ export default {
           this.getSolutions({ courseId, assignmentId }),
         ]);
       }
+
+      this.setLoading(false);
     },
   },
 };
