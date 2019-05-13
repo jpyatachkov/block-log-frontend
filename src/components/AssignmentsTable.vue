@@ -25,7 +25,7 @@
       <template v-slot:passed="{ value }">
         <app-status
         v-if="value !== -1"
-        :success="value"
+        :success="!!value"
         />
       </template>
     </b-table>
@@ -58,8 +58,12 @@ export default {
     coloredAssignments() {
       return Array.from((this.assignments || []).entries()).map(
         ([num, assignment]) => {
-          if (num < this.course.countPassed && !assignment.passed) {
-            assignment['_rowVariant'] = 'danger';
+          if (num < this.course.countPassed) {
+            if (!assignment.passed) {
+              assignment['_rowVariant'] = 'danger';
+            } else {
+              assignment['_rowVariant'] = 'success';
+            }
           }
 
           if (num === this.course.countPassed) {
@@ -68,6 +72,7 @@ export default {
 
           if (!this.userIsEnrolled) {
             assignment['_rowVariant'] = 'secondary';
+            assignment['passed'] = -1;
           }
 
           if (num > this.course.countPassed) {

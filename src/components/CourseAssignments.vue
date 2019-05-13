@@ -20,7 +20,7 @@
       <content-placeholders-text :lines="1" />
     </content-placeholders>
     <assignments-progress
-    v-else-if="userIsEnrolled && !!assignments"
+    v-else-if="userIsEnrolled && !!assignments.length"
     class="mt-2 mb-4"
     />
 
@@ -31,9 +31,16 @@
       <content-placeholders-text :lines="7" />
     </content-placeholders>
     <assignments-table
-    v-else-if="!!assignments"
+    v-else-if="!!assignments.length"
     @fetch-assignments="$emit('fetch-assignments', $event)"
     />
+
+    <div
+    v-if="!assignments.length"
+    class="text-center w-100 mt-4 d-flex justify-content-center align-items-center"
+    >
+      У этого курса пока нет заданий.
+    </div>
   </div>
 </template>
 

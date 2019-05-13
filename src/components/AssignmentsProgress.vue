@@ -1,6 +1,6 @@
 <template>
   <b-progress
-  height="17px"
+  height="27px"
   :max="100"
   show-value
   >

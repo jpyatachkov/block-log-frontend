@@ -68,6 +68,7 @@
 import {
   accountComputed,
   assignmentsComputed,
+  assignmentsMethods,
   coursesComputed,
   coursesMethods,
 } from '@/store/helpers';
@@ -114,6 +115,7 @@ export default {
   },
 
   methods: {
+    ...assignmentsMethods,
     ...coursesMethods,
 
     async onEnroll() {
@@ -121,12 +123,18 @@ export default {
 
       this.setLoading(true);
 
-      await this.enrollCourse({ courseId });
       // Нужно для того, чтобы список курсов обновился.
       // Если этого не сделать, то при переходе на страницу моих курсов или курсов в целом
       // не будет запроса к API (т.к. мы кэшируем извлеченные данные, чтобы не делать лишних запросов),
       // соответственно, нужно будет обновлять страницу вручную, чтобы увидеть созданный курс.
       this.clearMyCourses();
+      this.clearAssignments();
+
+      await this.enrollCourse({ courseId });
+      await Promise.all([
+        this.getCourse({ courseId }),
+        this.getAssignments({ courseId, page: 1 }),
+      ]);
 
       this.setLoading(false);
       eventBus.$emit(EVENTS.SHOW_TOAST, { message: 'Вы записаны на курс' });
