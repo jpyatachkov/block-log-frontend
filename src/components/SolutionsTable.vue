@@ -12,6 +12,10 @@
         {{ value }}
       </template>
 
+      <template v-slot:author="{ value }">
+        {{ value }}
+      </template>
+
       <template v-slot:isCorrect="{ value }">
         <app-status :success="value" />
       </template>
@@ -30,32 +34,51 @@
 </template>
 
 <script>
-import { solutionsComputed } from '@/store/helpers';
+import {
+  accountComputed,
+  coursePermissions,
+  solutionsComputed,
+} from '@/store/helpers';
 
 export default {
   name: 'SolutionsTable',
 
   data: () => ({
     currentPage: 1,
-    fields: {
-      index: {
-        label: '#',
-        sortable: false,
-      },
-      createdAt: {
-        label: 'Решение',
-        sortable: false,
-      },
-      isCorrect: {
-        label: 'Статус',
-        class: 'text-center',
-        sortable: false,
-      },
-    },
   }),
 
   computed: {
+    ...accountComputed,
+    ...coursePermissions,
     ...solutionsComputed,
+
+    fields() {
+      const fields = {
+        index: {
+          label: '#',
+          sortable: false,
+        },
+        createdAt: {
+          label: 'Решение',
+          sortable: false,
+        },
+        isCorrect: {
+          label: 'Статус',
+          class: 'text-center',
+          sortable: false,
+        },
+      };
+
+      if (this.userCanSeeOthersSolutions) {
+        fields['user'] = {
+          label: 'Автор',
+          class: 'text-center',
+          sortable: false,
+        };
+      }
+
+      return fields;
+    },
 
     solutionsWithDate() {
       return this.solutions.map((solution) => {
@@ -74,11 +97,33 @@ export default {
           createdAt = formatted;
         }
 
-        return {
-          ...solution,
-          createdAt,
-        };
+        if (this.userCanSeeOthersSolutions) {
+          let user;
+
+          if (solution.user.id === this.user.id) {
+            user = `${solution.user.firstName} ${
+              solution.user.lastName
+            } (это Вы)`;
+          } else {
+            user = `${solution.user.firstName} ${solution.user.lastName}`;
+          }
+
+          return {
+            ...solution,
+            user,
+            createdAt,
+          };
+        } else {
+          return {
+            ...solution,
+            createdAt,
+          };
+        }
       });
+    },
+
+    userCanSeeOthersSolutions() {
+      return this.userIsCollaborator || this.userIsModerator;
     },
   },
 

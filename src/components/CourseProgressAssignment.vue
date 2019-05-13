@@ -71,6 +71,11 @@
       </div>
     </div>
 
+    <app-card-text v-if="userIsCollaborator || userIsModerator">
+      Так как Вы являетесь преподавателем, Вы будете видеть здесь не только свои
+      решения, но и решения всех слушателей курса.
+    </app-card-text>
+
     <solutions-table
     v-if="solutions && solutions.length"
     class="mt-2"
@@ -88,6 +93,7 @@
 <script>
 import {
   assignmentsComputed,
+  coursePermissions,
   solutionsComputed,
   solutionsMethods,
 } from '@/store/helpers';
@@ -106,6 +112,7 @@ export default {
 
   computed: {
     ...assignmentsComputed,
+    ...coursePermissions,
     ...solutionsComputed,
 
     testExample() {
