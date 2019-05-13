@@ -2,16 +2,18 @@
   <div class="SolutionsTable__container">
     <b-table
     :fields="fields"
-    :items="solutions"
-    :tbody-tr-class="rowClass"
-    bordered
+    :items="solutionsWithDate"
     >
       <template v-slot:index="{ index }">
         {{ index + 1 }}
       </template>
 
+      <template v-slot:createdAt="{ value }">
+        {{ value }}
+      </template>
+
       <template v-slot:isCorrect="{ value }">
-        {{ value ? 'Принято' : 'Не принято' }}
+        <app-status :success="value" />
       </template>
     </b-table>
 
@@ -37,11 +39,16 @@ export default {
     currentPage: 1,
     fields: {
       index: {
-        label: 'Номер',
+        label: '#',
+        sortable: false,
+      },
+      createdAt: {
+        label: 'Решение',
         sortable: false,
       },
       isCorrect: {
-        label: 'Статус решения',
+        label: 'Статус',
+        class: 'text-center',
         sortable: false,
       },
     },
@@ -49,6 +56,23 @@ export default {
 
   computed: {
     ...solutionsComputed,
+
+    solutionsWithDate() {
+      return this.solutions.map((solution) => {
+        const dateParts = solution.createdAt.split('T');
+        const date = dateParts[0];
+        const time = dateParts[1].split('.')[0];
+
+        const formatted = `${date
+          .split('-')
+          .reverse()
+          .join('.')} ${time}`;
+
+        solution.createdAt = formatted;
+
+        return solution;
+      });
+    },
   },
 
   methods: {

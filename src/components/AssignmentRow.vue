@@ -55,7 +55,7 @@
       >
         <div v-if="!isEditMode">
           <edit-button
-          class="mb-2 mr-2"
+          class="mt-2 mb-2 mr-2"
           variant="primary"
           @click="isEditMode = true"
           >
@@ -63,7 +63,7 @@
           </edit-button>
 
           <delete-button
-          class="mb-2 mr-2"
+          class="mt-2 mb-2 mr-2"
           @click="showModal = true"
           />
         </div>
