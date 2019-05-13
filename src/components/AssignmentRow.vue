@@ -7,7 +7,10 @@
       <div
       class="pl-0 d-none col-md-2 d-md-flex flex-column justify-content-center align-items-start"
       >
-        <div class="AssignmentRow__number">
+        <div
+        class="AssignmentRow__number"
+        :class="numberStyles"
+        >
           {{ number }}
         </div>
       </div>
@@ -173,6 +176,12 @@ export default {
       return this.assignment.description.length > MAX_PREVIEW_LENGTH;
     },
 
+    numberStyles() {
+      return {
+        'AssignmentRow__number--edit': this.isEditMode,
+      };
+    },
+
     shortenClasses() {
       return {
         'overflow-hidden': true,
@@ -241,6 +250,11 @@ $list-border-radius: $row-border-radius * 2;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    &--edit {
+      color: white;
+      background-color: #93c6ef;
+    }
   }
 
   &__form {
