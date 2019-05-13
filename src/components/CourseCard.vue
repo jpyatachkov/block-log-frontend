@@ -15,7 +15,7 @@
     class="mt-auto d-flex justify-content-center align-items-center"
     >
       <blk-button
-      v-if="!!course.countAssignments"
+      v-if="!preventGoOn && !!course.countAssignments"
       variant="success"
       @click.stop="onCourseProgressClick"
       >
@@ -46,6 +46,10 @@ export default {
       type: Object,
     },
     isEditMode: {
+      default: false,
+      type: Boolean,
+    },
+    preventGoOn: {
       default: false,
       type: Boolean,
     },

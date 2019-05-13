@@ -44,6 +44,7 @@
     <courses-grid
     :courses="inactive"
     :loading="loading"
+    :prevent-go-on="true"
     class="pt-4 width-100"
     >
       <app-card

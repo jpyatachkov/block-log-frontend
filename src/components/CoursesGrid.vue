@@ -10,7 +10,10 @@
     </template>
 
     <template v-slot="{ item }">
-      <course-card :course="item" />
+      <course-card
+      :prevent-go-on="preventGoOn"
+      :course="item"
+      />
     </template>
   </blk-items-grid>
 </template>
@@ -34,6 +37,10 @@ export default {
     },
     loading: {
       required: true,
+      type: Boolean,
+    },
+    preventGoOn: {
+      default: false,
       type: Boolean,
     },
   },
