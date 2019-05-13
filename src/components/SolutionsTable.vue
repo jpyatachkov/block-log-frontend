@@ -59,18 +59,25 @@ export default {
 
     solutionsWithDate() {
       return this.solutions.map((solution) => {
-        const dateParts = solution.createdAt.split('T');
-        const date = dateParts[0];
-        const time = dateParts[1].split('.')[0];
+        let createdAt;
 
-        const formatted = `${date
-          .split('-')
-          .reverse()
-          .join('.')} ${time}`;
+        if (solution.createdAt && solution.createdAt.includes('T')) {
+          const dateParts = solution.createdAt.split('T');
+          const date = dateParts[0];
+          const time = dateParts[1].split('.')[0];
 
-        solution.createdAt = formatted;
+          const formatted = `${date
+            .split('-')
+            .reverse()
+            .join('.')} ${time}`;
 
-        return solution;
+          createdAt = formatted;
+        }
+
+        return {
+          ...solution,
+          createdAt,
+        };
       });
     },
   },
