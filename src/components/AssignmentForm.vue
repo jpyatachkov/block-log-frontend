@@ -86,10 +86,10 @@
       </div>
 
       <div class="row">
-        <div class="col d-flex jusify-content-start align-items-end">
+        <div class="col d-flex">
           <blk-button
           :disabled="loading"
-          class="mr-2"
+          class="ml-auto mr-2"
           @click="onCancelClick"
           >
             Отмена

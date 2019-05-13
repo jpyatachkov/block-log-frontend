@@ -28,7 +28,7 @@
       </div>
 
       <div class="row">
-        <div class="col d-flex justify-content-end align-items-center">
+        <div class="col d-flex justify-content-start align-items-center">
           <div>
             <blk-button
             :disabled="loading"
