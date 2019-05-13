@@ -56,6 +56,7 @@ export default {
   },
 
   async beforeRouteUpdate(to, from, next) {
+    console.log('BRU');
     next();
     await this.doFetch();
   },
@@ -66,6 +67,7 @@ export default {
     ...solutionsMethods,
 
     async doFetch() {
+      console.log('DF');
       this.setLoading(true);
 
       const courseId = this.$route.params.courseId;
@@ -105,15 +107,10 @@ export default {
 
       this.setAssignmentIndex({ idx });
 
-      if (this.solutionSent) {
-        await this.getAssignment({ courseId, assignmentId });
-      } else {
-        this.clearSolutions();
-        await Promise.all([
-          this.getAssignment({ courseId, assignmentId }),
-          this.getSolutions({ courseId, assignmentId }),
-        ]);
-      }
+      this.clearSolutions();
+
+      await this.getAssignment({ courseId, assignmentId });
+      await this.getSolutions({ courseId, assignmentId, page: 1 });
 
       this.setLoading(false);
     },
