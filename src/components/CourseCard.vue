@@ -27,7 +27,11 @@
 
 <script>
 import { CoursePermissionsMixin, ShortenMixin } from '@/mixins';
-import { accountComputed, coursesMethods } from '@/store/helpers';
+import {
+  accountComputed,
+  assignmentsMethods,
+  coursesMethods,
+} from '@/store/helpers';
 
 import { AccountService } from '@/services';
 
@@ -90,6 +94,7 @@ export default {
   },
 
   methods: {
+    ...assignmentsMethods,
     ...coursesMethods,
 
     onCardClick() {
@@ -100,6 +105,7 @@ export default {
     },
 
     onCourseProgressClick() {
+      this.clearAssignments();
       this.$router.push({
         name: 'course_progress',
         params: { courseId: this.course.id, id: -1 },

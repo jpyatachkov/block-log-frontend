@@ -101,8 +101,8 @@ $base-active-color: #24be74;
   justify-content: space-between;
   align-items: center;
   color: white;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   cursor: pointer;
   background-color: $base-color;
 

@@ -71,10 +71,15 @@ export default {
       const courseId = this.$route.params.courseId;
       let assignmentId = parseInt(this.$route.params.id);
 
+      await Promise.all([
+        this.getCourse({ courseId }),
+        this.getAssignments({ courseId, page: 1 }),
+      ]);
+
       let idx;
 
       if (assignmentId === -1) {
-        idx = this.assignments.findIndex((value) => !value.passed);
+        idx = this.assignments.findIndex((value) => value.passed !== true);
 
         if (idx === -1) {
           idx = this.assignments.length - 1;
@@ -90,10 +95,7 @@ export default {
         return;
       }
 
-      await Promise.all([
-        this.getCourse({ courseId }),
-        this.getAssignments({ courseId, page: 1 }),
-      ]);
+      assignmentId = parseInt(assignmentId);
 
       idx = this.assignments.findIndex((value) => value.id === assignmentId);
 
