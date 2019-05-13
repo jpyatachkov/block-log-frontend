@@ -20,7 +20,7 @@
       <content-placeholders-text :lines="1" />
     </content-placeholders>
     <assignments-progress
-    v-else-if="!!assignments"
+    v-else-if="userIsEnrolled && !!assignments"
     class="mt-2 mb-4"
     />
 

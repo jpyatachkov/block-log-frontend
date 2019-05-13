@@ -66,7 +66,11 @@ export default {
             assignment['_rowVariant'] = 'warning';
           }
 
-          if (num >= this.course.countPassed) {
+          if (!this.userIsEnrolled) {
+            assignment['_rowVariant'] = 'secondary';
+          }
+
+          if (num > this.course.countPassed) {
             assignment['passed'] = -1;
           }
 
