@@ -20,7 +20,7 @@
       <content-placeholders-text :lines="1" />
     </content-placeholders>
     <assignments-progress
-    v-else
+    v-else-if="!!assignments"
     class="mt-2 mb-4"
     />
 
@@ -31,14 +31,18 @@
       <content-placeholders-text :lines="7" />
     </content-placeholders>
     <assignments-table
-    v-else
+    v-else-if="!!assignments"
     @fetch-assignments="$emit('fetch-assignments', $event)"
     />
   </div>
 </template>
 
 <script>
-import { assignmentsMethods, coursePermissions } from '@/store/helpers';
+import {
+  assignmentsComputed,
+  assignmentsMethods,
+  coursePermissions,
+} from '@/store/helpers';
 
 import AssignmentsProgress from './AssignmentsProgress';
 import AssignmentsTable from './AssignmentsTable';
@@ -61,6 +65,7 @@ export default {
   },
 
   computed: {
+    ...assignmentsComputed,
     ...coursePermissions,
   },
 

@@ -66,7 +66,7 @@ export default {
             assignment['_rowVariant'] = 'warning';
           }
 
-          if (num > this.course.countPassed) {
+          if (num >= this.course.countPassed) {
             assignment['passed'] = -1;
           }
 
@@ -85,16 +85,16 @@ export default {
           label: 'Задание',
           sortable: false,
         },
+        passed: {
+          label: '',
+          class: 'text-center',
+          sortable: false,
+        },
       };
 
       if (this.userIsCollaborator || this.userIsModerator) {
         fields['countAttempts'] = {
           label: 'Попытки',
-          class: 'text-center',
-          sortable: false,
-        };
-        fields['passed'] = {
-          label: '',
           class: 'text-center',
           sortable: false,
         };
