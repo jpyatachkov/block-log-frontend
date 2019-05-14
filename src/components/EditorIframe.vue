@@ -157,7 +157,7 @@ export default {
           } else {
             this.setTesting(false);
             this.setSolutionSent(false);
-            await this.fetchSolutions();
+            // await this.fetchSolutions();
           }
         }
       }
