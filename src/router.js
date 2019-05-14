@@ -175,7 +175,7 @@ router.beforeEach(async (to, from, next) => {
   const forModerator = to.matched.some((route) => route.meta.forModerator);
 
   const userLoggedIn = JwtService.hasToken();
-  const userIsModerator = router.app.$store.getters['course/userIsModerator'];
+  const userIsModerator = router.app.$store.getters['courses/userIsModerator'];
 
   // Если пользователь залогинен,
   // при первом входе на сайт показываем ему не лендинг,
