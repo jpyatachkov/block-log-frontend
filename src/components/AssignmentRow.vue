@@ -66,6 +66,7 @@
           </edit-button>
 
           <delete-button
+          v-if="userIsModerator"
           class="mt-2 mb-2 mr-2"
           @click="showModal = true"
           />
@@ -117,13 +118,13 @@
 </template>
 
 <script>
+import { assignmentsMethods, coursePermissions } from '@/store/helpers';
 import eventBus, { EVENTS } from '@/bus';
 
 import AssignmentContainer from './AssignmentContainer';
 import DeleteButton from './DeleteButton';
 import EditButton from './EditButton';
 import { LoadingMixin } from '@/mixins';
-import { assignmentsMethods } from '@/store/helpers';
 
 const MAX_PREVIEW_LENGTH = 150;
 
@@ -164,6 +165,8 @@ export default {
   }),
 
   computed: {
+    ...coursePermissions,
+
     additionalStyles() {
       return {
         'AssignmentRow--first': this.isFirst,

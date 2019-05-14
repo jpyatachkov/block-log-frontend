@@ -3,7 +3,7 @@
     <div class="row mt-3 mb-3">
       <div class="col d-flex justify-content-end">
         <edit-button
-        v-if="!loading && (userIsCollaborator || userIsModerator)"
+        v-if="!loading && userIsModerator"
         @click="
           $router.push({
             name: 'course_update',

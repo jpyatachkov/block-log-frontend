@@ -1,3 +1,5 @@
+import eventBus, { EVENTS } from '@/bus';
+
 import { JwtService } from '@/services';
 import Router from 'vue-router';
 import Vue from 'vue';
@@ -133,6 +135,7 @@ const router = new Router({
       component: CourseUpdate,
       meta: {
         forLoggedIn: true,
+        forModerator: true,
       },
     },
     // {
@@ -169,8 +172,10 @@ router.beforeEach(async (to, from, next) => {
 
   const forAnonymous = to.matched.some((route) => route.meta.forAnonymous);
   const forLoggedIn = to.matched.some((route) => route.meta.forLoggedIn);
+  const forModerator = to.matched.some((route) => route.meta.forModerator);
 
   const userLoggedIn = JwtService.hasToken();
+  const userIsModerator = router.app.$store.getters['course/userIsModerator'];
 
   // Если пользователь залогинен,
   // при первом входе на сайт показываем ему не лендинг,
@@ -196,6 +201,14 @@ router.beforeEach(async (to, from, next) => {
 
   if (forLoggedIn && !userLoggedIn) {
     return next({ name: 'login' });
+  }
+
+  if (forModerator && !userIsModerator) {
+    eventBus.$emit(EVENTS.SHOW_TOAST, {
+      message: 'Недостаточно прав для выполнения операции',
+      isCorrect: false,
+    });
+    return next({ name: 'course', params: { id: to.params.id } });
   }
 
   next();
