@@ -2,6 +2,7 @@
   <div class="width-100">
     <course-header
     :avatar="form.avatarBase64"
+    :loading="loading"
     :title="form.title"
     class="mb-4"
     update
@@ -205,8 +206,6 @@ export default {
 
   methods: {
     setFormData(form) {
-      console.log(form);
-
       const {
         title,
         shortDescription,
