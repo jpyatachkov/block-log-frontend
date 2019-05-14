@@ -16,6 +16,7 @@
 
       <div class="col d-flex justify-content-end align-items-center">
         <blk-button
+        v-if="userIsEnrolled"
         class="CourseProgressAssignment__solution-button"
         variant="primary"
         @click="onClick"
@@ -81,11 +82,17 @@
     class="mt-2"
     />
     <div
-    v-else
+    v-else-if="userIsEnrolled"
     class="text-center w-100 mt-2 d-flex justify-content-center align-items-center"
     >
       Вы пока не сделали ни одной попытки. Нажмите кнопку "Решить задачу", чтобы
       попробовать.
+    </div>
+    <div
+    v-else
+    class="text-center w-100 mt-2 d-flex justify-content-center align-items-center"
+    >
+      Вы не записаны на курс, поэтому не можете решать задачи.
     </div>
   </div>
 </template>
