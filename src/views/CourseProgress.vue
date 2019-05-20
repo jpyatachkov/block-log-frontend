@@ -112,7 +112,10 @@ export default {
       console.log(1);
 
       await this.getAssignment({ courseId, assignmentId });
-      await this.getSolutions({ courseId, assignmentId, page: 1 });
+
+      if (!this.solutionSent) {
+        await this.getSolutions({ courseId, assignmentId, page: 1 });
+      }
 
       this.setLoading(false);
     },
